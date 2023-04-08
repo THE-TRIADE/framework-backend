@@ -1,18 +1,18 @@
-package imd.ufrn.familyroutine.repository;
+// package imd.ufrn.familyroutine.repository;
 
-import java.util.List;
+// import java.util.List;
 
-import imd.ufrn.familyroutine.model.User;
+// import imd.ufrn.familyroutine.model.User;
 
-public interface UserRepository {
+// public interface UserRepository {
     
-    List<User> findAll();
+//     List<User> findAll();
     
-    User finById(Integer id);
+//     User finById(Integer id);
 
-    User save(User user);
+//     User save(User user);
 
-    void deleteAll();
+//     void deleteAll();
     
-    void deleteById(Integer id);
-}
+//     void deleteById(Integer id);
+// }
