@@ -23,7 +23,7 @@ public class GuardianController {
     }
 
     @GetMapping("{guardianId}")
-    public Guardian findGuardianById(@PathVariable Integer guardianId) {
+    public Guardian findGuardianById(@PathVariable Long guardianId) {
         return this.guardianService.findGuardianById(guardianId);
     }
 }

@@ -8,7 +8,12 @@ public interface GuardianRepository {
     
     List<Guardian> findAll();
     
-    Guardian findById(Integer id);
+    Guardian findById(Long id);
 
-    // TODO Outras operações
+    Guardian save(Guardian guardian);
+
+    void deleteById(Long id);
+    
+    void deleteAll();
+
 }

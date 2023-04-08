@@ -10,7 +10,7 @@ public class Guardian extends Person {
 
     }
 
-    public Guardian(Integer id, String name, String cpf, Date birthDate, String email, String password) {
+    public Guardian(Long id, String name, String cpf, Date birthDate, String email, String password) {
         super(id, name, cpf, birthDate);
         this.email = email;
         this.password = password;

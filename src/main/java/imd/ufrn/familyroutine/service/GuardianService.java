@@ -17,7 +17,7 @@ public class GuardianService {
         return this.guardianRepository.findAll();
     }
 
-    public Guardian findGuardianById(Integer guardianId) {
+    public Guardian findGuardianById(Long guardianId) {
         return this.guardianRepository.findById(guardianId);
     }
 }

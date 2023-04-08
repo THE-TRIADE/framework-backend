@@ -17,19 +17,35 @@ public class GuardianRepositoryImpl implements GuardianRepository {
     @Override
     public List<Guardian> findAll() {
         String sql = "SELECT * FROM guardian";
-        return jdbcTemplate.query(sql, 
-        (resultSet, rowNumber) -> new Guardian(resultSet.getInt("id"), resultSet.getString("name"), 
-            resultSet.getString("cpf"), resultSet.getDate("birthDate"), resultSet.getString("email"), 
-            resultSet.getString("password")));
+        return jdbcTemplate.query(sql, new GuardianMapper());
     }
 
     @Override
-    public Guardian findById(Integer id) {
+    public Guardian findById(Long id) {
         String sql = "SELECT * FROM guardian WHERE id = " + id;
-        return jdbcTemplate.query(sql, 
-        (resultSet, rowNumber) -> new Guardian(resultSet.getInt("id"), resultSet.getString("name"), 
-            resultSet.getString("cpf"), resultSet.getDate("birthDate"), resultSet.getString("email"), 
-            resultSet.getString("password"))).get(0);
+        return jdbcTemplate.queryForObject(sql, new Object[] { id }, new GuardianMapper());
+    }
+
+    @Override
+    public Guardian save(Guardian guardian) {
+        String sql = "INSERT INTO guardian (id, `name`, cpf, birthDate, email, `password`) VALUES (?,?,?,?,?,?)";
+        jdbcTemplate.update(sql, guardian.getId(), guardian.getName(),  guardian.getCpf(), 
+                    guardian.getBirthDate(), guardian.getEmail(),  guardian.getPassword());
+        return null;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        String sql = "DELETE * FROM guardian WHERE id = " + id;
+        jdbcTemplate.update(sql, id > 0);
+    }
+
+    @Override
+    public void deleteAll() {
+        String sql = "DELETE * FROM guardian";
+        jdbcTemplate.update(sql, true);
     }
      
+
+    
 }
