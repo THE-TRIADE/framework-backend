@@ -1,6 +1,6 @@
 package imd.ufrn.familyroutine.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Guardian extends Person {
     private String email;

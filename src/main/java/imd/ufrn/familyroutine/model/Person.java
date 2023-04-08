@@ -1,8 +1,11 @@
 package imd.ufrn.familyroutine.model;
 
-import java.util.Date;
+import java.sql.Date;
+
+import org.springframework.data.annotation.Id;
 
 public class Person {
+    @Id
     private Long id;
     private String name;
     private String cpf;

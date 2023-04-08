@@ -20,4 +20,16 @@ public class GuardianService {
     public Guardian findGuardianById(Long guardianId) {
         return this.guardianRepository.findById(guardianId);
     }
+
+    public void deleteGuardianById(Long guardianId) {
+        this.guardianRepository.deleteById(guardianId);
+    }
+
+    public void deleteAllGuardians() {
+        this.guardianRepository.deleteAll();
+    }
+
+    public Guardian createGuardian(Guardian newGuardian) {
+        return this.guardianRepository.save(newGuardian);
+    }
 }
