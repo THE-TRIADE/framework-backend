@@ -3,7 +3,7 @@ package imd.ufrn.familyroutine.model;
 import java.util.Date;
 
 public class Person {
-    private Integer id;
+    private Long id;
     private String name;
     private String cpf;
     private Date birthDate;
@@ -11,18 +11,18 @@ public class Person {
     public Person() {
     }
 
-    public Person(Integer id, String name, String cpf, Date birthDate) {
+    public Person(Long id, String name, String cpf, Date birthDate) {
         this.id = id;
         this.name = name;
         this.cpf = cpf;
         this.birthDate = birthDate;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
