@@ -1,4 +1,4 @@
-package imd.ufrn.familyroutine.repository;
+package imd.ufrn.familyroutine.repository.mappers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
