@@ -29,7 +29,7 @@ public class GuardianRepositoryImpl implements GuardianRepository {
     @Override
     public Guardian findById(Long id) {
         String sql = "SELECT * FROM guardian WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[] { id }, new GuardianMapper());
+        return jdbcTemplate.queryForObject(sql, new GuardianMapper(), id);
     }
 
     @Override

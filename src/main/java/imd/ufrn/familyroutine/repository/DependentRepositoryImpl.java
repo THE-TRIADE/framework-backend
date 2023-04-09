@@ -29,7 +29,7 @@ public class DependentRepositoryImpl implements DependentRepository {
   @Override
   public Dependent findById(Long id) {
     String sql = "SELECT * FROM dependent WHERE id = ?";
-    return jdbcTemplate.queryForObject(sql, new Object[] { id }, new DependentMapper());
+    return jdbcTemplate.queryForObject(sql, new DependentMapper(), id);
   }
 
   @Override

@@ -28,7 +28,7 @@ public class FamilyGroupRepositoryImpl implements FamilyGroupRepository {
   @Override
   public FamilyGroup findById(Long id) {
     String sql = "SELECT * FROM familyGroup WHERE id = ?";
-    return jdbcTemplate.queryForObject(sql, new Object[] { id }, new FamilyGroupMapper());
+    return jdbcTemplate.queryForObject(sql, new FamilyGroupMapper(), id);
   }
 
   @Override
