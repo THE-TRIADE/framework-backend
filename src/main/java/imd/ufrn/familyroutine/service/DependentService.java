@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import imd.ufrn.familyroutine.model.Dependent;
 import imd.ufrn.familyroutine.repository.DependentRepository;
+import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
 
 @Service
 public class DependentService{
@@ -18,7 +19,9 @@ public class DependentService{
     }
 
     public Dependent findDependentById(Long dependentId) {
-        return this.dependentRepository.findById(dependentId);
+        return this.dependentRepository
+            .findById(dependentId)
+            .orElseThrow(() -> new EntityNotFoundException(dependentId, Dependent.class));
     }
 
     public void deleteDependentById(Long dependentId) {

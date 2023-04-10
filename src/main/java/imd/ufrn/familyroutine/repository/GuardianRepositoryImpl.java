@@ -4,8 +4,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -27,9 +29,13 @@ public class GuardianRepositoryImpl implements GuardianRepository {
     }
 
     @Override
-    public Guardian findById(Long id) {
-        String sql = "SELECT * FROM guardian WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new GuardianMapper(), id);
+    public Optional<Guardian> findById(Long id) {
+        String sql = "SELECT * FROM guardian WHERE id = ?";       
+        try {
+            return Optional.of(jdbcTemplate.queryForObject(sql, new GuardianMapper(), id));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        } 
     }
 
     @Override
@@ -47,7 +53,7 @@ public class GuardianRepositoryImpl implements GuardianRepository {
             return ps;
         }, keyHolder);
     
-        return this.findById(keyHolder.getKey().longValue());
+        return this.findById(keyHolder.getKey().longValue()).get();
     }
 
     @Override
@@ -60,6 +66,16 @@ public class GuardianRepositoryImpl implements GuardianRepository {
     public void deleteAll() {
         String sql = "DELETE FROM guardian";
         jdbcTemplate.update(sql);
+    }
+
+    @Override
+    public Optional<Guardian> findByEmail(String email) {
+        String sql = "SELECT * FROM guardian WHERE email = ?";
+        try {
+            return Optional.of(jdbcTemplate.queryForObject(sql, new GuardianMapper(), email));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        } 
     }
      
 
