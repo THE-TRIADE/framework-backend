@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import imd.ufrn.familyroutine.model.Guardian;
+import imd.ufrn.familyroutine.model.api.LoginRequest;
 import imd.ufrn.familyroutine.service.GuardianService;
+import jakarta.validation.Valid;
 
 @CrossOrigin
 @RestController
@@ -35,6 +37,11 @@ public class GuardianController {
     @PostMapping
     public Guardian createGuardian(@RequestBody Guardian newGuardian) {
         return this.guardianService.createGuardian(newGuardian);
+    }
+
+    @PostMapping("/login")
+    public Guardian logInGuardian(@RequestBody @Valid LoginRequest loginRequest) {
+        return this.guardianService.authenticateGuardian(loginRequest);
     }
 
     @DeleteMapping
