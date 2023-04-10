@@ -1,0 +1,16 @@
+CREATE TABLE `guardian` (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(100) NOT NULL,
+    cpf VARCHAR(11) NOT NULL,
+    birthDate DATE NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    `password` VARCHAR(256) NOT NULL,
+    PRIMARY KEY(id)
+);
+CREATE TABLE `dependent` (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(100) NOT NULL,
+    cpf VARCHAR(11) NOT NULL,
+    birthDate DATE NOT NULL,
+    PRIMARY KEY(id)
+);
