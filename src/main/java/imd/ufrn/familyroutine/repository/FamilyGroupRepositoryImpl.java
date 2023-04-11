@@ -3,8 +3,10 @@ package imd.ufrn.familyroutine.repository;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -26,9 +28,14 @@ public class FamilyGroupRepositoryImpl implements FamilyGroupRepository {
   }
 
   @Override
-  public FamilyGroup findById(Long id) {
+  public Optional<FamilyGroup> findById(Long id) {
     String sql = "SELECT * FROM familyGroup WHERE id = ?";
-    return jdbcTemplate.queryForObject(sql, new FamilyGroupMapper(), id);
+    try {
+        return Optional.of(jdbcTemplate.queryForObject(sql, new FamilyGroupMapper(), id));
+    }
+    catch(EmptyResultDataAccessException ex) {
+        return Optional.empty();
+    }
   }
 
   @Override
@@ -43,7 +50,7 @@ public class FamilyGroupRepositoryImpl implements FamilyGroupRepository {
       return ps;
     }, keyHolder);
 
-    return this.findById(keyHolder.getKey().longValue());
+    return this.findById(keyHolder.getKey().longValue()).get();
   }
   
     @Override

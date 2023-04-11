@@ -14,3 +14,7 @@ CREATE TABLE `dependent` (
     birthDate DATE NOT NULL,
     PRIMARY KEY(id)
 );
+CREATE TABLE `familyGroup` (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(100) NOT NULL
+);

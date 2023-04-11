@@ -2,6 +2,7 @@ package imd.ufrn.familyroutine.repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import imd.ufrn.familyroutine.model.FamilyGroup;
 
@@ -9,7 +10,7 @@ public interface FamilyGroupRepository{
 
   List<FamilyGroup> findAll();
 
-  FamilyGroup findById(Long id);
+  Optional<FamilyGroup> findById(Long id);
 
   FamilyGroup save(FamilyGroup familyGroup);
 

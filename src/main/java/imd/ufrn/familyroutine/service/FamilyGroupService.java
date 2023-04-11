@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import imd.ufrn.familyroutine.model.FamilyGroup;
 import imd.ufrn.familyroutine.repository.FamilyGroupRepository;
+import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
 
 @Service
 public class FamilyGroupService{
@@ -18,7 +19,7 @@ public class FamilyGroupService{
     }
 
     public FamilyGroup findFamilyGroupById(Long familyGroupId) {
-        return this.familyGroupRepository.findById(familyGroupId);
+        return this.familyGroupRepository.findById(familyGroupId).orElseThrow(() -> new EntityNotFoundException(familyGroupId, FamilyGroup.class));
     }
 
     public void deleteFamilyGroupById(Long familyGroupId) {
