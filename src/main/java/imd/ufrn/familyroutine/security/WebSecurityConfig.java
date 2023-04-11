@@ -1,14 +1,10 @@
 package imd.ufrn.familyroutine.security;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -51,24 +47,21 @@ public class WebSecurityConfig {
     }
     
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/guardian/**")
-                .permitAll()
-                .requestMatchers("/h2-ui/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin(withDefaults())
-                .logout(withDefaults())
-                .httpBasic(withDefaults())
-                .authenticationManager(authManager)
+                // .formLogin(withDefaults())
+                // .httpBasic(withDefaults())
+                // .authorizeHttpRequests()
+                // .requestMatchers(HttpMethod.POST, "/guardian/**")
+                //     .permitAll()
+                // .anyRequest()
+                //     .authenticated()
+                // .and()
                 .headers(headers -> headers.frameOptions().sameOrigin())
                 .authenticationProvider(authenticationProvider())
                 .build();
-      
     }
+
+
 }
