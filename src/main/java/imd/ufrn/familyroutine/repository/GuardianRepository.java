@@ -14,9 +14,4 @@ public interface GuardianRepository {
     Optional<Guardian> findByEmail(String email);
 
     Guardian save(Guardian guardian);
-
-    void deleteById(Long id);
-    
-    void deleteAll();
-
 }

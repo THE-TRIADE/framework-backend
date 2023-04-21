@@ -1,16 +1,11 @@
 package imd.ufrn.familyroutine.repository;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import imd.ufrn.familyroutine.model.Dependent;
@@ -24,13 +19,13 @@ public class DependentRepositoryImpl implements DependentRepository {
 
   @Override
   public List<Dependent> findAll() {
-    String sql = "SELECT * FROM dependent";
+    String sql = "SELECT * FROM PERSON INNER JOIN DEPENDENT ON PERSON.id = DEPENDENT.personId";
     return jdbcTemplate.query(sql, new DependentMapper());
   }
 
   @Override
   public Optional<Dependent> findById(Long id) {
-    String sql = "SELECT * FROM dependent WHERE id = ?";
+    String sql = "SELECT * FROM PERSON INNER JOIN DEPENDENT ON PERSON.id = DEPENDENT.personId WHERE personId = ?";
     try {
         return Optional.of(jdbcTemplate.queryForObject(sql, new DependentMapper(), id));
     } catch (EmptyResultDataAccessException e) {
@@ -40,30 +35,9 @@ public class DependentRepositoryImpl implements DependentRepository {
 
   @Override
   public Dependent save(Dependent dependent) {
-    KeyHolder keyHolder = new GeneratedKeyHolder();
-    String sql = "INSERT INTO dependent (`name`, cpf, birthDate) VALUES (?,?,?)";
-
-    jdbcTemplate.update(connection -> { 
-        PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, dependent.getName());
-        ps.setString(2, dependent.getCpf());
-        ps.setDate(3, (Date) dependent.getBirthDate());
-        return ps;
-    }, keyHolder);
-
-    return this.findById(keyHolder.getKey().longValue()).get();
-  }
-
-  @Override
-  public void deleteById(Long id) {
-    String sql = "DELETE FROM dependent WHERE id = ?";
-    jdbcTemplate.update(sql, new Object[] { id });
-  }
-
-  @Override
-  public void deleteAll() {
-    String sql = "DELETE FROM dependent";
-    jdbcTemplate.update(sql);
+    String sql = "INSERT INTO dependent (personId) VALUES (?)";
+    jdbcTemplate.update(sql, dependent.getId());
+    return dependent;
   }
 
 }

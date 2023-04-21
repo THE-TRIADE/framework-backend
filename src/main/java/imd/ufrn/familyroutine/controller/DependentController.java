@@ -34,7 +34,7 @@ public class DependentController {
 
     @PostMapping
     public Dependent createDependent(@RequestBody Dependent newDependent) {
-        return this.dependentService.createDependent(newDependent);
+        return this.dependentService.createDependentInCascade(newDependent);
     }
 
     @DeleteMapping

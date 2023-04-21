@@ -3,7 +3,6 @@ package imd.ufrn.familyroutine.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +16,6 @@ import imd.ufrn.familyroutine.model.api.LoginRequest;
 import imd.ufrn.familyroutine.service.GuardianService;
 import jakarta.validation.Valid;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/guardian")
 public class GuardianController {
@@ -36,7 +34,7 @@ public class GuardianController {
 
     @PostMapping
     public Guardian createGuardian(@RequestBody Guardian newGuardian) {
-        return this.guardianService.createGuardian(newGuardian);
+        return this.guardianService.createGuardianInCascade(newGuardian);
     }
 
     @PostMapping("/login")

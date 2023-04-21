@@ -53,7 +53,7 @@ public class FamilyGroupRepositoryImpl implements FamilyGroupRepository {
     return this.findById(keyHolder.getKey().longValue()).get();
   }
   
-    @Override
+  @Override
   public void deleteById(Long id) {
     String sql = "DELETE FROM familyGroup WHERE id = ?";
     jdbcTemplate.update(sql, new Object[] { id });

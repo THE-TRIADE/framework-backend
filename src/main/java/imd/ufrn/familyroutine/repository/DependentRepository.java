@@ -13,8 +13,4 @@ public interface DependentRepository {
 
   Dependent save(Dependent dependent);
 
-  void deleteById(Long id);
-
-  void deleteAll();
-
 }
