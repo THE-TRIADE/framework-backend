@@ -1,18 +1,19 @@
-// package imd.ufrn.familyroutine.repository;
+package imd.ufrn.familyroutine.repository;
 
-// import java.util.List;
+import java.util.List;
+import java.util.Optional;
 
-// import imd.ufrn.familyroutine.model.Activity;
+import imd.ufrn.familyroutine.model.Activity;
 
-// public interface ActivityRepository {
+public interface ActivityRepository {
     
-//     List<Activity> findAll();
+    List<Activity> findAll();
     
-//     Activity finById(Integer id);
+    Optional<Activity> findById(Long id);
 
-//     Activity save(Activity activity);
+    Activity save(Activity activity);
 
-//     void deleteAll();
+    void deleteAll();
     
-//     void deleteById(Integer id);
-// }
+    void deleteById(Long id);
+}

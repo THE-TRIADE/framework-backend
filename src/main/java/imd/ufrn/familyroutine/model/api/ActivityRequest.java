@@ -1,36 +1,45 @@
-package imd.ufrn.familyroutine.model;
+package imd.ufrn.familyroutine.model.api;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.springframework.data.annotation.Id;
+import imd.ufrn.familyroutine.model.ActivityState;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 
-public class Activity {
-    @Id
-    private Long id;
+public class ActivityRequest {
+    @NotEmpty
     private String name;
-    private String description;
+    @NotNull
     private Date dateStart;
+    @NotNull
     private Date dateEnd;
+    @NotNull
     private Time hourStart;
+    @NotNull
     private Time hourEnd;
-    private ActivityState state;
-    private String commentary;
-
+    @NotNull
     private Long dependentId;
+    @NotNull
     private Long currentGuardian;
+    @NotNull
     private Long actor;
+    @NotNull
     private Long createdBy;
+    @NotNull
+    private Boolean repeat;
     
-    public Activity() {
+    private List<Integer> daysToRepeat = new ArrayList<>();
+    private Date repeatUntil;
+    
+    private String description;
+    private ActivityState state = ActivityState.CREATED;
+
+    public ActivityRequest() {
     }
 
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    } 
     public String getName() {
         return name;
     }
@@ -73,12 +82,6 @@ public class Activity {
     public void setState(ActivityState state) {
         this.state = state;
     }
-    public String getCommentary() {
-        return commentary;
-    }
-    public void setCommentary(String commentary) {
-        this.commentary = commentary;
-    }
     public Long getDependentId() {
         return dependentId;
     }
@@ -102,5 +105,23 @@ public class Activity {
     }
     public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
+    }
+    public Boolean isRepeat() {
+        return repeat;
+    }
+    public void setRepeat(Boolean repeat) {
+        this.repeat = repeat;
+    }
+    public List<Integer> getDaysToRepeat() {
+        return daysToRepeat;
+    }
+    public void setDaysToRepeat(List<Integer> daysToRepeat) {
+        this.daysToRepeat = daysToRepeat;
+    }
+    public Date getRepeatUntil() {
+        return repeatUntil;
+    }
+    public void setRepeatUntil(Date repeatUntil) {
+        this.repeatUntil = repeatUntil;
     }
 }
