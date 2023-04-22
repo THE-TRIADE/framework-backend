@@ -11,35 +11,32 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import imd.ufrn.familyroutine.model.Person;
-import imd.ufrn.familyroutine.repository.mappers.PersonMapper;
+import imd.ufrn.familyroutine.model.RecurringActivity;
+import imd.ufrn.familyroutine.repository.mappers.RecurringActivityMapper;
 
 @Repository
-public class PersonRepositoryImpl implements PersonRepository {
+public class RecurringActivityRepositoryImpl implements RecurringActivityRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public Optional<Person> findById(Long id) {
-        String sql = "SELECT * FROM person WHERE id = ?";       
+    public Optional<RecurringActivity> findById(Long id) {
+        String sql = "SELECT * FROM recurring_activity WHERE id = ?";       
         try {
-            return Optional.of(jdbcTemplate.queryForObject(sql, new PersonMapper(), id));
+            return Optional.of(jdbcTemplate.queryForObject(sql, new RecurringActivityMapper(), id));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         } 
     }
 
     @Override
-    public Person save(Person person) {
+    public RecurringActivity save(RecurringActivity activity) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO person (`name`, cpf, birthDate) VALUES (?,?,?)";
+        String sql = "INSERT INTO recurring_activity () VALUES ()";
 
         jdbcTemplate.update(connection -> { 
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, person.getName());
-            ps.setString(2, person.getCpf());
-            ps.setDate(3, person.getBirthDate());
             return ps;
         }, keyHolder);
     
@@ -48,13 +45,13 @@ public class PersonRepositoryImpl implements PersonRepository {
 
     @Override
     public void deleteById(Long id) {
-        String sql = "DELETE FROM person WHERE id = ?";
+        String sql = "DELETE FROM recurring_activity WHERE id = ?";
         jdbcTemplate.update(sql, new Object[] { id });
     }
 
     @Override
     public void deleteAll() {
-        String sql = "DELETE FROM person";
+        String sql = "DELETE FROM recurring_activity";
         jdbcTemplate.update(sql);
     }
 }

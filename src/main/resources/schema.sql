@@ -20,11 +20,17 @@ CREATE TABLE `dependent` (
     PRIMARY KEY(personId)
 );
 
-CREATE TABLE `familyGroup` (
+CREATE TABLE `family_group` (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(100) NOT NULL,
     dependentId BIGINT,
     FOREIGN KEY (dependentId) REFERENCES `dependent`(personId)
+);
+
+
+CREATE TABLE `recurring_activity` (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE `activity`(
@@ -38,14 +44,18 @@ CREATE TABLE `activity`(
     `state` VARCHAR(50) NOT NULL,
     commentary VARCHAR(500),
     
-    dependentId BIGINT, 
-    currentGuardianId BIGINT, 
-    actorId BIGINT, 
-    createdBy BIGINT,   
+    dependentId BIGINT NOT NULL, 
+    currentGuardianId BIGINT NOT NULL, 
+    actorId BIGINT NOT NULL, 
+    createdBy BIGINT NOT NULL,
+    finishedBy BIGINT,   
+    recurringActivityId BIGINT,   
       
     FOREIGN KEY(dependentId) REFERENCES `dependent`(personId),
     FOREIGN KEY(currentGuardianId) REFERENCES `guardian`(personId),
     FOREIGN KEY(actorId) REFERENCES `person`(id),
     FOREIGN KEY(createdBy) REFERENCES `guardian`(personId),
+    FOREIGN KEY(finishedBy) REFERENCES `guardian`(personId),
+    FOREIGN KEY(recurringActivityId) REFERENCES `recurring_activity`(id),
     PRIMARY KEY(id)
 );

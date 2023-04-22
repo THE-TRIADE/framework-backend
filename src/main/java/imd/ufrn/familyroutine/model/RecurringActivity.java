@@ -1,7 +1,20 @@
 package imd.ufrn.familyroutine.model;
 
-import java.util.List;
-
 public class RecurringActivity {
-    List<Long> activitiesId;
+    Long id;
+    
+    public RecurringActivity() {
+    }
+
+    public RecurringActivity(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

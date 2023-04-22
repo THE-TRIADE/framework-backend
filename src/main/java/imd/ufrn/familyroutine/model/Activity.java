@@ -21,6 +21,8 @@ public class Activity {
     private Long currentGuardian;
     private Long actor;
     private Long createdBy;
+    private Long finishedBy;
+    private Long recurringActivityId;
     
     public Activity() {
     }
@@ -102,5 +104,17 @@ public class Activity {
     }
     public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
+    }
+    public Long getFinishedBy() {
+        return finishedBy;
+    }
+    public void setFinishedBy(Long finishedBy) {
+        this.finishedBy = finishedBy;
+    }
+    public Long getRecurringActivityId() {
+        return recurringActivityId;
+    }
+    public void setRecurringActivityId(Long recurringActivityId) {
+        this.recurringActivityId = recurringActivityId;
     }
 }

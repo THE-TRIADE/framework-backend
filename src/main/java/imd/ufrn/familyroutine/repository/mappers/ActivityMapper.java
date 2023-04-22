@@ -23,8 +23,10 @@ public class ActivityMapper implements RowMapper<Activity>{
     activity.setCommentary(resultSet.getString("commentary"));
     activity.setDependentId(resultSet.getLong("dependentId"));
     activity.setCurrentGuardian(resultSet.getLong("currentGuardianId"));
-    activity.setCreatedBy(resultSet.getLong("createdBy"));
     activity.setActor(resultSet.getLong("actorId"));
+    activity.setCreatedBy(resultSet.getLong("createdBy"));
+    activity.setFinishedBy(resultSet.getLong("FinishedBy"));
+    activity.setRecurringActivityId(resultSet.getLong("RecurringActivityId"));
     return activity;
   }
     

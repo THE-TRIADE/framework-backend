@@ -10,5 +10,5 @@ INSERT INTO guardian (email, `password`, personId) VALUES ('leandro@email.com', 
 INSERT INTO `dependent` (personId) VALUES (3);
 INSERT INTO `dependent` (personId) VALUES (4);
 
-INSERT INTO `activity` (`name`,`description`, dateStart, dateEnd, hourStart, hourEnd,`state`,commentary,dependentId,currentGuardianId,actorId,createdBy) VALUES ('Tomar banho', null, '2023-04-21', '2023-04-21', '20:00:00', '21:00:00', 'CREATED', null, 3, 1, 3, 1);
-INSERT INTO `activity` (`name`,`description`, dateStart, dateEnd, hourStart, hourEnd,`state`,commentary,dependentId,currentGuardianId,actorId,createdBy) VALUES ('Pagar escola', null, '2023-04-21', '2023-04-21', '20:00:00', '21:00:00', 'CREATED', null, 3, 1, 1, 1);
+INSERT INTO `activity` (`name`, dateStart, dateEnd, hourStart, hourEnd,`state`,dependentId,currentGuardianId,actorId,createdBy) VALUES ('Tomar banho', '2023-04-21', '2023-04-21', '20:00:00', '21:00:00', 'CREATED', 3, 1, 3, 1);
+INSERT INTO `activity` (`name`, dateStart, dateEnd, hourStart, hourEnd,`state`,dependentId,currentGuardianId,actorId,createdBy) VALUES ('Pagar escola', '2023-04-21', '2023-04-21', '20:00:00', '21:00:00', 'CREATED', 3, 1, 1, 1);

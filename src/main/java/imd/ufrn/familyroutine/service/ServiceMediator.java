@@ -1,5 +1,12 @@
 package imd.ufrn.familyroutine.service;
 
+import java.sql.Date;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +18,10 @@ import imd.ufrn.familyroutine.model.Activity;
 import imd.ufrn.familyroutine.model.Dependent;
 import imd.ufrn.familyroutine.model.Guardian;
 import imd.ufrn.familyroutine.model.Person;
+import imd.ufrn.familyroutine.model.RecurringActivity;
 import imd.ufrn.familyroutine.model.api.ActivityRequest;
+import imd.ufrn.familyroutine.service.exception.RecurringActivityException;
+import imd.ufrn.familyroutine.service.exception.RecurringActivityType;
 
 @Service
 public class ServiceMediator {
@@ -24,6 +34,11 @@ public class ServiceMediator {
     @Lazy
     @Autowired
     private PersonService personService;
+    @Lazy
+    @Autowired
+    private ActivityService activityService;
+    @Autowired
+    private RecurringActivityService recurringActivityService;
 
     @Transactional
     public Dependent createDependent(Dependent newDependent) {
@@ -61,8 +76,94 @@ public class ServiceMediator {
         this.personService.deletePersonById(guardianId);
     }
 
+    @Transactional
 	public Activity createRecurringActivities(ActivityRequest activityRequest) {
-        // TODO
-        return null;
+        this.checkRecurringActivitiesFieldsThroughActivityRequest(activityRequest);
+        
+        List<Activity> activities = new ArrayList<>();
+        activities.add(this.activityService.mapActivityRequestToActivity(activityRequest));
+
+        // Getting first activity time diff in hours
+        LocalDateTime startDateTime = LocalDateTime.of(activityRequest.getDateStart().toLocalDate(), activityRequest.getHourStart().toLocalTime());
+        LocalDateTime endDateTime = LocalDateTime.of(activityRequest.getDateEnd().toLocalDate(), activityRequest.getHourEnd().toLocalTime());
+        Long diffInHours = ChronoUnit.HOURS.between(startDateTime, endDateTime);
+
+        // Setting up loop variables
+        Iterator<Integer> daysIterator = activityRequest.getDaysToRepeat().iterator();
+        LocalDateTime currentDate = startDateTime;
+        LocalDateTime limitDate = LocalDateTime.of(activityRequest.getRepeatUntil().toLocalDate(), activityRequest.getHourStart().toLocalTime());
+
+        while (currentDate.isBefore(limitDate)) {
+            currentDate = findNextDate(currentDate, DayOfWeek.of(daysIterator.next()));
+
+            if(currentDate.isAfter(limitDate)) {
+                break;
+            }
+
+            Activity newActivity = new Activity();
+            newActivity.setName(activityRequest.getName());
+            newActivity.setDateStart(Date.valueOf(currentDate.toLocalDate()));
+            newActivity.setDateEnd(Date.valueOf(currentDate.plusHours(diffInHours).toLocalDate()));
+            newActivity.setHourStart(activityRequest.getHourStart());
+            newActivity.setHourEnd(activityRequest.getHourEnd());
+            newActivity.setDependentId(activityRequest.getDependentId());
+            newActivity.setCurrentGuardian(activityRequest.getCurrentGuardian());
+            newActivity.setActor(activityRequest.getActor());
+            newActivity.setCreatedBy(activityRequest.getCreatedBy());
+            newActivity.setState(activityRequest.getState());
+
+            activities.add(newActivity);
+
+            if(!daysIterator.hasNext()) {
+                daysIterator = activityRequest.getDaysToRepeat().iterator();
+            }
+        }
+
+        RecurringActivity recurringActivity = this.recurringActivityService.createRecurringActivity(new RecurringActivity());
+        activities.forEach(activity -> activity.setRecurringActivityId(recurringActivity.getId()));
+
+        return this.activityService.createMultipleActivities(activities).get(0);
 	}
+
+    /* UTILS */
+    private LocalDateTime findNextDate(LocalDateTime currentDate, DayOfWeek dayOfWeek) {
+        LocalDateTime nextDate = currentDate;
+
+        if (currentDate.getDayOfWeek() == dayOfWeek) {
+            nextDate = currentDate.plusDays(1);
+        }
+        while (nextDate.getDayOfWeek() != dayOfWeek) {
+            nextDate = nextDate.plusDays(1);
+        }
+
+        return nextDate;
+    }
+
+    private void checkRecurringActivitiesFieldsThroughActivityRequest(ActivityRequest activityRequest) {
+        if (activityRequest.getDaysToRepeat().isEmpty() || activityRequest.getRepeatUntil() == null) {
+            throw new RecurringActivityException(RecurringActivityType.FIELD);
+        }
+
+        LocalDate startDate = activityRequest.getDateStart().toLocalDate();
+        LocalDate endDate = activityRequest.getRepeatUntil().toLocalDate();
+
+        if (startDate.isAfter(endDate)) {
+            throw new RecurringActivityException(RecurringActivityType.INTERVAL);
+        }
+
+        // Check if there is no days lesser than 1 and greater than 7. Valid interval: [1,7]. 1 is Monday and 7 is Sunday.
+        Long daysLesserThan1 = activityRequest.getDaysToRepeat()
+            .stream()
+            .filter(day -> day < 1)
+            .count();
+
+        Long daysGreaterThan7 = activityRequest.getDaysToRepeat()
+            .stream()
+            .filter(day -> day > 7)
+            .count();
+
+        if (daysLesserThan1 > 0 || daysGreaterThan7 > 0) {
+            throw new RecurringActivityException(RecurringActivityType.DAY_INDEX);
+        }
+    }
 }

@@ -10,7 +10,9 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import imd.ufrn.familyroutine.model.RestResponse;
+import imd.ufrn.familyroutine.service.exception.ActivityIntervalException;
 import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
+import imd.ufrn.familyroutine.service.exception.RecurringActivityException;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
@@ -26,4 +28,23 @@ public class GlobalHandlerException extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler({ ActivityIntervalException.class })
+    public ResponseEntity<Object> handleActivityIntervalException(ActivityIntervalException ex, WebRequest request) {
+        RestResponse response = RestResponse.builder()
+            .status(HttpStatus.BAD_REQUEST)
+            .message(ex.getMessage())
+            .path(request.getDescription(false).substring(4))
+            .build();
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({ RecurringActivityException.class })
+    public ResponseEntity<Object> handleRecurringActivityException(RecurringActivityException ex, WebRequest request) {
+        RestResponse response = RestResponse.builder()
+            .status(HttpStatus.BAD_REQUEST)
+            .message(ex.getMessage())
+            .path(request.getDescription(false).substring(4))
+            .build();
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }

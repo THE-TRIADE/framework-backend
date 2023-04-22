@@ -15,9 +15,10 @@ public class ActivityService {
 
 	@Autowired
     private ActivityRepository activityRepository;
-
     @Autowired
     private ServiceMediator serviceMediator;
+    @Autowired
+    private ValidationService validationService;
 
     public List<Activity> findAll() {
         return this.activityRepository.findAll();
@@ -41,7 +42,12 @@ public class ActivityService {
         }
     }
 
+    protected List<Activity> createMultipleActivities(List<Activity> newActivities) {
+        return newActivities.stream().map(this::createActivity).toList();
+    }
+
     protected Activity createActivity(Activity newActivity) {
+        this.validationService.validActivityOrError(newActivity);
         return this.activityRepository.save(newActivity);
     }
 
@@ -49,7 +55,7 @@ public class ActivityService {
         this.activityRepository.deleteAll();
 	}
     
-    private Activity mapActivityRequestToActivity(ActivityRequest activityRequest) {
+    protected Activity mapActivityRequestToActivity(ActivityRequest activityRequest) {
         Activity activity = new Activity();
         activity.setName(activityRequest.getName());
         activity.setDateStart(activityRequest.getDateStart());
