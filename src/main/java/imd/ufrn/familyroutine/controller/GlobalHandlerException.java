@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import imd.ufrn.familyroutine.model.RestResponse;
 import imd.ufrn.familyroutine.service.exception.ActivityIntervalException;
 import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
+import imd.ufrn.familyroutine.service.exception.InvalidStateException;
 import imd.ufrn.familyroutine.service.exception.RecurringActivityException;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -40,6 +41,16 @@ public class GlobalHandlerException extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ RecurringActivityException.class })
     public ResponseEntity<Object> handleRecurringActivityException(RecurringActivityException ex, WebRequest request) {
+        RestResponse response = RestResponse.builder()
+            .status(HttpStatus.BAD_REQUEST)
+            .message(ex.getMessage())
+            .path(request.getDescription(false).substring(4))
+            .build();
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({ InvalidStateException.class })
+    public ResponseEntity<Object> handleInvalidStateException(InvalidStateException ex, WebRequest request) {
         RestResponse response = RestResponse.builder()
             .status(HttpStatus.BAD_REQUEST)
             .message(ex.getMessage())

@@ -13,6 +13,8 @@ public interface ActivityRepository {
 
     Activity save(Activity activity);
 
+    Activity update(Activity activity);
+
     void deleteAll();
     
     void deleteById(Long id);

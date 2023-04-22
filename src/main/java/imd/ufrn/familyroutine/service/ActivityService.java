@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import imd.ufrn.familyroutine.model.Activity;
+import imd.ufrn.familyroutine.model.ActivityState;
 import imd.ufrn.familyroutine.model.api.ActivityRequest;
+import imd.ufrn.familyroutine.model.api.FinishActivityRequest;
 import imd.ufrn.familyroutine.repository.ActivityRepository;
 import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
+import imd.ufrn.familyroutine.service.exception.InvalidStateException;
 
 @Service
 public class ActivityService {
@@ -42,6 +45,25 @@ public class ActivityService {
         }
     }
 
+	public void deleteAllActivities() {
+        this.activityRepository.deleteAll();
+	}
+
+    public Activity finishActivity(Long activityId, FinishActivityRequest finishActivityRequest) {
+        Activity activity = this.findActivityById(activityId);
+        this.checkActivityInDoneOrNotDoneStateOrError(activity);
+        activity.setState(ActivityState.DONE);
+        activity.setFinishedBy(finishActivityRequest.getGuardianId());
+        activity.setCommentary(finishActivityRequest.getCommentary());
+        return this.updateActivity(activity);
+    }
+
+    protected void checkActivityInDoneOrNotDoneStateOrError(Activity activity) {
+        if (activity.getState() == ActivityState.DONE || activity.getState() == ActivityState.NOT_DONE) {
+            throw new InvalidStateException(activity, List.of(ActivityState.CREATED, ActivityState.IN_PROGRESS, ActivityState.LATE));
+        }
+    }
+
     protected List<Activity> createMultipleActivities(List<Activity> newActivities) {
         return newActivities.stream().map(this::createActivity).toList();
     }
@@ -51,9 +73,6 @@ public class ActivityService {
         return this.activityRepository.save(newActivity);
     }
 
-	public void deleteAllActivities() {
-        this.activityRepository.deleteAll();
-	}
     
     protected Activity mapActivityRequestToActivity(ActivityRequest activityRequest) {
         Activity activity = new Activity();
@@ -68,5 +87,9 @@ public class ActivityService {
         activity.setCreatedBy(activityRequest.getCreatedBy());
         activity.setState(activityRequest.getState());
         return activity;
+    }
+
+    private Activity updateActivity(Activity activity) {
+        return this.activityRepository.update(activity);
     }
 }

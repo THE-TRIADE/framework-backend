@@ -65,6 +65,28 @@ public class ActivityRepositoryImpl implements ActivityRepository {
 
     return this.findById(keyHolder.getKey().longValue()).get();
   }
+
+  @Override
+  public Activity update(Activity activity) {
+    String sql = "UPDATE activity SET `name` = ?, `description` = ?, dateStart = ?, dateEnd = ?, hourStart = ?, hourEnd = ?, `state` = ?, commentary = ?, dependentId = ?, currentGuardianId = ?, actorId = ?, createdBy = ?, finishedBy = ? WHERE id = ?";
+    
+    jdbcTemplate.update(sql, 
+            activity.getName(),
+            activity.getDescription(),
+            activity.getDateStart(),
+            activity.getDateEnd(),
+            activity.getHourStart(),
+            activity.getHourEnd(),
+            activity.getState().toString(),
+            activity.getCommentary(),
+            activity.getDependentId(),
+            activity.getCurrentGuardian(),
+            activity.getActor(),
+            activity.getCreatedBy(),
+            activity.getFinishedBy(),
+            activity.getId());
+    return activity;
+  }
   
   @Override
   public void deleteById(Long id) {
