@@ -58,7 +58,12 @@ public class ActivityRepositoryImpl implements ActivityRepository {
       ps.setLong(10, activity.getCurrentGuardian());
       ps.setLong(11, activity.getActor());
       ps.setLong(12, activity.getCreatedBy());
-      ps.setLong(13, activity.getRecurringActivityId());
+      if (activity.getRecurringActivityId() != null){
+        ps.setLong(13, activity.getRecurringActivityId());
+      }
+      else {
+        ps.setNull(13, 0);
+      }
 
       return ps;
     }, keyHolder);
