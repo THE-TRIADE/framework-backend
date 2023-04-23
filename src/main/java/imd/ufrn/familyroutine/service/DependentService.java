@@ -13,6 +13,8 @@ import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
 public class DependentService{
     @Autowired
     private DependentRepository dependentRepository;
+    @Autowired
+    private ServiceMediator serviceMediator;
 
     public List<Dependent> findAll() {
         return this.dependentRepository.findAll();
@@ -25,14 +27,18 @@ public class DependentService{
     }
 
     public void deleteDependentById(Long dependentId) {
-        this.dependentRepository.deleteById(dependentId);
+        this.serviceMediator.deleteDependentById(dependentId);
     }
 
     public void deleteAllDependents() {
-        this.dependentRepository.deleteAll();
+        this.serviceMediator.deleteAllDependents();
     }
 
-    public Dependent createDependent(Dependent newDependent) {
+    public Dependent createDependentInCascade(Dependent newDependent) {
+        return this.serviceMediator.createDependent(newDependent);
+    }
+
+    protected Dependent createDependent(Dependent newDependent) {
         return this.dependentRepository.save(newDependent);
     }
 }

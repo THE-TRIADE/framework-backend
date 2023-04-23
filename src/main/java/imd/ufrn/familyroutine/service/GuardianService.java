@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import imd.ufrn.familyroutine.model.Guardian;
-import imd.ufrn.familyroutine.model.api.LoginRequest;
+import imd.ufrn.familyroutine.model.api.request.LoginRequest;
 import imd.ufrn.familyroutine.repository.GuardianRepository;
 import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
 
@@ -24,6 +24,9 @@ public class GuardianService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private ServiceMediator serviceMediator;
+
     public List<Guardian> findAll() {
         return this.guardianRepository.findAll();
     }
@@ -35,16 +38,20 @@ public class GuardianService {
     }
 
     public void deleteGuardianById(Long guardianId) {
-        this.guardianRepository.deleteById(guardianId);
+        this.serviceMediator.deleteGuardianById(guardianId);
     }
 
     public void deleteAllGuardians() {
-        this.guardianRepository.deleteAll();
+        this.serviceMediator.deleteAllGuardians();
     }
 
     public Guardian createGuardian(Guardian newGuardian) {
         newGuardian.setPassword(passwordEncoder.encode(newGuardian.getPassword()));
         return this.guardianRepository.save(newGuardian);
+    }
+
+    public Guardian createGuardianInCascade(Guardian newGuardian) {
+        return this.serviceMediator.createGuardian(newGuardian);
     }
 
     public Guardian authenticateGuardian(LoginRequest loginRequest) {

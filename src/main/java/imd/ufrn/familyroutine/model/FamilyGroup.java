@@ -1,9 +1,8 @@
 package imd.ufrn.familyroutine.model;
 
-
 public class FamilyGroup {
-    private String name;
     private Long id;
+    private String name;
 
     public FamilyGroup(){}
 

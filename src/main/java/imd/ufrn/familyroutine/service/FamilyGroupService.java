@@ -29,7 +29,7 @@ public class FamilyGroupService{
     public void deleteAllFamilyGroups() {
         this.familyGroupRepository.deleteAll();
     }
-
+    
     public FamilyGroup createFamilyGroup(FamilyGroup familyGroup) {
         return this.familyGroupRepository.save(familyGroup);
     }

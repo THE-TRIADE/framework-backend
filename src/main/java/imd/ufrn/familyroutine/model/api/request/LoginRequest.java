@@ -1,4 +1,4 @@
-package imd.ufrn.familyroutine.model.api;
+package imd.ufrn.familyroutine.model.api.request;
 
 import jakarta.validation.constraints.NotEmpty;
 
