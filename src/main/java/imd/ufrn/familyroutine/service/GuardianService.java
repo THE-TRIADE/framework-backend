@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import imd.ufrn.familyroutine.model.Guardian;
-import imd.ufrn.familyroutine.model.api.LoginRequest;
+import imd.ufrn.familyroutine.model.api.request.LoginRequest;
 import imd.ufrn.familyroutine.repository.GuardianRepository;
 import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
 

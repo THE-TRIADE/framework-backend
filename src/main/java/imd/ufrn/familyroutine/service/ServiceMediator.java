@@ -1,6 +1,7 @@
 package imd.ufrn.familyroutine.service;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,7 +20,8 @@ import imd.ufrn.familyroutine.model.Dependent;
 import imd.ufrn.familyroutine.model.Guardian;
 import imd.ufrn.familyroutine.model.Person;
 import imd.ufrn.familyroutine.model.RecurringActivity;
-import imd.ufrn.familyroutine.model.api.ActivityRequest;
+import imd.ufrn.familyroutine.model.api.ActivityMapper;
+import imd.ufrn.familyroutine.model.api.request.ActivityRequest;
 import imd.ufrn.familyroutine.service.exception.RecurringActivityException;
 import imd.ufrn.familyroutine.service.exception.RecurringActivityType;
 
@@ -39,6 +41,9 @@ public class ServiceMediator {
     private ActivityService activityService;
     @Autowired
     private RecurringActivityService recurringActivityService;
+    @Lazy
+    @Autowired
+    private ActivityMapper activityMapper;
 
     @Transactional
     public Dependent createDependent(Dependent newDependent) {
@@ -81,17 +86,17 @@ public class ServiceMediator {
         this.checkRecurringActivitiesFieldsThroughActivityRequest(activityRequest);
         
         List<Activity> activities = new ArrayList<>();
-        activities.add(this.activityService.mapActivityRequestToActivity(activityRequest));
+        activities.add(this.activityMapper.mapActivityRequestToActivity(activityRequest));
 
         // Getting first activity time diff in hours
-        LocalDateTime startDateTime = LocalDateTime.of(activityRequest.getDateStart().toLocalDate(), activityRequest.getHourStart().toLocalTime());
-        LocalDateTime endDateTime = LocalDateTime.of(activityRequest.getDateEnd().toLocalDate(), activityRequest.getHourEnd().toLocalTime());
+        LocalDateTime startDateTime = LocalDateTime.of(activityRequest.getDateStart(), activityRequest.getHourStart());
+        LocalDateTime endDateTime = LocalDateTime.of(activityRequest.getDateEnd(), activityRequest.getHourEnd());
         Long diffInHours = ChronoUnit.HOURS.between(startDateTime, endDateTime);
 
         // Setting up loop variables
         Iterator<Integer> daysIterator = activityRequest.getDaysToRepeat().iterator();
         LocalDateTime currentDate = startDateTime;
-        LocalDateTime limitDate = LocalDateTime.of(activityRequest.getRepeatUntil().toLocalDate(), activityRequest.getHourStart().toLocalTime());
+        LocalDateTime limitDate = LocalDateTime.of(activityRequest.getRepeatUntil(), activityRequest.getHourStart());
 
         while (currentDate.isBefore(limitDate)) {
             currentDate = findNextDate(currentDate, DayOfWeek.of(daysIterator.next()));
@@ -104,8 +109,8 @@ public class ServiceMediator {
             newActivity.setName(activityRequest.getName());
             newActivity.setDateStart(Date.valueOf(currentDate.toLocalDate()));
             newActivity.setDateEnd(Date.valueOf(currentDate.plusHours(diffInHours).toLocalDate()));
-            newActivity.setHourStart(activityRequest.getHourStart());
-            newActivity.setHourEnd(activityRequest.getHourEnd());
+            newActivity.setHourStart(Time.valueOf(activityRequest.getHourStart()));
+            newActivity.setHourEnd(Time.valueOf(activityRequest.getHourEnd()));
             newActivity.setDependentId(activityRequest.getDependentId());
             newActivity.setCurrentGuardian(activityRequest.getCurrentGuardian());
             newActivity.setActor(activityRequest.getActor());
@@ -144,8 +149,8 @@ public class ServiceMediator {
             throw new RecurringActivityException(RecurringActivityType.FIELD);
         }
 
-        LocalDate startDate = activityRequest.getDateStart().toLocalDate();
-        LocalDate endDate = activityRequest.getRepeatUntil().toLocalDate();
+        LocalDate startDate = activityRequest.getDateStart();
+        LocalDate endDate = activityRequest.getRepeatUntil();
 
         if (startDate.isAfter(endDate)) {
             throw new RecurringActivityException(RecurringActivityType.INTERVAL);
