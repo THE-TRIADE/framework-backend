@@ -1,10 +1,14 @@
-package imd.ufrn.familyroutine.model.api;
+package imd.ufrn.familyroutine.model.api.response;
 
 import java.sql.Date;
-import java.sql.Time; 
+import java.sql.Time;
+
+import imd.ufrn.familyroutine.model.ActivityState; 
 
 public class ActivityResponse {
+    private Long id;
     private String name;
+    private ActivityState state;
     private Date dateStart;
     private Date dateEnd;
     private Time hourStart;
@@ -12,18 +16,21 @@ public class ActivityResponse {
     
     private Long dependentId;
 
-    private Long currentGuardian;
+    private Long currentGuardianId;
     private String currentGuardianEmail;
     private String currentGuardianName;
 
-    private Long actor;
+    private Long actorId;
     private String actorName;
 
-    private Long createdBy;
-    private Long createdByEmail;
-    private Long createdByName;
+    private Long createdById;
+    private String createdByEmail;
+    private String createdByName;
 
-    private Boolean repeat;
+    private Long recurringActivityId;
+
+    public ActivityResponse() {
+    }
 
     public String getName() {
         return name;
@@ -73,12 +80,12 @@ public class ActivityResponse {
         this.dependentId = dependentId;
     }
 
-    public Long getCurrentGuardian() {
-        return currentGuardian;
+    public Long getCurrentGuardianId() {
+        return currentGuardianId;
     }
 
-    public void setCurrentGuardian(Long currentGuardian) {
-        this.currentGuardian = currentGuardian;
+    public void setCurrentGuardianId(Long currentGuardianId) {
+        this.currentGuardianId = currentGuardianId;
     }
 
     public String getCurrentGuardianEmail() {
@@ -97,12 +104,12 @@ public class ActivityResponse {
         this.currentGuardianName = currentGuardianName;
     }
 
-    public Long getActor() {
-        return actor;
+    public Long getActorId() {
+        return actorId;
     }
 
-    public void setActor(Long actor) {
-        this.actor = actor;
+    public void setActorId(Long actorId) {
+        this.actorId = actorId;
     }
 
     public String getActorName() {
@@ -113,35 +120,51 @@ public class ActivityResponse {
         this.actorName = actorName;
     }
 
-    public Long getCreatedBy() {
-        return createdBy;
+    public Long getCreatedById() {
+        return createdById;
     }
 
-    public void setCreatedBy(Long createdBy) {
-        this.createdBy = createdBy;
+    public void setCreatedById(Long createdById) {
+        this.createdById = createdById;
     }
 
-    public Long getCreatedByEmail() {
+    public String getCreatedByEmail() {
         return createdByEmail;
     }
 
-    public void setCreatedByEmail(Long createdByEmail) {
+    public void setCreatedByEmail(String createdByEmail) {
         this.createdByEmail = createdByEmail;
     }
 
-    public Long getCreatedByName() {
+    public String getCreatedByName() {
         return createdByName;
     }
 
-    public void setCreatedByName(Long createdByName) {
+    public void setCreatedByName(String createdByName) {
         this.createdByName = createdByName;
     }
 
-    public Boolean getRepeat() {
-        return repeat;
+    public Long getId() {
+        return id;
     }
 
-    public void setRepeat(Boolean repeat) {
-        this.repeat = repeat;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public ActivityState getState() {
+        return state;
+    }
+
+    public void setState(ActivityState state) {
+        this.state = state;
+    }
+
+    public Long getRecurringActivityId() {
+        return recurringActivityId;
+    }
+
+    public void setRecurringActivityId(Long recurringActivityId) {
+        this.recurringActivityId = recurringActivityId;
     }
 }

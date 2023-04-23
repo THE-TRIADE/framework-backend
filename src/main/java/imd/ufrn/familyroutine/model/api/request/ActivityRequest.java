@@ -1,25 +1,25 @@
-package imd.ufrn.familyroutine.model.api;
+package imd.ufrn.familyroutine.model.api.request;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import imd.ufrn.familyroutine.model.ActivityState;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 public class ActivityRequest {
     @NotEmpty
     private String name;
     @NotNull
-    private Date dateStart;
+    private LocalDate dateStart;
     @NotNull
-    private Date dateEnd;
+    private LocalDate dateEnd;
     @NotNull
-    private Time hourStart;
+    private LocalTime hourStart;
     @NotNull
-    private Time hourEnd;
+    private LocalTime hourEnd;
     @NotNull
     private Long dependentId;
     @NotNull
@@ -32,7 +32,7 @@ public class ActivityRequest {
     private Boolean repeat;
     
     private List<Integer> daysToRepeat = new ArrayList<>();
-    private Date repeatUntil;
+    private LocalDate repeatUntil;
     
     private String description;
     private ActivityState state = ActivityState.CREATED;
@@ -52,30 +52,43 @@ public class ActivityRequest {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Date getDateStart() {
+    
+    public LocalDate getDateStart() {
         return dateStart;
     }
-    public void setDateStart(Date dateStart) {
+
+    public void setDateStart(LocalDate dateStart) {
         this.dateStart = dateStart;
     }
-    public Date getDateEnd() {
+
+    public LocalDate getDateEnd() {
         return dateEnd;
     }
-    public void setDateEnd(Date dateEnd) {
+
+    public void setDateEnd(LocalDate dateEnd) {
         this.dateEnd = dateEnd;
     }
-    public Time getHourStart() {
+
+    public LocalTime getHourStart() {
         return hourStart;
     }
-    public void setHourStart(Time hourStart) {
+
+    public void setHourStart(LocalTime hourStart) {
         this.hourStart = hourStart;
     }
-    public Time getHourEnd() {
+
+    public LocalTime getHourEnd() {
         return hourEnd;
     }
-    public void setHourEnd(Time hourEnd) {
+
+    public void setHourEnd(LocalTime hourEnd) {
         this.hourEnd = hourEnd;
     }
+
+    public Boolean getRepeat() {
+        return repeat;
+    }
+
     public ActivityState getState() {
         return state;
     }
@@ -118,10 +131,10 @@ public class ActivityRequest {
     public void setDaysToRepeat(List<Integer> daysToRepeat) {
         this.daysToRepeat = daysToRepeat;
     }
-    public Date getRepeatUntil() {
+    public LocalDate getRepeatUntil() {
         return repeatUntil;
     }
-    public void setRepeatUntil(Date repeatUntil) {
+    public void setRepeatUntil(LocalDate repeatUntil) {
         this.repeatUntil = repeatUntil;
     }
 }

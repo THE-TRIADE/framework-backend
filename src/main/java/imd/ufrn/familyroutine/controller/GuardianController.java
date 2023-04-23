@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import imd.ufrn.familyroutine.model.Guardian;
-import imd.ufrn.familyroutine.model.api.LoginRequest;
+import imd.ufrn.familyroutine.model.api.request.LoginRequest;
 import imd.ufrn.familyroutine.service.GuardianService;
 import jakarta.validation.Valid;
 

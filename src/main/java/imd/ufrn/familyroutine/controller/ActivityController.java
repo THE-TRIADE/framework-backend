@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import imd.ufrn.familyroutine.model.Activity;
-import imd.ufrn.familyroutine.model.api.ActivityRequest;
-import imd.ufrn.familyroutine.model.api.FinishActivityRequest;
+import imd.ufrn.familyroutine.model.api.request.ActivityRequest;
+import imd.ufrn.familyroutine.model.api.request.FinishActivityRequest;
+import imd.ufrn.familyroutine.model.api.response.ActivityResponse;
 import imd.ufrn.familyroutine.service.ActivityService;
 import jakarta.validation.Valid;
 
@@ -25,22 +25,22 @@ public class ActivityController {
     private ActivityService activityService;
     
     @GetMapping
-    public List<Activity> getAllActivities() {
+    public List<ActivityResponse> getAllActivities() {
         return this.activityService.findAll();
     }
 
     @GetMapping("{activityId}")
-    public Activity findActivityById(@PathVariable Long activityId) {
+    public ActivityResponse findActivityById(@PathVariable Long activityId) {
         return this.activityService.findActivityById(activityId);
     }
 
     @PostMapping
-    public Activity createActivity(@RequestBody @Valid ActivityRequest activity) {
+    public ActivityResponse createActivity(@RequestBody @Valid ActivityRequest activity) {
         return this.activityService.handleActivityRequest(activity);
     }
 
     @PatchMapping("{activityId}/finish")
-    public Activity createActivity(@PathVariable Long activityId, @RequestBody @Valid FinishActivityRequest finishActivityRequest) {
+    public ActivityResponse createActivity(@PathVariable Long activityId, @RequestBody @Valid FinishActivityRequest finishActivityRequest) {
         return this.activityService.finishActivity(activityId, finishActivityRequest);
     }
 
