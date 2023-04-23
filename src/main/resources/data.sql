@@ -12,3 +12,6 @@ INSERT INTO `dependent` (personId) VALUES (4);
 
 INSERT INTO `activity` (`name`, dateStart, dateEnd, hourStart, hourEnd,`state`,dependentId,currentGuardianId,actorId,createdBy) VALUES ('Tomar banho', '2023-04-21', '2023-04-21', '20:00:00', '21:00:00', 'CREATED', 3, 1, 3, 1);
 INSERT INTO `activity` (`name`, dateStart, dateEnd, hourStart, hourEnd,`state`,dependentId,currentGuardianId,actorId,createdBy) VALUES ('Pagar escola', '2023-04-21', '2023-04-21', '20:00:00', '21:00:00', 'CREATED', 3, 1, 1, 1);
+
+INSERT INTO `guard` (daysOfTheWeek, guardianRole, dependentId, guardianId) VALUES ('SUNDAY,MONDAY', 'MOTHER', 3, 1);
+INSERT INTO `guard` (guardianRole, dependentId, guardianId) VALUES ('MOTHER', 3, 2);

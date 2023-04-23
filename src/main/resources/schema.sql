@@ -59,3 +59,15 @@ CREATE TABLE `activity`(
     FOREIGN KEY(recurringActivityId) REFERENCES `recurring_activity`(id),
     PRIMARY KEY(id)
 );
+
+CREATE TABLE `guard`(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    daysOfTheWeek VARCHAR(56),
+    guardianRole VARCHAR(9) NOT NULL,
+
+    dependentId BIGINT NOT NULL, 
+    guardianId BIGINT NOT NULL, 
+
+    FOREIGN KEY(dependentId) REFERENCES `dependent`(personId) ON DELETE CASCADE,
+    FOREIGN KEY(guardianId) REFERENCES `guardian`(personId) ON DELETE CASCADE
+)
