@@ -2,6 +2,7 @@ package imd.ufrn.familyroutine.repository.mappers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,13 +17,13 @@ public class GuardMapper implements RowMapper<Guard> {
     Guard guard = new Guard();
     guard.setId(resultSet.getLong("id"));
 
-    String daysOfTheWeek = resultSet.getString("daysOfTheWeek");
+    String daysOfWeek = resultSet.getString("daysOfWeek");
 
-    if (daysOfTheWeek != null) {
-      guard.setDaysOfTheWeek(
-          List.of(daysOfTheWeek.split(","))
+    if (daysOfWeek != null) {
+      guard.setDaysOfWeek(
+          List.of(daysOfWeek.split(","))
               .stream()
-              .map(string -> DayOfTheWeek.valueOf(string))
+              .map(string -> DayOfWeek.valueOf(string))
               .collect(Collectors.toList()));
     }
 

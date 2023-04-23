@@ -53,11 +53,11 @@ public class GuardRepositoryImpl implements GuardRepository {
   @Override
   public Guard save(Guard guard) {
     KeyHolder keyHolder = new GeneratedKeyHolder();
-    String sql = "INSERT INTO guard (daysOfTheWeek, guardianRole, dependentId, guardianId) VALUES (?,?,?,?)";
+    String sql = "INSERT INTO guard (daysOfWeek, guardianRole, dependentId, guardianId) VALUES (?,?,?,?)";
 
     jdbcTemplate.update(connection -> {
       PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-      ps.setString(1, guard.getDaysOfTheWeek().stream().map(Enum::toString).collect(Collectors.joining(",")));
+      ps.setString(1, guard.getDaysOfWeek().stream().map(Enum::toString).collect(Collectors.joining(",")));
       ps.setString(2, guard.getGuardianRole().toString());
       ps.setLong(3, guard.getDependentId());
       ps.setLong(4, guard.getGuardianId());
@@ -70,10 +70,10 @@ public class GuardRepositoryImpl implements GuardRepository {
 
   @Override
   public Guard update(Guard guard) {
-    String sql = "UPDATE guard SET daysOfTheWeek = ?, guardianRole = ? WHERE id = ?";
+    String sql = "UPDATE guard SET daysOfWeek = ?, guardianRole = ? WHERE id = ?";
 
     jdbcTemplate.update(sql,
-        guard.getDaysOfTheWeek().stream().map(Enum::toString).collect(Collectors.joining(",")),
+        guard.getDaysOfWeek().stream().map(Enum::toString).collect(Collectors.joining(",")),
         guard.getGuardianRole().toString(),
         guard.getId());
     return guard;

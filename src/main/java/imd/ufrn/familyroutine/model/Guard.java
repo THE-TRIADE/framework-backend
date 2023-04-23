@@ -1,5 +1,6 @@
 package imd.ufrn.familyroutine.model;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -7,7 +8,7 @@ import org.springframework.data.annotation.Id;
 public class Guard {
   @Id
   private Long id;
-  private List<DayOfTheWeek> daysOfTheWeek;
+  private List<DayOfWeek> daysOfWeek;
   private GuardianRole guardianRole;
   private Long dependentId;
   private Long guardianId;
@@ -15,10 +16,10 @@ public class Guard {
   public Guard() {
   }
 
-  public Guard(Long id, List<DayOfTheWeek> daysOfTheWeek, GuardianRole guardianRole, Long dependentId,
+  public Guard(Long id, List<DayOfWeek> daysOfWeek, GuardianRole guardianRole, Long dependentId,
       Long guardianId) {
     this.id = id;
-    this.daysOfTheWeek = daysOfTheWeek;
+    this.daysOfWeek = daysOfWeek;
     this.guardianRole = guardianRole;
     this.dependentId = dependentId;
     this.guardianId = guardianId;
@@ -32,12 +33,12 @@ public class Guard {
     this.id = id;
   }
 
-  public List<DayOfTheWeek> getDaysOfTheWeek() {
-    return daysOfTheWeek;
+  public List<DayOfWeek> getDaysOfWeek() {
+    return daysOfWeek;
   }
 
-  public void setDaysOfTheWeek(List<DayOfTheWeek> daysOfTheWeek) {
-    this.daysOfTheWeek = daysOfTheWeek;
+  public void setDaysOfWeek(List<DayOfWeek> daysOfWeek) {
+    this.daysOfWeek = daysOfWeek;
   }
 
   public GuardianRole getGuardianRole() {

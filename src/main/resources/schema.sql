@@ -62,7 +62,7 @@ CREATE TABLE `activity`(
 
 CREATE TABLE `guard`(
     id BIGINT NOT NULL AUTO_INCREMENT,
-    daysOfTheWeek VARCHAR(56),
+    daysOfWeek VARCHAR(56),
     guardianRole VARCHAR(9) NOT NULL,
 
     dependentId BIGINT NOT NULL, 
