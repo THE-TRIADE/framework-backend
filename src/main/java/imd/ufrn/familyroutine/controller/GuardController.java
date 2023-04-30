@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import imd.ufrn.familyroutine.model.Guard;
+import imd.ufrn.familyroutine.model.api.request.GuardRequest;
+import imd.ufrn.familyroutine.model.api.response.GuardResponse;
 import imd.ufrn.familyroutine.service.GuardService;
 
 @CrossOrigin
@@ -16,27 +17,27 @@ public class GuardController {
   private GuardService guardService;
 
   @GetMapping
-  public List<Guard> findAllGuards() {
+  public List<GuardResponse> findAllGuards() {
     return this.guardService.findAllGuards();
   }
 
   @GetMapping("/by-id/{guardId}")
-  public Guard findGuardById(@PathVariable Long guardId) {
+  public GuardResponse findGuardById(@PathVariable Long guardId) {
     return this.guardService.findGuardById(guardId);
   }
 
   @GetMapping("/by-dependent-id/{dependentId}")
-  public List<Guard> findGuardsByDependentId(@PathVariable Long dependentId) {
+  public List<GuardResponse> findGuardsByDependentId(@PathVariable Long dependentId) {
     return this.guardService.findGuardsByDependentId(dependentId);
   }
 
   @GetMapping("/by-guardian-id/{guardianId}")
-  public List<Guard> findGuardsByGuardianId(@PathVariable Long guardianId) {
+  public List<GuardResponse> findGuardsByGuardianId(@PathVariable Long guardianId) {
     return this.guardService.findGuardsByGuardianId(guardianId);
   }
 
   @PostMapping
-  public Guard createGuard(@RequestBody Guard newGuard) {
+  public GuardResponse createGuard(@RequestBody GuardRequest newGuard) {
     return this.guardService.createGuard(newGuard);
   }
 

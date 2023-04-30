@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import imd.ufrn.familyroutine.model.Guard;
+import imd.ufrn.familyroutine.model.api.GuardMapper;
+import imd.ufrn.familyroutine.model.api.request.GuardRequest;
+import imd.ufrn.familyroutine.model.api.response.GuardResponse;
 import imd.ufrn.familyroutine.repository.GuardRepository;
 import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
 
@@ -13,25 +16,30 @@ import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
 public class GuardService {
   @Autowired
   private GuardRepository guardRepository;
+  @Autowired
+  private GuardMapper guardMapper;
 
-  public List<Guard> findAllGuards() {
-    return this.guardRepository.findAll();
+  public List<GuardResponse> findAllGuards() {
+    return this.guardRepository.findAll().stream().map(guardMapper::mapGuardToGuardResponse).toList();
   }
 
-  public Guard findGuardById(Long guardId) {
-    return this.guardRepository.findById(guardId).orElseThrow(() -> new EntityNotFoundException(guardId, Guard.class));
+  public GuardResponse findGuardById(Long guardId) {
+    return this.guardMapper.mapGuardToGuardResponse(this.getGuardById(guardId));
   }
 
-  public List<Guard> findGuardsByGuardianId(Long guardianId) {
-    return this.guardRepository.findByGuardianId(guardianId);
+  public List<GuardResponse> findGuardsByGuardianId(Long guardianId) {
+    return this.guardRepository.findByGuardianId(guardianId).stream().map(guardMapper::mapGuardToGuardResponse)
+        .toList();
   }
 
-  public List<Guard> findGuardsByDependentId(Long dependentId) {
-    return this.guardRepository.findByDependentId(dependentId);
+  public List<GuardResponse> findGuardsByDependentId(Long dependentId) {
+    return this.guardRepository.findByDependentId(dependentId).stream().map(guardMapper::mapGuardToGuardResponse)
+        .toList();
   }
 
-  public Guard createGuard(Guard newGuard) {
-    return this.guardRepository.save(newGuard);
+  public GuardResponse createGuard(GuardRequest newGuard) {
+    Guard guard = this.guardMapper.mapGuardRequestToGuard(newGuard);
+    return this.guardMapper.mapGuardToGuardResponse(this.guardRepository.save(guard));
   }
 
   public Guard updateGuard(Guard guard) {
@@ -44,5 +52,9 @@ public class GuardService {
 
   public void deleteAllGuards() {
     this.guardRepository.deleteAll();
+  }
+
+  public Guard getGuardById(Long guardId) {
+    return this.guardRepository.findById(guardId).orElseThrow(() -> new EntityNotFoundException(guardId, Guard.class));
   }
 }
