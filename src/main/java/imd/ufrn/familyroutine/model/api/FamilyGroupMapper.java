@@ -20,7 +20,7 @@ public class FamilyGroupMapper {
 
     public FamilyGroupResponse mapFamilyGroupToFamilyGroupResponse(FamilyGroup familyGroup){
         FamilyGroupResponse familyGroupResponse = new FamilyGroupResponse();
-        familyGroupResponse.setDependents(familyGroupService.GetFamilyGroupDependentsById(familyGroup.getId()));
+        familyGroupResponse.setDependents(familyGroupService.getFamilyGroupDependentsById(familyGroup.getId()));
 
         return familyGroupResponse;
     }

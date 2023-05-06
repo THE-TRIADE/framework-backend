@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import imd.ufrn.familyroutine.model.FamilyGroup;
+import imd.ufrn.familyroutine.model.Dependent;
+import imd.ufrn.familyroutine.model.api.request.FamilyGroupRequest;
+import imd.ufrn.familyroutine.model.api.response.FamilyGroupResponse;
 import imd.ufrn.familyroutine.service.FamilyGroupService;
 
 @CrossOrigin
@@ -23,17 +25,17 @@ public class FamilyGroupController {
     private FamilyGroupService familyGroupService;
     
     @GetMapping
-    public List<FamilyGroup> getAllFamilyGroups() {
+    public List<FamilyGroupResponse> getAllFamilyGroups() {
         return this.familyGroupService.findAll();
     }
 
     @GetMapping("{familyGroupId}")
-    public FamilyGroup findFamilyGroupById(@PathVariable Long familyGroupId) {
+    public FamilyGroupResponse findFamilyGroupById(@PathVariable Long familyGroupId) {
         return this.familyGroupService.findFamilyGroupById(familyGroupId);
     }
 
     @PostMapping
-    public FamilyGroup createFamilyGroup(@RequestBody FamilyGroup newFamilyGroup) {
+    public FamilyGroupResponse createFamilyGroup(@RequestBody FamilyGroupRequest newFamilyGroup) {
         return this.familyGroupService.createFamilyGroup(newFamilyGroup);
     }
 
@@ -46,4 +48,10 @@ public class FamilyGroupController {
     public void deleteFamilyGroupById(@PathVariable Long familyGroupId) {
         this.familyGroupService.deleteFamilyGroupById(familyGroupId);
     } 
+
+    // Provavelmente não é necessário
+    @GetMapping 
+    public List<Dependent> getFamilyGroupDependentsById(@PathVariable Long famillyGroupId){
+        return this.familyGroupService.getFamilyGroupDependentsById(famillyGroupId);
+    }
 }

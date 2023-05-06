@@ -12,7 +12,9 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import imd.ufrn.familyroutine.model.Dependent;
 import imd.ufrn.familyroutine.model.FamilyGroup;
+import imd.ufrn.familyroutine.repository.mappers.DependentMapper;
 import imd.ufrn.familyroutine.repository.mappers.FamilyGroupMapper;
 
 @Repository
@@ -63,6 +65,12 @@ public class FamilyGroupRepositoryImpl implements FamilyGroupRepository {
   public void deleteAll() {
     String sql = "DELETE FROM familyGroup";
     jdbcTemplate.update(sql);
+  }
+
+  @Override
+  public List<Dependent> getDependents(Long familyGroupId){
+      String sql = "SELECT * FROM dependent WHERE familyGroupId = ?";
+      return jdbcTemplate.query(sql, new DependentMapper(), familyGroupId);
   }
 
 }

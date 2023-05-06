@@ -16,15 +16,18 @@ CREATE TABLE `guardian` (
 
 CREATE TABLE `dependent` (
     personId BIGINT UNIQUE,
+
+    familyGroupId BIGINT,
+    FOREIGN KEY (familyGroupId) REFERENCES `family_group`(id),
+
     FOREIGN KEY(personId) REFERENCES `person`(id) ON DELETE CASCADE,
     PRIMARY KEY(personId)
+
 );
 
 CREATE TABLE `family_group` (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(100) NOT NULL,
-    dependentId BIGINT,
-    FOREIGN KEY (dependentId) REFERENCES `dependent`(personId)
+    `name` VARCHAR(100) NOT NULL
 );
 
 
@@ -44,7 +47,7 @@ CREATE TABLE `activity`(
     `state` VARCHAR(50) NOT NULL,
     commentary VARCHAR(500),
     
-    dependentId BIGINT NOT NULL, 
+(familyGroupId) BIGINT NOT NULL, 
     currentGuardianId BIGINT NOT NULL, 
     actorId BIGINT NOT NULL, 
     createdBy BIGINT NOT NULL,
