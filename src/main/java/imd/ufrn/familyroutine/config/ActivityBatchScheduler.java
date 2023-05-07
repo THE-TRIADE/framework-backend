@@ -43,13 +43,10 @@ public class ActivityBatchScheduler  {
 
     @Autowired
     private JobLauncher jobLauncher;
-
     @Autowired
     private JobRepository jobRepository;
-
     @Autowired
     private PlatformTransactionManager transactionManager;
-
     @Autowired
     private DataSource dataSource;
 
@@ -57,8 +54,8 @@ public class ActivityBatchScheduler  {
     public void launchJob() throws Exception {
         LocalDateTime date = LocalDateTime.now();
         if (enabled.get()) {
-            JobExecution jobExecution = jobLauncher.run(activityJob(jobRepository, transactionManager), new JobParametersBuilder().addLocalDateTime("launchDate", date)
-                    .toJobParameters());
+            JobExecution jobExecution = jobLauncher.run(activityJob(jobRepository, transactionManager), 
+                    new JobParametersBuilder().addLocalDateTime("launchDate", date).toJobParameters());
             batchRunCounter.incrementAndGet();
             logger.info("Batch job ends with status as " + jobExecution.getStatus());
         }

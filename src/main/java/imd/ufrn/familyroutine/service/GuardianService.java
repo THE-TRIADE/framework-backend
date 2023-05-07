@@ -7,8 +7,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import imd.ufrn.familyroutine.model.Guardian;
+import imd.ufrn.familyroutine.model.Person;
 import imd.ufrn.familyroutine.model.api.request.LoginRequest;
 import imd.ufrn.familyroutine.repository.GuardianRepository;
 import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
@@ -25,7 +27,7 @@ public class GuardianService {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private ServiceMediator serviceMediator;
+    private PersonService personService;
 
     public List<Guardian> findAll() {
         return this.guardianRepository.findAll();
@@ -37,21 +39,22 @@ public class GuardianService {
             .orElseThrow(() -> new EntityNotFoundException(guardianId, Guardian.class));
     }
 
-    public void deleteGuardianById(Long guardianId) {
-        this.serviceMediator.deleteGuardianById(guardianId);
-    }
-
-    public void deleteAllGuardians() {
-        this.serviceMediator.deleteAllGuardians();
-    }
-
-    public Guardian createGuardian(Guardian newGuardian) {
-        newGuardian.setPassword(passwordEncoder.encode(newGuardian.getPassword()));
-        return this.guardianRepository.save(newGuardian);
-    }
-
+    @Transactional
     public Guardian createGuardianInCascade(Guardian newGuardian) {
-        return this.serviceMediator.createGuardian(newGuardian);
+        Person personCreated = this.personService.createPerson(newGuardian);
+        newGuardian.setId(personCreated.getId());
+        this.createGuardian(newGuardian);
+        return newGuardian;
+    }
+
+    @Transactional
+    public void deleteAllGuardians() {
+        List<Guardian> guardians = this.findAll();
+        this.personService.deleteAllGuardians(guardians);
+    }
+
+    public void deleteGuardianById(Long guardianId) {
+        this.personService.deletePersonById(guardianId);
     }
 
     public Guardian authenticateGuardian(LoginRequest loginRequest) {
@@ -60,5 +63,10 @@ public class GuardianService {
         );
         
         return this.guardianRepository.findByEmail(loginRequest.getUsername()).get();
+    }
+
+    private Guardian createGuardian(Guardian newGuardian) {
+        newGuardian.setPassword(passwordEncoder.encode(newGuardian.getPassword()));
+        return this.guardianRepository.save(newGuardian);
     }
 }
