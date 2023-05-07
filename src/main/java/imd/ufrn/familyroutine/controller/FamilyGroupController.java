@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import imd.ufrn.familyroutine.model.Dependent;
 import imd.ufrn.familyroutine.model.api.request.FamilyGroupRequest;
 import imd.ufrn.familyroutine.model.api.response.FamilyGroupResponse;
 import imd.ufrn.familyroutine.service.FamilyGroupService;
@@ -49,9 +48,4 @@ public class FamilyGroupController {
         this.familyGroupService.deleteFamilyGroupById(familyGroupId);
     } 
 
-    // Provavelmente não é necessário
-    @GetMapping 
-    public List<Dependent> getFamilyGroupDependentsById(@PathVariable Long familyGroupId){
-        return this.familyGroupService.getFamilyGroupDependentsByFamilyGroupId(familyGroupId);
-    }
 }

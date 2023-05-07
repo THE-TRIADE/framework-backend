@@ -25,13 +25,13 @@ public class FamilyGroupRepositoryImpl implements FamilyGroupRepository {
 
   @Override
   public List<FamilyGroup> findAll() { 
-    String sql = "SELECT * FROM familyGroup";
+    String sql = "SELECT * FROM family_group";
     return jdbcTemplate.query(sql, new FamilyGroupMapper());
   }
 
   @Override
   public Optional<FamilyGroup> findById(Long id) {
-    String sql = "SELECT * FROM familyGroup WHERE id = ?";
+    String sql = "SELECT * FROM family_group WHERE id = ?";
     try {
         return Optional.of(jdbcTemplate.queryForObject(sql, new FamilyGroupMapper(), id));
     }
@@ -43,7 +43,7 @@ public class FamilyGroupRepositoryImpl implements FamilyGroupRepository {
   @Override
   public FamilyGroup save(FamilyGroup familyGroup) {
     KeyHolder keyHolder = new GeneratedKeyHolder();
-    String sql = "INSERT INTO familyGroup (`name`) VALUES (?)";
+    String sql = "INSERT INTO family_group (`name`) VALUES (?)";
     
     
     jdbcTemplate.update(connection -> {
@@ -57,19 +57,19 @@ public class FamilyGroupRepositoryImpl implements FamilyGroupRepository {
   
   @Override
   public void deleteById(Long id) {
-    String sql = "DELETE FROM familyGroup WHERE id = ?";
+    String sql = "DELETE FROM family_group WHERE id = ?";
     jdbcTemplate.update(sql, new Object[] { id });
   }
 
   @Override
   public void deleteAll() {
-    String sql = "DELETE FROM familyGroup";
+    String sql = "DELETE FROM family_group";
     jdbcTemplate.update(sql);
   }
 
   @Override
   public Optional<List<Dependent>> findDependentsByFamilyGroupId(Long familyGroupId){
-      String sql = "SELECT * FROM dependent WHERE familyGroupId = ?";
+      String sql = "SELECT * FROM PERSON INNER JOIN DEPENDENT ON PERSON.id = DEPENDENT.personId WHERE familyGroupId = ?";
       try {
         return Optional.of(jdbcTemplate.query(sql, new DependentMapper(), familyGroupId));
       }
