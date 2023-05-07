@@ -4,6 +4,16 @@ import java.sql.Date;
 
 public class Dependent extends Person {
 
+  private Long familyGroupId;
+
+  public Long getFamilyGroupId() {
+    return familyGroupId;
+  }
+
+  public void setFamilyGroupId(Long familyGroupId) {
+    this.familyGroupId = familyGroupId;
+  }
+
   public Dependent() {
 
   }

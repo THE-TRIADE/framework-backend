@@ -14,23 +14,37 @@ CREATE TABLE `guardian` (
     PRIMARY KEY(personId)
 );
 
-CREATE TABLE `dependent` (
-    personId BIGINT UNIQUE,
-    FOREIGN KEY(personId) REFERENCES `person`(id) ON DELETE CASCADE,
-    PRIMARY KEY(personId)
-);
-
 CREATE TABLE `family_group` (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(100) NOT NULL,
-    dependentId BIGINT,
-    FOREIGN KEY (dependentId) REFERENCES `dependent`(personId)
+    `name` VARCHAR(100) NOT NULL
 );
 
+CREATE TABLE `dependent` (
+    personId BIGINT UNIQUE,
+
+    familyGroupId BIGINT,
+    FOREIGN KEY (familyGroupId) REFERENCES `family_group`(id),
+
+    FOREIGN KEY(personId) REFERENCES `person`(id) ON DELETE CASCADE,
+    PRIMARY KEY(personId)
+
+);
 
 CREATE TABLE `recurring_activity` (
     id BIGINT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(id)
+);
+
+CREATE TABLE `guard`(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    daysOfWeek VARCHAR(56),
+    guardianRole VARCHAR(9) NOT NULL,
+
+    dependentId BIGINT NOT NULL, 
+    guardianId BIGINT NOT NULL, 
+
+    FOREIGN KEY(dependentId) REFERENCES `dependent`(personId) ON DELETE CASCADE,
+    FOREIGN KEY(guardianId) REFERENCES `guardian`(personId) ON DELETE CASCADE
 );
 
 CREATE TABLE `activity`(
@@ -44,7 +58,8 @@ CREATE TABLE `activity`(
     `state` VARCHAR(50) NOT NULL,
     commentary VARCHAR(500),
     
-    dependentId BIGINT NOT NULL, 
+    familyGroupId BIGINT NOT NULL, 
+    dependentId BIGINT NOT NULL,
     currentGuardianId BIGINT NOT NULL, 
     actorId BIGINT NOT NULL, 
     createdBy BIGINT NOT NULL,
@@ -59,15 +74,3 @@ CREATE TABLE `activity`(
     FOREIGN KEY(recurringActivityId) REFERENCES `recurring_activity`(id),
     PRIMARY KEY(id)
 );
-
-CREATE TABLE `guard`(
-    id BIGINT NOT NULL AUTO_INCREMENT,
-    daysOfWeek VARCHAR(56),
-    guardianRole VARCHAR(9) NOT NULL,
-
-    dependentId BIGINT NOT NULL, 
-    guardianId BIGINT NOT NULL, 
-
-    FOREIGN KEY(dependentId) REFERENCES `dependent`(personId) ON DELETE CASCADE,
-    FOREIGN KEY(guardianId) REFERENCES `guardian`(personId) ON DELETE CASCADE
-)
