@@ -51,7 +51,7 @@ public class FamilyGroupController {
 
     // Provavelmente não é necessário
     @GetMapping 
-    public List<Dependent> getFamilyGroupDependentsById(@PathVariable Long famillyGroupId){
-        return this.familyGroupService.getFamilyGroupDependentsById(famillyGroupId);
+    public List<Dependent> getFamilyGroupDependentsById(@PathVariable Long familyGroupId){
+        return this.familyGroupService.getFamilyGroupDependentsByFamilyGroupId(familyGroupId);
     }
 }

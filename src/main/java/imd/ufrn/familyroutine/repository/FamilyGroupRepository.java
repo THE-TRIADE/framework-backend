@@ -20,6 +20,6 @@ public interface FamilyGroupRepository{
 
   void deleteAll();
 
-  List<Dependent> getDependents(Long familyGroupId);
+  Optional<List<Dependent>> findDependentsByFamilyGroupId(Long familyGroupId);
 
 }

@@ -68,9 +68,14 @@ public class FamilyGroupRepositoryImpl implements FamilyGroupRepository {
   }
 
   @Override
-  public List<Dependent> getDependents(Long familyGroupId){
+  public Optional<List<Dependent>> findDependentsByFamilyGroupId(Long familyGroupId){
       String sql = "SELECT * FROM dependent WHERE familyGroupId = ?";
-      return jdbcTemplate.query(sql, new DependentMapper(), familyGroupId);
+      try {
+        return Optional.of(jdbcTemplate.query(sql, new DependentMapper(), familyGroupId));
+      }
+      catch(EmptyResultDataAccessException ex) {
+          return Optional.empty();
+      }
   }
 
 }

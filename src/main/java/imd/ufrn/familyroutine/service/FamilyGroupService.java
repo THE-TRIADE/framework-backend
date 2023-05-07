@@ -38,7 +38,7 @@ public class FamilyGroupService{
     }
 
     public void deleteFamilyGroupById(Long familyGroupId) {
-        this.getFamilyGroupDependentsById(familyGroupId).forEach(
+        this.getFamilyGroupDependentsByFamilyGroupId(familyGroupId).forEach(
             (x) -> {dependentService.deleteDependentById(x.getId());} );
         this.familyGroupRepository.deleteById(familyGroupId);
     }
@@ -52,7 +52,9 @@ public class FamilyGroupService{
     public FamilyGroupResponse createFamilyGroup(FamilyGroupRequest familyGroupRequest) {
         FamilyGroup familyGroup = this.familyGroupRepository.save(familyGroupMapper.mapFamilyGroupRequestToFamilyGroup(familyGroupRequest));
         
-        if(familyGroupRequest.getDependents() == null) return this.familyGroupMapper.mapFamilyGroupToFamilyGroupResponse(familyGroup);
+        if(familyGroupRequest.getDependents() == null) {
+            return this.familyGroupMapper.mapFamilyGroupToFamilyGroupResponse(familyGroup);
+        }
         for (Dependent dependent : familyGroupRequest.getDependents()) {
             dependent.setFamilyGroupId(familyGroup.getId());
             dependentService.createDependentInCascade(dependent);
@@ -61,7 +63,9 @@ public class FamilyGroupService{
         return this.familyGroupMapper.mapFamilyGroupToFamilyGroupResponse(familyGroup);
     }
 
-    public List<Dependent> getFamilyGroupDependentsById(Long familyGroupId){
-        return familyGroupRepository.getDependents(familyGroupId);
+    public List<Dependent> getFamilyGroupDependentsByFamilyGroupId(Long familyGroupId){
+        return familyGroupRepository.findDependentsByFamilyGroupId(familyGroupId)
+                .orElseThrow(
+                 () -> new EntityNotFoundException(familyGroupId, FamilyGroup.class));
     }
 }
