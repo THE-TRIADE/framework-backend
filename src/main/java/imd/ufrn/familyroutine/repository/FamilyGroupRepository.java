@@ -4,6 +4,8 @@ package imd.ufrn.familyroutine.repository;
 import java.util.List;
 import java.util.Optional;
 
+import imd.ufrn.familyroutine.model.Dependent;
+
 import imd.ufrn.familyroutine.model.FamilyGroup;
 
 public interface FamilyGroupRepository{
@@ -17,5 +19,7 @@ public interface FamilyGroupRepository{
   void deleteById(Long id);
 
   void deleteAll();
+
+  Optional<List<Dependent>> findDependentsByFamilyGroupId(Long familyGroupId);
 
 }
