@@ -70,4 +70,20 @@ CREATE TABLE `guard`(
 
     FOREIGN KEY(dependentId) REFERENCES `dependent`(personId) ON DELETE CASCADE,
     FOREIGN KEY(guardianId) REFERENCES `guardian`(personId) ON DELETE CASCADE
+);
+
+CREATE TABLE `spent`(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    `value` INT NOT NULL,
+    `name` VARCHAR(100) NOT NULL,
+    paidOn DATE NOT NULL,
+
+    dependentId BIGINT NOT NULL, 
+    guardianId BIGINT NOT NULL, 
+    activityId BIGINT, 
+
+    FOREIGN KEY(dependentId) REFERENCES `dependent`(personId) ON DELETE CASCADE,
+    FOREIGN KEY(guardianId) REFERENCES `guardian`(personId) ON DELETE CASCADE,
+    FOREIGN KEY(activityId) REFERENCES `activity`(id)
+
 )

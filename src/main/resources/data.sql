@@ -15,3 +15,6 @@ INSERT INTO `activity` (`name`, dateStart, dateEnd, hourStart, hourEnd,`state`,d
 
 INSERT INTO `guard` (daysOfWeek, guardianRole, dependentId, guardianId) VALUES ('SUNDAY,MONDAY', 'MOTHER', 3, 1);
 INSERT INTO `guard` (guardianRole, dependentId, guardianId) VALUES ('MOTHER', 3, 2);
+
+INSERT INTO `spent` (`name`, paidOn, `value`, activityId, dependentId, guardianId) VALUES ('Odontologia', '2021-04-26', 100000, 1, 3, 1);
+INSERT INTO `spent` (`name`, paidOn, `value`, activityId, dependentId, guardianId) VALUES ('Lazer', '2021-04-27', 100000, NULL, 3, 1);
