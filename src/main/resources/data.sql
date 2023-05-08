@@ -26,3 +26,8 @@ INSERT INTO `guard` (guardianRole, dependentId, guardianId) VALUES
 INSERT INTO `activity` (`name`, dateStart, dateEnd, hourStart, hourEnd,`state`, familyGroupId, dependentId, currentGuardianId, actorId, createdBy) VALUES 
     ('Tomar banho', '2023-04-21', '2023-04-21', '20:00:00', '21:00:00', 'CREATED', 3, 1, 1, 1, 1),
     ('Pagar escola', '2023-04-21', '2023-04-21', '20:00:00', '21:00:00', 'CREATED', 3, 1, 1, 1, 1);
+
+INSERT INTO `spent` (`name`, paidOn, `value`, activityId, dependentId, guardianId) VALUES 
+    ('Odontologia', '2021-04-26', 100000, 1, 3, 1);
+INSERT INTO `spent` (`name`, paidOn, `value`, activityId, dependentId, guardianId) VALUES 
+    ('Lazer', '2021-04-27', 100000, NULL, 3, 1);
