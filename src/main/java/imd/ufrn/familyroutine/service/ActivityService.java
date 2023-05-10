@@ -9,6 +9,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,8 +63,9 @@ public class ActivityService {
 
     public ActivityResponse finishActivity(Long activityId, FinishActivityRequest finishActivityRequest) {
         Activity activity = this.getActivityById(activityId);
-        this.checkActivityInDoneOrNotDoneStateOrError(activity);
-        activity.setState(ActivityState.DONE);
+        this.checkActivityIsNotInStateDoneOrNotDoneOrError(activity);
+        Function<Boolean,ActivityState> defineFinishState = done -> done == true ? ActivityState.DONE : ActivityState.NOT_DONE;
+        activity.setState(defineFinishState.apply(finishActivityRequest.getDone()));
         activity.setFinishedBy(finishActivityRequest.getGuardianId());
         activity.setCommentary(finishActivityRequest.getCommentary());
         return this.activityMapper.mapActivityToActivityResponse(this.updateActivity(activity));
@@ -77,7 +79,7 @@ public class ActivityService {
         this.activityRepository.deleteById(activityId);
     }
 
-    protected void checkActivityInDoneOrNotDoneStateOrError(Activity activity) {
+    protected void checkActivityIsNotInStateDoneOrNotDoneOrError(Activity activity) {
         if (activity.getState() == ActivityState.DONE || activity.getState() == ActivityState.NOT_DONE) {
             throw new InvalidStateException(activity, List.of(ActivityState.CREATED, ActivityState.IN_PROGRESS, ActivityState.LATE));
         }
