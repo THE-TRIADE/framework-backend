@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import imd.ufrn.familyroutine.model.*;
@@ -15,6 +16,7 @@ import imd.ufrn.familyroutine.service.exception.InvalidDayException;
 
 @Component
 public class GuardMapper {
+  @Lazy
   @Autowired
   private GuardianService guardianService;
   @Autowired
