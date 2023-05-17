@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import imd.ufrn.familyroutine.model.Guardian;
 import imd.ufrn.familyroutine.model.api.request.LoginRequest;
+import imd.ufrn.familyroutine.model.api.response.GuardianResponse;
 import imd.ufrn.familyroutine.service.GuardianService;
 import jakarta.validation.Valid;
 
@@ -28,8 +29,8 @@ public class GuardianController {
     }
 
     @GetMapping("{guardianId}")
-    public Guardian findGuardianById(@PathVariable Long guardianId) {
-        return this.guardianService.findGuardianById(guardianId);
+    public GuardianResponse findGuardianById(@PathVariable Long guardianId) {
+        return this.guardianService.findGuardianByGuardianId(guardianId);
     }
 
     @PostMapping

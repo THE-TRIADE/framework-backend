@@ -1,6 +1,8 @@
 package imd.ufrn.familyroutine.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,6 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import imd.ufrn.familyroutine.model.Guardian;
 import imd.ufrn.familyroutine.model.Person;
 import imd.ufrn.familyroutine.model.api.request.LoginRequest;
+import imd.ufrn.familyroutine.model.api.response.FamilyGroupResponse;
+import imd.ufrn.familyroutine.model.api.response.GuardResponse;
+import imd.ufrn.familyroutine.model.api.response.GuardianResponse;
 import imd.ufrn.familyroutine.repository.GuardianRepository;
 import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
 
@@ -19,6 +24,10 @@ import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
 public class GuardianService {
     @Autowired
     private GuardianRepository guardianRepository;
+    @Autowired
+    private GuardService guardService;
+    @Autowired
+    private FamilyGroupService familyGroupService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -35,8 +44,23 @@ public class GuardianService {
 
     public Guardian findGuardianById(Long guardianId) {
         return this.guardianRepository
-            .findById(guardianId)
-            .orElseThrow(() -> new EntityNotFoundException(guardianId, Guardian.class));
+                    .findById(guardianId)
+                    .orElseThrow(() -> new EntityNotFoundException(guardianId, Guardian.class));
+    }
+
+    public GuardianResponse findGuardianByGuardianId(Long guardianId) {
+        Guardian guardian = this.guardianRepository
+                                .findById(guardianId)
+                                .orElseThrow(() -> new EntityNotFoundException(guardianId, Guardian.class));
+        List<GuardResponse> guards = this.guardService.findGuardsByGuardianId(guardianId);
+        Set<FamilyGroupResponse> familyGroups = new HashSet<>();
+        guards.stream()
+            .forEach(guard -> {
+                FamilyGroupResponse fg = this.familyGroupService.findByDependentId(guard.getDependentId());
+                familyGroups.add(fg);
+            });
+        
+        return null;
     }
 
     @Transactional

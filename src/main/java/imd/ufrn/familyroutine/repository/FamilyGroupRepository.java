@@ -22,4 +22,6 @@ public interface FamilyGroupRepository{
 
   Optional<List<Dependent>> findDependentsByFamilyGroupId(Long familyGroupId);
 
+  Optional<FamilyGroup> findByDependentId(Long dependentId);
+
 }

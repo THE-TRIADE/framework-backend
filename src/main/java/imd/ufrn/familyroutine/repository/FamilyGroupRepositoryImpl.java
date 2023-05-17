@@ -41,6 +41,17 @@ public class FamilyGroupRepositoryImpl implements FamilyGroupRepository {
   }
 
   @Override
+  public Optional<FamilyGroup> findByDependentId(Long dependentId) {
+    String sql = "SELECT * FROM family_group INNER JOIN dependent ON family_group.id = dependent.familyGroupId WHERE dependent.id = ?";
+    try {
+        return Optional.of(jdbcTemplate.queryForObject(sql, new FamilyGroupMapper(), dependentId));
+    }
+    catch(EmptyResultDataAccessException ex) {
+        return Optional.empty();
+    }
+  }
+
+  @Override
   public FamilyGroup save(FamilyGroup familyGroup) {
     KeyHolder keyHolder = new GeneratedKeyHolder();
     String sql = "INSERT INTO family_group (`name`) VALUES (?)";

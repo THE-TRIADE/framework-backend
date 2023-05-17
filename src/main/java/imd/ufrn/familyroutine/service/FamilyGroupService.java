@@ -68,4 +68,10 @@ public class FamilyGroupService{
                 .orElseThrow(
                  () -> new EntityNotFoundException(familyGroupId, FamilyGroup.class));
     }
+
+    public FamilyGroupResponse findByDependentId(Long dependentId) {
+        return this.familyGroupMapper
+            .mapFamilyGroupToFamilyGroupResponse(
+                this.familyGroupRepository.findByDependentId(dependentId).get());
+    }
 }
