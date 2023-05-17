@@ -47,6 +47,15 @@ public class ActivityService {
                 .toList();
     }
 
+    public List<ActivityResponse> findByDependentId(Long dependentId) {
+        return this.activityRepository
+                    .findAll()
+                    .stream()
+                    .filter(activity -> activity.getDependentId().equals(dependentId))
+                    .map(this.activityMapper::mapActivityToActivityResponse)
+                    .toList();
+    }
+
     public ActivityResponse findActivityById(Long activityId) {
         return this.activityMapper.mapActivityToActivityResponse(this.getActivityById(activityId));
     }
