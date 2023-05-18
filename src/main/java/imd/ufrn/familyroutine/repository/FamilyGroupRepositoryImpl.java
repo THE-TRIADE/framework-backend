@@ -42,7 +42,7 @@ public class FamilyGroupRepositoryImpl implements FamilyGroupRepository {
 
   @Override
   public Optional<FamilyGroup> findByDependentId(Long dependentId) {
-    String sql = "SELECT * FROM family_group INNER JOIN dependent ON family_group.id = dependent.familyGroupId WHERE dependent.id = ?";
+    String sql = "SELECT * FROM family_group INNER JOIN dependent ON family_group.id = dependent.familyGroupId WHERE dependent.personId = ?";
     try {
         return Optional.of(jdbcTemplate.queryForObject(sql, new FamilyGroupMapper(), dependentId));
     }
