@@ -21,7 +21,6 @@ INSERT INTO `dependent` (personId, familyGroupId) VALUES
 
 INSERT INTO `guard` (daysOfWeek, guardianRole, dependentId, guardianId) 
     VALUES ('SUNDAY,MONDAY', 'MOTHER', 3, 1),
-     ('SUNDAY,MONDAY', 'MOTHER', 3, 1),
      ('SUNDAY,MONDAY', 'FATHER', 4, 2),
      ('SUNDAY,MONDAY', 'MOTHER', 5, 2),
      ('SUNDAY,MONDAY', 'FATHER', 4, 2);
