@@ -2,6 +2,7 @@ package imd.ufrn.familyroutine.repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -57,7 +58,12 @@ public class GuardRepositoryImpl implements GuardRepository {
 
     jdbcTemplate.update(connection -> {
       PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-      ps.setString(1, guard.getDaysOfWeek().stream().map(Enum::toString).collect(Collectors.joining(",")));
+      if (guard.getDaysOfWeek() == null) {
+        ps.setNull(1, Types.VARCHAR);
+      }
+      else {
+        ps.setString(1, guard.getDaysOfWeek().stream().map(Enum::toString).collect(Collectors.joining(",")));
+      }
       ps.setString(2, guard.getGuardianRole().toString());
       ps.setLong(3, guard.getDependentId());
       ps.setLong(4, guard.getGuardianId());
