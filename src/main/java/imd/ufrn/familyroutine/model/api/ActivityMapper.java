@@ -65,6 +65,13 @@ public class ActivityMapper {
         activityResponse.setCreatedByName(createdByGuardian.getName());
         activityResponse.setRecurringActivityId(activity.getRecurringActivityId());
 
+        if(activity.getCommentary() != null) {
+            activityResponse.setCommentary(activity.getCommentary());
+        }
+        if(activity.getFinishedBy() != null) {
+            activityResponse.setFinishedById(activity.getFinishedBy());
+        }
+
         return activityResponse;
     }
 }

@@ -28,6 +28,10 @@ public class ActivityResponse {
     private String createdByEmail;
     private String createdByName;
 
+    private String commentary;
+    private Long finishedById;
+    private String finishedByName;
+
     private Long recurringActivityId;
 
     public ActivityResponse() {
@@ -35,6 +39,30 @@ public class ActivityResponse {
 
     public String getName() {
         return name;
+    }
+
+    public String getCommentary() {
+        return commentary;
+    }
+
+    public void setCommentary(String commentary) {
+        this.commentary = commentary;
+    }
+
+    public Long getFinishedById() {
+        return finishedById;
+    }
+
+    public void setFinishedById(Long finishedById) {
+        this.finishedById = finishedById;
+    }
+
+    public String getFinishedByName() {
+        return finishedByName;
+    }
+
+    public void setFinishedByName(String finishedByName) {
+        this.finishedByName = finishedByName;
     }
 
     public String getDependentName() {
