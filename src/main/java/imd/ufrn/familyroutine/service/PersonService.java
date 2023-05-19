@@ -9,6 +9,7 @@ import imd.ufrn.familyroutine.model.Dependent;
 import imd.ufrn.familyroutine.model.Guardian;
 import imd.ufrn.familyroutine.model.Person;
 import imd.ufrn.familyroutine.repository.PersonRepository;
+import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
 
 @Service
 public class PersonService {
@@ -18,6 +19,12 @@ public class PersonService {
 
     public Person createPerson(Person newPerson) {
         return this.personRepository.save(newPerson);
+    }
+
+    public Person findPersonById(Long personId) {
+        return this.personRepository
+                   .findById(personId)
+                   .orElseThrow(() -> new EntityNotFoundException(personId, Person.class));
     }
 
     protected void deletePersonById(Long personId) {

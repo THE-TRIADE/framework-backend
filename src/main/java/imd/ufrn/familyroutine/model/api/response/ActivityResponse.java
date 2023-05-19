@@ -15,6 +15,7 @@ public class ActivityResponse {
     private Time hourEnd;
     
     private Long dependentId;
+    private String dependentName;
 
     private Long currentGuardianId;
     private String currentGuardianEmail;
@@ -34,6 +35,14 @@ public class ActivityResponse {
 
     public String getName() {
         return name;
+    }
+
+    public String getDependentName() {
+        return dependentName;
+    }
+
+    public void setDependentName(String dependentName) {
+        this.dependentName = dependentName;
     }
 
     public void setName(String name) {

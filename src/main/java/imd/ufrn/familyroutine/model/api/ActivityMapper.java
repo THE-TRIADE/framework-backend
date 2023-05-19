@@ -8,15 +8,19 @@ import org.springframework.stereotype.Component;
 
 import imd.ufrn.familyroutine.model.Activity;
 import imd.ufrn.familyroutine.model.Guardian;
+import imd.ufrn.familyroutine.model.Person;
 import imd.ufrn.familyroutine.model.api.request.ActivityRequest;
 import imd.ufrn.familyroutine.model.api.response.ActivityResponse;
 import imd.ufrn.familyroutine.service.GuardianService;
+import imd.ufrn.familyroutine.service.PersonService;
 
 @Component
 public class ActivityMapper {
 
     @Autowired
     private GuardianService guardianService;
+    @Autowired
+    private PersonService personService;
 
     public Activity mapActivityRequestToActivity(ActivityRequest activityRequest) {
         Activity activity = new Activity();
@@ -43,6 +47,8 @@ public class ActivityMapper {
         activityResponse.setHourStart(activity.getHourStart());
         activityResponse.setHourEnd(activity.getHourEnd());
         activityResponse.setDependentId(activity.getDependentId());
+        Person dependent = this.personService.findPersonById(activity.getDependentId());
+        activityResponse.setDependentName(dependent.getName());
 
         activityResponse.setCurrentGuardianId(activity.getCurrentGuardian());
         Guardian currentGuardian = this.guardianService.findGuardianById(activity.getCurrentGuardian());
@@ -50,7 +56,8 @@ public class ActivityMapper {
         activityResponse.setCurrentGuardianName(currentGuardian.getName());
         
         activityResponse.setActorId(activity.getActor());
-        // activityResponse.setActorName();
+        Person actor = this.personService.findPersonById(activity.getActor());
+        activityResponse.setActorName(actor.getName());
 
         activityResponse.setCreatedById(activity.getCreatedBy());
         Guardian createdByGuardian = this.guardianService.findGuardianById(activity.getCreatedBy());

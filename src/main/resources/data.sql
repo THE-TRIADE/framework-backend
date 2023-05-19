@@ -1,7 +1,7 @@
 INSERT INTO `person` (`name`, cpf, birthDate) VALUES 
     ('Ana Holanda', 99999999999, '2002-07-13'), 
-    ('Leandro Assuncao', 88888888888, '2003-04-25'),
-    ('Joaozinho', 99999999999, '2012-07-13'),
+    ('Leandro Assunção', 88888888888, '2003-04-25'),
+    ('Joãozinho', 99999999999, '2012-07-13'),
     ('Pedrinho', 88888888888, '2013-04-25');
 
 INSERT INTO guardian (email, `password`, personId) VALUES 
@@ -9,9 +9,9 @@ INSERT INTO guardian (email, `password`, personId) VALUES
     ('leandro@email.com', '$2a$10$/8XMU9zaTUp3Hbj9II1OxONTx7zvKaWzL7OW30JoikiDkopZqQOGu', 2);
 
 INSERT INTO family_group (`name`) VALUES
-    ('familia Sampaio'),
-    ('familia Oliveira'),
-    ('familia Bolevar');
+    ('Família Sampaio'),
+    ('Família Oliveira'),
+    ('Família Bolevar');
 
 INSERT INTO `dependent` (personId, familyGroupId) VALUES 
     (3, 1),
