@@ -58,7 +58,6 @@ CREATE TABLE `activity`(
     `state` VARCHAR(50) NOT NULL,
     commentary VARCHAR(500),
     
-    familyGroupId BIGINT NOT NULL, 
     dependentId BIGINT NOT NULL,
     currentGuardianId BIGINT NOT NULL, 
     actorId BIGINT NOT NULL, 
