@@ -3,6 +3,7 @@ package imd.ufrn.familyroutine.service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,12 +60,13 @@ public class GuardianService {
                                 .findById(guardianId)
                                 .orElseThrow(() -> new EntityNotFoundException(guardianId, Guardian.class));
         List<GuardResponse> guards = this.guardService.findGuardsByGuardianId(guardianId);
-        Set<FamilyGroupResponse> familyGroups = new HashSet<>();
-        guards.stream()
-            .forEach(guard -> {
-                FamilyGroupResponse fg = this.familyGroupService.findByDependentId(guard.getDependentId());
-                familyGroups.add(fg);
-            });
+        Set<FamilyGroupResponse> familyGroups = this.familyGroupService.findAll()
+        .stream().collect(Collectors.toSet());
+        // guards.stream()
+        //     .forEach(guard -> {
+        //         FamilyGroupResponse fg = this.familyGroupService.findByDependentId(guard.getDependentId());
+        //         familyGroups.add(fg);
+        //     });
         
         return guardianMapper.mapGuardianToGuardianReponse(guardian, guards, familyGroups);
     }
