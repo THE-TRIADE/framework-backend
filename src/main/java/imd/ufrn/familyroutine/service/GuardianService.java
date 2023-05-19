@@ -60,13 +60,12 @@ public class GuardianService {
                                 .findById(guardianId)
                                 .orElseThrow(() -> new EntityNotFoundException(guardianId, Guardian.class));
         List<GuardResponse> guards = this.guardService.findGuardsByGuardianId(guardianId);
-        Set<FamilyGroupResponse> familyGroups = this.familyGroupService.findAll()
-        .stream().collect(Collectors.toSet());
-        // guards.stream()
-        //     .forEach(guard -> {
-        //         FamilyGroupResponse fg = this.familyGroupService.findByDependentId(guard.getDependentId());
-        //         familyGroups.add(fg);
-        //     });
+        Set<FamilyGroupResponse> familyGroups = new HashSet<>();
+        guards.stream()
+            .forEach(guard -> {
+                FamilyGroupResponse fg = this.familyGroupService.findByDependentId(guard.getDependentId());
+                familyGroups.add(fg);
+            });
         
         return guardianMapper.mapGuardianToGuardianReponse(guardian, guards, familyGroups);
     }
