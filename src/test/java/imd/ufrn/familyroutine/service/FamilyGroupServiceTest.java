@@ -1,10 +1,14 @@
 package imd.ufrn.familyroutine.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.swing.text.html.Option;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +24,7 @@ import imd.ufrn.familyroutine.model.FamilyGroup;
 import imd.ufrn.familyroutine.model.api.FamilyGroupMapper;
 import imd.ufrn.familyroutine.model.api.response.FamilyGroupResponse;
 import imd.ufrn.familyroutine.repository.FamilyGroupRepository;
+import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
 
 @ExtendWith(SpringExtension.class)
 public class FamilyGroupServiceTest {
@@ -120,6 +125,37 @@ public class FamilyGroupServiceTest {
          * Positivo simples - ID que existe e é um Long
          * Negativo com entradas válidas  - ID não existe, mas é um Long
          */
+
+        @Test
+        void shouldFindTheFamilyGroupById() {
+            Long familyGroupId = 1L;
+            FamilyGroup testRepository = new FamilyGroup("Test");
+            testRepository.setId(familyGroupId);
+            FamilyGroupResponse testResponse = new FamilyGroupResponse();
+            testResponse.setId(testRepository.getId());
+            testResponse.setName(testRepository.getName());
+
+            Mockito.when(familyGroupRepository.findById(familyGroupId)).thenReturn( Optional.of(testRepository)); 
+            Mockito.when(familyGroupMapper.mapFamilyGroupToFamilyGroupResponse(testRepository)).thenReturn(testResponse);
+            
+            FamilyGroupResponse familyGroup = familyGroupService.findFamilyGroupById(familyGroupId);
+
+            assertEquals(1L, familyGroup.getId());
+            assertEquals("Test", familyGroup.getName());
+        }
+
+        @Test
+        void shouldNotFindTheFamilyGroupById() {
+            Long familyGroupId = 1L;
+            FamilyGroup testRepository = new FamilyGroup("Test");
+            testRepository.setId(familyGroupId);
+
+            Mockito.when(familyGroupRepository.findById(familyGroupId)).thenReturn(Optional.empty());
+            
+            assertThrows( EntityNotFoundException.class , () -> {
+                familyGroupService.findFamilyGroupById(familyGroupId);
+            });
+        }
     }
 
     @Nested
