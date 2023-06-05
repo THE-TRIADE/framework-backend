@@ -21,7 +21,6 @@ import imd.ufrn.familyroutine.model.api.GuardMapper;
 import imd.ufrn.familyroutine.model.api.request.GuardRequest;
 import imd.ufrn.familyroutine.repository.GuardRepository;
 
-// TODO Ana Maria
 @ExtendWith(SpringExtension.class)
 public class GuardServiceTest {
     @InjectMocks
@@ -85,11 +84,14 @@ public class GuardServiceTest {
             verify(guardRepository, times(1)).deleteById(guardId);
         }
     }
-}
 
-// @Nested
-// public class DeleteAllGuards {
-// /*
-// * Positivo simples
-// */
-// }
+    @Nested
+    public class DeleteAllGuards {
+        @Test
+        public void shouldDeleteAllGuards() {
+            guardService.deleteAllGuards();
+
+            verify(guardRepository, times(1)).deleteAll();
+        }
+    }
+}
