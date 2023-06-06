@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,9 +23,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import imd.ufrn.familyroutine.model.Dependent;
 import imd.ufrn.familyroutine.model.FamilyGroup;
 import imd.ufrn.familyroutine.model.api.FamilyGroupMapper;
+import imd.ufrn.familyroutine.model.api.request.FamilyGroupRequest;
 import imd.ufrn.familyroutine.model.api.response.FamilyGroupResponse;
+import imd.ufrn.familyroutine.model.api.response.GuardResponse;
 import imd.ufrn.familyroutine.repository.FamilyGroupRepository;
 import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
 
@@ -37,6 +43,12 @@ public class FamilyGroupServiceTest {
 
     @Mock
     private FamilyGroupMapper familyGroupMapper;
+    
+    @Mock
+    private DependentService dependentService;
+    
+    @Mock
+    private GuardService guardService;
 
     @Nested
     public class FindAll {
@@ -164,5 +176,57 @@ public class FamilyGroupServiceTest {
          * Positivo simples - id e nome
          * Positivo expandido - id, nome e dependentes
          */
+        @Test
+        void shouldCreateSimpleFamilyGroup() {
+            Long familyGroupId = 1L;
+            FamilyGroup testRepository = new FamilyGroup("Test");
+            testRepository.setId(familyGroupId);
+
+            FamilyGroupRequest testRequest = new FamilyGroupRequest();
+            testRequest.setName(testRepository.getName());
+
+            FamilyGroupResponse testResponse = new FamilyGroupResponse();
+            testResponse.setName(testRepository.getName());
+            testResponse.setId(testRepository.getId());
+
+            Mockito.when(familyGroupRepository.save(testRepository)).thenReturn(testRepository);
+            Mockito.when(familyGroupMapper.mapFamilyGroupToFamilyGroupResponse(testRepository)).thenReturn(testResponse);
+            Mockito.when(familyGroupMapper.mapFamilyGroupRequestToFamilyGroup(testRequest)).thenReturn(testRepository);
+            
+            FamilyGroupResponse familyGroup = familyGroupService.createFamilyGroup(testRequest);
+            assertEquals(testResponse, familyGroup);
+        }
+
+        @Test
+        void shouldCreateFamilyGroupWithDependents() {
+            List<Dependent> dependents = new ArrayList<>();
+            dependents.add(new Dependent(1L, "Teste 1", "12345678910L", Date.valueOf(LocalDateTime.now().toLocalDate())));
+            dependents.add(new Dependent(2L, "Teste 2", "01987654321L", Date.valueOf(LocalDateTime.now().toLocalDate())));
+
+            Long familyGroupId = 1L;
+            FamilyGroup testRepository = new FamilyGroup("Test");
+            testRepository.setId(familyGroupId);
+
+            FamilyGroupRequest testRequest = new FamilyGroupRequest();
+            testRequest.setName(testRepository.getName());
+            testRequest.setDependents(dependents);
+
+            FamilyGroupResponse testResponse = new FamilyGroupResponse();
+            testResponse.setName(testRepository.getName());
+            testResponse.setId(testRepository.getId());
+            testResponse.setDependents(dependents);
+
+            GuardResponse guardResponse = new GuardResponse();
+
+            Mockito.when(familyGroupRepository.save(testRepository)).thenReturn(testRepository);
+            Mockito.when(familyGroupMapper.mapFamilyGroupRequestToFamilyGroup(testRequest)).thenReturn(testRepository);
+            Mockito.when(familyGroupMapper.mapFamilyGroupToFamilyGroupResponse(testRepository)).thenReturn(testResponse);
+            Mockito.when(dependentService.createDependentInCascade(dependents.get(0))).thenReturn(dependents.get(0));
+            Mockito.when(dependentService.createDependentInCascade(dependents.get(1))).thenReturn(dependents.get(1));
+            Mockito.when(guardService.createGuard(Mockito.any())).thenReturn(guardResponse);
+            
+            FamilyGroupResponse familyGroup = familyGroupService.createFamilyGroup(testRequest);
+            assertEquals(testResponse, familyGroup);
+        }
     }
 }
