@@ -5,22 +5,20 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.swing.text.html.Option;
-
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import imd.ufrn.familyroutine.model.Dependent;
@@ -130,7 +128,7 @@ public class FamilyGroupServiceTest {
         }
 
     }
-    // TODO Leonardo David
+
     @Nested
     public class FindFamilyGroupById {
         /*
@@ -227,6 +225,89 @@ public class FamilyGroupServiceTest {
             
             FamilyGroupResponse familyGroup = familyGroupService.createFamilyGroup(testRequest);
             assertEquals(testResponse, familyGroup);
+        }
+    }
+
+    @Nested
+    public class DeleteFamilyGroupById {
+
+        @Test
+        public void shouldDeleteFamilyGroupById() {
+            Long familyGroupId = 1L;
+
+            Mockito.when(familyGroupRepository.findDependentsByFamilyGroupId(familyGroupId)).thenReturn(Optional.of(new ArrayList<Dependent>()));
+            
+            familyGroupService.deleteFamilyGroupById(familyGroupId); 
+            
+            verify(familyGroupRepository, times(1)).deleteById(familyGroupId);
+            
+        }
+
+    }
+
+    @Nested
+    public class deleteAllFamilyGroups{
+
+        @Test
+        public void shouldDeleteFamilyGroupById() {
+            Mockito.doNothing().when(familyGroupRepository).deleteAll();
+            Mockito.doNothing().when(dependentService).deleteAllDependents();
+            
+            familyGroupService.deleteAllFamilyGroups(); 
+            
+            verify(dependentService, times(1)).deleteAllDependents();
+            verify(familyGroupRepository, times(1)).deleteAll();
+        }
+    }
+
+    @Nested
+    public class GetFamilyGroupDependentsByFamilyGroupId{
+        
+        @Test
+        public void shouldTryFindFDependents(){
+            Long familyGroupId = 1L;
+
+            Mockito.when(familyGroupRepository.findDependentsByFamilyGroupId(familyGroupId)).thenReturn(Optional.of(new ArrayList<Dependent>()));
+
+            familyGroupService.getFamilyGroupDependentsByFamilyGroupId(familyGroupId);
+            
+            verify(familyGroupRepository, times(1)).findDependentsByFamilyGroupId(familyGroupId);
+
+        }
+    }
+
+    @Nested
+    public class FindByDependentId{
+
+        @Test
+        public void shoulFindFamilyGroupByDependentId(){
+            Long familyGroupId = 1L;
+            Long dependentId = 1L;
+            FamilyGroup testRepository = new FamilyGroup("Test");
+            testRepository.setId(familyGroupId);
+            FamilyGroupResponse testResponse = new FamilyGroupResponse();
+            testResponse.setId(testRepository.getId());
+            testResponse.setName(testRepository.getName());
+
+            Mockito.when(familyGroupRepository.findByDependentId(dependentId)).thenReturn( Optional.of(testRepository)); 
+            Mockito.when(familyGroupMapper.mapFamilyGroupToFamilyGroupResponse(testRepository)).thenReturn(testResponse);
+
+            FamilyGroupResponse familyGroup = familyGroupService.findByDependentId(dependentId);
+
+            assertEquals(1L, familyGroup.getId());
+            assertEquals("Test", familyGroup.getName());
+            
+        }
+
+        @Test
+        void shouldNotFindTheFamilyGroupByDependentId() {
+            Long familyGroupId = 1L;
+
+            Mockito.when(familyGroupRepository.findById(familyGroupId)).thenReturn(Optional.empty());
+            
+            assertThrows( EntityNotFoundException.class , () -> {
+                familyGroupService.findFamilyGroupById(familyGroupId);
+            });
         }
     }
 }
