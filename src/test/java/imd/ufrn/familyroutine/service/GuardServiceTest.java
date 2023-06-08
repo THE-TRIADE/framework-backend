@@ -5,10 +5,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.util.Optional;
+import java.util.*;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,7 +21,9 @@ import imd.ufrn.familyroutine.model.Guard;
 import imd.ufrn.familyroutine.model.GuardianRole;
 import imd.ufrn.familyroutine.model.api.GuardMapper;
 import imd.ufrn.familyroutine.model.api.request.GuardRequest;
+import imd.ufrn.familyroutine.model.api.response.GuardResponse;
 import imd.ufrn.familyroutine.repository.GuardRepository;
+import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
 
 @ExtendWith(SpringExtension.class)
 public class GuardServiceTest {
@@ -28,6 +32,9 @@ public class GuardServiceTest {
 
     @Mock
     private GuardRepository guardRepository;
+
+    @Mock
+    private GuardRepository guardResponse;
 
     @Mock
     private GuardMapper guardMapper;
@@ -94,4 +101,142 @@ public class GuardServiceTest {
             verify(guardRepository, times(1)).deleteAll();
         }
     }
+
+    @Nested
+    public class FindGuardById {
+        @Test
+        public void testFindGuardById() {
+            Long guardId = 1L;
+
+            Guard guard = new Guard();
+            guard.setId(guardId);
+            guard.setDependentId(1L);
+            guard.setGuardianId(1L);
+            guard.setGuardianRole(GuardianRole.FATHER);
+
+            GuardResponse guardResponse = new GuardResponse();
+            guardResponse.setId(guard.getId());
+            guardResponse.setDependentId(guard.getDependentId());
+            guardResponse.setGuardianId(guard.getGuardianId());
+            guardResponse.setGuardianRole(guard.getGuardianRole());
+
+            Mockito.when(guardRepository.findById(guardId)).thenReturn(Optional.of(guard));
+
+            Mockito.when(guardMapper.mapGuardToGuardResponse(guard))
+                    .thenReturn(guardResponse);
+
+            GuardResponse guardResponseReturn = guardService.findGuardById(guardId);
+
+            assertEquals(guardResponse.getId(), guardResponseReturn.getId());
+            assertEquals(guardResponse.getDependentId(), guardResponseReturn.getDependentId());
+            assertEquals(guardResponse.getGuardianId(), guardResponseReturn.getGuardianId());
+            assertEquals(guardResponse.getGuardianRole(), guardResponseReturn.getGuardianRole());
+        }
+
+        @Test
+        public void testFindGuardByIdNotFound() {
+            Long guardId = 1L;
+
+            Mockito.when(guardRepository.findById(guardId)).thenReturn(Optional.empty());
+
+            assertThrows(EntityNotFoundException.class, () -> {
+                guardService.findGuardById(guardId);
+            });
+
+            verify(guardRepository, times(1)).findById(guardId);
+        }
+    }
+
+    @Nested
+    public class FindAll {
+
+        @Nested
+        public class WhenIsEmpty {
+            @Test
+            void shouldReturnAnEmptyList() {
+                Mockito.when(guardRepository.findAll()).thenReturn(List.of());
+                Mockito.when(guardMapper.mapGuardToGuardResponse(null)).thenReturn(null);
+
+                List<GuardResponse> guards = guardService.findAllGuards();
+
+                assertTrue(guards.isEmpty());
+            }
+        }
+
+        @Nested
+        public class WhenHasOneGuard {
+            @Test
+            void shouldReturnAListWithOneGuardResponse() {
+                Guard guard = new Guard();
+                guard.setId(1L);
+                guard.setDependentId(1L);
+                guard.setGuardianId(1L);
+                guard.setGuardianRole(GuardianRole.FATHER);
+
+                GuardResponse guardResponse = new GuardResponse();
+                guardResponse.setId(guard.getId());
+                guardResponse.setDependentId(guard.getDependentId());
+                guardResponse.setGuardianId(guard.getGuardianId());
+                guardResponse.setGuardianRole(guard.getGuardianRole());
+
+                List<Guard> findAllResponse = new ArrayList<>();
+                findAllResponse.add(guard);
+
+                Mockito.when(guardRepository.findAll()).thenReturn(findAllResponse);
+                Mockito.when(guardMapper.mapGuardToGuardResponse(guard)).thenReturn(guardResponse);
+
+                List<GuardResponse> guards = guardService.findAllGuards();
+
+                assertEquals(1, guards.size());
+                guards.forEach(guarda -> {
+                    assertEquals(guardResponse.getId(), guarda.getId());
+                    assertEquals(guardResponse.getDependentId(), guarda.getDependentId());
+                    assertEquals(guardResponse.getGuardianId(), guarda.getGuardianId());
+                    assertEquals(guardResponse.getGuardianRole(), guarda.getGuardianRole());
+                });
+            }
+        }
+
+        @Nested
+        public class WhenHasMoreThanOneGuard {
+            @Test
+            void shouldReturnAListWithMultipleGuardResponses() {
+                List<Guard> testGuards = new ArrayList<>();
+                List<GuardResponse> testResponses = new ArrayList<>();
+
+                for (Long i = 0L; i < 3L; ++i) {
+                    Guard guard = new Guard();
+                    guard.setId(i);
+                    guard.setDependentId(i);
+                    guard.setGuardianId(i);
+                    guard.setGuardianRole(GuardianRole.FATHER);
+                    testGuards.add(guard);
+
+                    GuardResponse guardResponse = new GuardResponse();
+                    guardResponse.setId(guard.getId());
+                    guardResponse.setDependentId(guard.getDependentId());
+                    guardResponse.setGuardianId(guard.getGuardianId());
+                    guardResponse.setGuardianRole(guard.getGuardianRole());
+                    testResponses.add(guardResponse);
+                }
+
+                Mockito.when(guardRepository.findAll()).thenReturn(testGuards);
+                Mockito.when(guardMapper.mapGuardToGuardResponse(testGuards.get(0))).thenReturn(testResponses.get(0));
+                Mockito.when(guardMapper.mapGuardToGuardResponse(testGuards.get(1))).thenReturn(testResponses.get(1));
+                Mockito.when(guardMapper.mapGuardToGuardResponse(testGuards.get(2))).thenReturn(testResponses.get(2));
+
+                List<GuardResponse> guards = guardService.findAllGuards();
+
+                assertEquals(3, guards.size());
+                for (int i = 0; i < 3; i++) {
+                    GuardResponse guardResponse = guards.get(i);
+                    assertEquals(i, guardResponse.getId());
+                    assertEquals(i, guardResponse.getDependentId());
+                    assertEquals(i, guardResponse.getGuardianId());
+                    assertEquals(GuardianRole.FATHER, guardResponse.getGuardianRole());
+                }
+            }
+        }
+    }
+
 }
