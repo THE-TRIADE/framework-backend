@@ -91,7 +91,7 @@ public class FamilyGroupServiceTest {
         @Nested
         public class WhenHasMoreThanOneFamilyGroup {
             @Test
-            void shouldReturnAnListWithOneFamilyGroupResponse() {
+            void shouldReturnAnListWithMoreThanOneFamilyGroupResponse() {
                 List<FamilyGroup> testRepositories = new ArrayList<>();
                 List<FamilyGroupResponse> testResponses = new ArrayList<>();
                 
