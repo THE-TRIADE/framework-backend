@@ -2,6 +2,8 @@ package imd.ufrn.familyroutine.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -18,6 +20,8 @@ import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import imd.ufrn.familyroutine.model.Activity;
+import imd.ufrn.familyroutine.model.ActivityState;
+import imd.ufrn.familyroutine.model.RecurringActivity;
 import imd.ufrn.familyroutine.model.api.ActivityMapper;
 import imd.ufrn.familyroutine.model.api.request.ActivityRequest;
 import imd.ufrn.familyroutine.model.api.response.ActivityResponse;
@@ -41,6 +45,9 @@ public class ActivityServiceTest {
 
     @Mock
     private ValidationService validationService;
+
+    @Mock
+    private RecurringActivityService recurringActivityService;
 
     @Nested
     public class CreateActivity {
@@ -69,6 +76,7 @@ public class ActivityServiceTest {
             activity.setCurrentGuardian(activityRequest.getCurrentGuardian());
             activity.setActor(activityRequest.getActor());
             activity.setCreatedBy(activityRequest.getCreatedBy());
+            activity.setState(ActivityState.CREATED);
 
             activityResponse = new ActivityResponse();
             activityResponse.setId(activity.getId());
@@ -206,6 +214,34 @@ public class ActivityServiceTest {
         }
 
         @Nested
+        public class WhenTheParamRepeatIsTrueButDaysToRepeatIsEmpty {
+            @Test
+            public void shouldThrowRecurringActivityFieldException() {
+                dateTimeStart = LocalDateTime.now();
+                dateTimeEnd = LocalDateTime.now().plusHours(2);
+                activityRequest.setDateStart(dateTimeStart.toLocalDate());
+                activityRequest.setDateEnd(dateTimeEnd.toLocalDate());
+                activityRequest.setHourStart(dateTimeStart.toLocalTime());
+                activityRequest.setHourEnd(dateTimeEnd.toLocalTime());
+                activityRequest.setRepeat(true);
+                activityRequest.setRepeatUntil(dateTimeStart.plusDays(10).toLocalDate());
+                activityRequest.setDaysToRepeat(List.of());
+               
+                activity.setDateStart(Date.valueOf(activityRequest.getDateStart()));
+                activity.setDateEnd(Date.valueOf(activityRequest.getDateEnd()));
+                activity.setHourStart(Time.valueOf(activityRequest.getHourStart()));
+                activity.setHourEnd(Time.valueOf(activityRequest.getHourStart()));
+
+                Mockito.when(activityMapper.mapActivityToActivityResponse(activity)).thenThrow(new RecurringActivityException(RecurringActivityType.FIELD));
+                Throwable exception = assertThrows(RecurringActivityException.class, () -> {
+                    activityService.handleActivityRequest(activityRequest);
+                });
+
+                assertEquals("'repeat' field is true. Check if both 'repeatUntil' and 'daysToRepeat' fields are filled correctly.", exception.getMessage());
+            }
+        }
+
+        @Nested
         public class WhenTheParamRepeatIsTrueButRepeatUntilIsBeforeFirstActivityDateStart {
             @Test
             public void shouldThrowRecurringActivityIntervalException() {
@@ -258,6 +294,76 @@ public class ActivityServiceTest {
                 });
 
                 assertEquals("'daysToRepeat' has a number either lesser than one or greater than seven. Please try again.", exception.getMessage());
+            }
+        }
+
+        @Nested
+        public class WhenTheParamRepeatIsTrueButDaysToRepeatHasValueGreaterThanSeven {
+            @Test
+            public void shouldThrowRecurringActivityDayIndexException() {
+                dateTimeStart = LocalDateTime.now();
+                dateTimeEnd = LocalDateTime.now().plusHours(2);
+                activityRequest.setDateStart(dateTimeStart.toLocalDate());
+                activityRequest.setDateEnd(dateTimeEnd.toLocalDate());
+                activityRequest.setHourStart(dateTimeStart.toLocalTime());
+                activityRequest.setHourEnd(dateTimeEnd.toLocalTime());
+                activityRequest.setRepeat(true);
+                activityRequest.setRepeatUntil(dateTimeEnd.plusDays(5).toLocalDate());
+                activityRequest.setDaysToRepeat(List.of(9,3,5));
+               
+                activity.setDateStart(Date.valueOf(activityRequest.getDateStart()));
+                activity.setDateEnd(Date.valueOf(activityRequest.getDateEnd()));
+                activity.setHourStart(Time.valueOf(activityRequest.getHourStart()));
+                activity.setHourEnd(Time.valueOf(activityRequest.getHourStart()));
+
+                Mockito.when(activityMapper.mapActivityToActivityResponse(activity)).thenThrow(new RecurringActivityException(RecurringActivityType.DAY_INDEX));
+                Throwable exception = assertThrows(RecurringActivityException.class, () -> {
+                    activityService.handleActivityRequest(activityRequest);
+                });
+
+                assertEquals("'daysToRepeat' has a number either lesser than one or greater than seven. Please try again.", exception.getMessage());
+            }
+        }
+   
+        @Nested
+        public class CreatingGroupActivityWhenParamsAreOk {
+            @Test
+            public void shouldReturnActivityAndBeCalledThreeTimes() {
+                dateTimeStart = LocalDateTime.of(2023, 6, 7, 20, 5);
+                dateTimeEnd = dateTimeStart.plusHours(2);
+                activityRequest.setDateStart(dateTimeStart.toLocalDate());
+                activityRequest.setDateEnd(dateTimeEnd.toLocalDate());
+                activityRequest.setHourStart(dateTimeStart.toLocalTime());
+                activityRequest.setHourEnd(dateTimeEnd.toLocalTime());
+                activityRequest.setRepeat(true);
+                activityRequest.setRepeatUntil(dateTimeEnd.plusDays(3).toLocalDate());
+                activityRequest.setDaysToRepeat(List.of(4,5));
+               
+                activity.setDateStart(Date.valueOf(activityRequest.getDateStart()));
+                activity.setDateEnd(Date.valueOf(activityRequest.getDateEnd()));
+                activity.setHourStart(Time.valueOf(activityRequest.getHourStart()));
+                activity.setHourEnd(Time.valueOf(activityRequest.getHourStart()));
+
+                activityResponse.setDateStart(activity.getDateStart());
+                activityResponse.setDateEnd(activity.getDateEnd());
+                activityResponse.setHourStart(activity.getHourStart());
+                activityResponse.setHourEnd(activity.getHourEnd());
+
+                RecurringActivity groupActivity = new RecurringActivity(1L);
+
+                Mockito.when(activityMapper.mapActivityRequestToActivity(activityRequest)).thenReturn(activity);
+                Mockito.when(recurringActivityService.createRecurringActivity(Mockito.any(RecurringActivity.class))).thenReturn(groupActivity);
+                Mockito.when(validationService.validActivityOrError(Mockito.any())).thenReturn(Mockito.any());
+                Mockito.when(activityMapper.mapActivityToActivityResponse(activity)).thenReturn(activityResponse);
+                
+                ActivityResponse response = activityService.handleActivityRequest(activityRequest);
+                assertEquals(1L, response.getId());
+                assertEquals("Activity Test", response.getName());
+                assertEquals(2L, response.getDependentId());
+                assertEquals(1L, response.getCurrentGuardianId());
+                assertEquals(2L, response.getActorId());
+                assertEquals(1L, response.getCreatedById());
+                verify(activityRepository, times(3)).save(Mockito.any());
             }
         }
     }
