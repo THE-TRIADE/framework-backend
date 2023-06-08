@@ -11,6 +11,7 @@ import imd.ufrn.familyroutine.model.api.request.GuardRequest;
 import imd.ufrn.familyroutine.model.api.response.GuardResponse;
 import imd.ufrn.familyroutine.repository.GuardRepository;
 import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
+import imd.ufrn.familyroutine.service.exception.InvalidImmutableArgumentsException;
 
 @Service
 public class GuardService {
@@ -50,7 +51,7 @@ public class GuardService {
 
     if(!guardUpdated.getDependentId().equals(guard.getDependentId()) 
         || !guardUpdated.getGuardianId().equals(guard.getGuardianId())) {
-            // TODO Lançar exceção que atributos imutáveis foram alterados
+            throw new InvalidImmutableArgumentsException("Dependent", "Guardian");
     }
     validationService.validDaysOfWeekOrError(guardRequest.getDaysOfWeek());
 
