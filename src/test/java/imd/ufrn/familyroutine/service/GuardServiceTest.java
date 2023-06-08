@@ -24,6 +24,7 @@ import imd.ufrn.familyroutine.model.api.request.GuardRequest;
 import imd.ufrn.familyroutine.model.api.response.GuardResponse;
 import imd.ufrn.familyroutine.repository.GuardRepository;
 import imd.ufrn.familyroutine.service.exception.EntityNotFoundException;
+import imd.ufrn.familyroutine.service.exception.InvalidImmutableArgumentsException;
 
 @ExtendWith(SpringExtension.class)
 public class GuardServiceTest {
@@ -77,6 +78,78 @@ public class GuardServiceTest {
             Guard updatedGuard = guardService.updateGuard(guardId, guardRequest);
 
             assertEquals(guard, updatedGuard);
+        }
+
+        @Test
+        public void shouldThrowInvalidImmutableArgumentsExceptionWithDependentIdModified() {
+            Long guardId = 1L;
+
+            Guard guard = new Guard();
+            guard.setId(guardId);
+            guard.setDependentId(1L);
+            guard.setGuardianId(1L);
+            guard.setGuardianRole(GuardianRole.FATHER);
+
+            GuardRequest guardRequest = new GuardRequest();
+            guardRequest.setGuardianRole(GuardianRole.MOTHER);
+            guardRequest.setDependentId(3L);
+            guardRequest.setGuardianId(1L);
+
+            Guard guardUpdated = new Guard();
+            guardUpdated.setId(guardId);
+            guardUpdated.setDependentId(guardRequest.getDependentId());
+            guardUpdated.setGuardianId(guardRequest.getGuardianId());
+            guardUpdated.setGuardianRole(guardRequest.getGuardianRole());
+
+            Mockito.when(guardMapper.mapGuardRequestToGuard(guardRequest)).thenReturn(guardUpdated);
+
+            Mockito.when(guardRepository.findById(guardId)).thenReturn(Optional.of(guard));
+
+            Mockito.when(guardRepository.update(guard)).thenReturn(guard);
+
+            Mockito.when(validationService.validDaysOfWeekOrError(guardRequest.getDaysOfWeek()))
+                    .thenReturn(guardRequest.getDaysOfWeek());
+
+
+            assertThrows(InvalidImmutableArgumentsException.class, () -> {
+                guardService.updateGuard(guardId, guardRequest);
+            });
+        }
+
+        @Test
+        public void shouldThrowInvalidImmutableArgumentsExceptionWithGuardianIdModified() {
+            Long guardId = 1L;
+
+            Guard guard = new Guard();
+            guard.setId(guardId);
+            guard.setDependentId(1L);
+            guard.setGuardianId(1L);
+            guard.setGuardianRole(GuardianRole.FATHER);
+
+            GuardRequest guardRequest = new GuardRequest();
+            guardRequest.setGuardianRole(GuardianRole.MOTHER);
+            guardRequest.setDependentId(1L);
+            guardRequest.setGuardianId(3L);
+
+            Guard guardUpdated = new Guard();
+            guardUpdated.setId(guardId);
+            guardUpdated.setDependentId(guardRequest.getDependentId());
+            guardUpdated.setGuardianId(guardRequest.getGuardianId());
+            guardUpdated.setGuardianRole(guardRequest.getGuardianRole());
+
+            Mockito.when(guardMapper.mapGuardRequestToGuard(guardRequest)).thenReturn(guardUpdated);
+
+            Mockito.when(guardRepository.findById(guardId)).thenReturn(Optional.of(guard));
+
+            Mockito.when(guardRepository.update(guard)).thenReturn(guard);
+
+            Mockito.when(validationService.validDaysOfWeekOrError(guardRequest.getDaysOfWeek()))
+                    .thenReturn(guardRequest.getDaysOfWeek());
+
+
+            assertThrows(InvalidImmutableArgumentsException.class, () -> {
+                guardService.updateGuard(guardId, guardRequest);
+            });
         }
     }
 
