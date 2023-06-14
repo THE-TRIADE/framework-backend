@@ -246,7 +246,7 @@ public class FamilyGroupServiceTest {
     }
 
     @Nested
-    public class deleteAllFamilyGroups{
+    public class DeleteAllFamilyGroups{
 
         @Test
         public void shouldDeleteFamilyGroupById() {
@@ -272,6 +272,22 @@ public class FamilyGroupServiceTest {
             familyGroupService.getFamilyGroupDependentsByFamilyGroupId(familyGroupId);
             
             verify(familyGroupRepository, times(1)).findDependentsByFamilyGroupId(familyGroupId);
+
+        }
+        
+        @Test
+        public void shouldFindDependents(){
+            Long familyGroupId = 1L;
+            List<Dependent> dependents = new ArrayList<>();
+            dependents.add(new Dependent(1L, "Teste 1", "12345678910L", Date.valueOf(LocalDateTime.now().toLocalDate())));
+            dependents.add(new Dependent(2L, "Teste 2", "01987654321L", Date.valueOf(LocalDateTime.now().toLocalDate())));
+
+            Mockito.when(familyGroupRepository.findDependentsByFamilyGroupId(familyGroupId)).thenReturn(Optional.of(dependents));
+
+            List<Dependent> dependentsResult = familyGroupService.getFamilyGroupDependentsByFamilyGroupId(familyGroupId);
+            
+            verify(familyGroupRepository, times(1)).findDependentsByFamilyGroupId(familyGroupId);
+            assertEquals( dependents, dependentsResult);
 
         }
     }
@@ -301,12 +317,12 @@ public class FamilyGroupServiceTest {
 
         @Test
         void shouldNotFindTheFamilyGroupByDependentId() {
-            Long familyGroupId = 1L;
-
-            Mockito.when(familyGroupRepository.findById(familyGroupId)).thenReturn(Optional.empty());
+            Long dependentId = 1L;
             
-            assertThrows( EntityNotFoundException.class , () -> {
-                familyGroupService.findFamilyGroupById(familyGroupId);
+            Mockito.when(familyGroupRepository.findByDependentId(dependentId)).thenReturn(Optional.empty());
+            
+            assertThrows( EntityNotFoundException.class, () -> {
+                familyGroupService.findByDependentId(dependentId);
             });
         }
     }
