@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.time.DayOfWeek;
 import java.util.*;
 
 import org.junit.jupiter.api.Test;
@@ -80,6 +81,49 @@ public class GuardServiceTest {
             assertEquals(guard, updatedGuard);
         }
 
+        @Test
+        public void shouldUpdateGuardDaysOfWeekAndGuardianRole() {
+            Long guardId = 1L;
+
+            Guard guard = new Guard();
+            guard.setId(guardId);
+            guard.setDependentId(1L);
+            guard.setGuardianId(1L);
+            guard.setGuardianRole(GuardianRole.FATHER);
+
+            GuardRequest guardRequest = new GuardRequest();
+            guardRequest.setGuardianRole(GuardianRole.MOTHER);
+            guardRequest.setDependentId(1L);
+            guardRequest.setGuardianId(1L);
+            guardRequest.setDaysOfWeek(Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.TUESDAY)
+                    .stream()
+                    .map(DayOfWeek::getValue)
+                    .toList());         
+            Guard guardUpdated = new Guard();    
+            guardUpdated.setId(guardId);
+            guardUpdated.setDependentId(guardRequest.getDependentId());
+            guardUpdated.setGuardianId(guardRequest.getGuardianId());
+            guardUpdated.setGuardianRole(guardRequest.getGuardianRole());
+            guardUpdated.setDaysOfWeek(guardRequest.getDaysOfWeek()
+                    .stream()
+                    .map(day -> DayOfWeek.of(day))
+                    .toList());
+
+            Mockito.when(guardMapper.mapGuardRequestToGuard(guardRequest)).thenReturn(guardUpdated);
+
+            Mockito.when(guardRepository.findById(guardId)).thenReturn(Optional.of(guard));
+
+            Mockito.when(guardRepository.update(guard)).thenReturn(guard);
+
+            Mockito.when(validationService.validDaysOfWeekOrError(guardRequest.getDaysOfWeek()))
+                    .thenReturn(guardRequest.getDaysOfWeek());
+
+            Guard updatedGuard = guardService.updateGuard(guardId, guardRequest);
+
+            assertEquals(guardUpdated.getDaysOfWeek(), updatedGuard.getDaysOfWeek());
+            assertEquals(guardUpdated.getGuardianRole(), updatedGuard.getGuardianRole());
+        }
+        
         @Test
         public void shouldThrowInvalidImmutableArgumentsExceptionWithDependentIdModified() {
             Long guardId = 1L;
