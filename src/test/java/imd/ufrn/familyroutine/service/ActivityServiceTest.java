@@ -329,7 +329,7 @@ public class ActivityServiceTest {
         public class CreatingGroupActivityWhenParamsAreOk {
             @Test
             public void shouldReturnActivityAndBeCalledThreeTimes() {
-                dateTimeStart = LocalDateTime.of(2023, 6, 7, 20, 5);
+                dateTimeStart = LocalDateTime.of(2023, 6, 10, 20, 5);
                 dateTimeEnd = dateTimeStart.plusHours(2);
                 activityRequest.setDateStart(dateTimeStart.toLocalDate());
                 activityRequest.setDateEnd(dateTimeEnd.toLocalDate());
@@ -337,7 +337,7 @@ public class ActivityServiceTest {
                 activityRequest.setHourEnd(dateTimeEnd.toLocalTime());
                 activityRequest.setRepeat(true);
                 activityRequest.setRepeatUntil(dateTimeEnd.plusDays(3).toLocalDate());
-                activityRequest.setDaysToRepeat(List.of(4,5));
+                activityRequest.setDaysToRepeat(List.of(7,1));
                
                 activity.setDateStart(Date.valueOf(activityRequest.getDateStart()));
                 activity.setDateEnd(Date.valueOf(activityRequest.getDateEnd()));
