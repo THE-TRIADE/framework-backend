@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>imd.ufrn</groupId>
-	<artifactId>familyroutine</artifactId>
+	<artifactId>frameworkroutine</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>familyroutine</name>
-	<description>API REST do FamilyRoutine no contexto de projeto acadêmico</description>
+	<name>frameworkroutine</name>
+	<description>Framework de rotinas no contexto de projeto acadêmico</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
