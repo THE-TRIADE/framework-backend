@@ -70,6 +70,8 @@ public class ActivityStandardMapper {
         }
         if(activity.getFinishedBy() != null) {
             activityResponse.setFinishedById(activity.getFinishedBy());
+            Guardian finishedByGuardian = this.guardianService.findGuardianById(activity.getFinishedBy());
+            activityResponse.setFinishedByName(finishedByGuardian.getName());
         }
 
         return activityResponse;

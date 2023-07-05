@@ -46,7 +46,7 @@ public class ActivityStandardController implements ActivityController<ActivitySt
     }
 
     @PatchMapping("{activityId}/finish")
-    public ActivityStandardResponse createActivity(@PathVariable Long activityId, @RequestBody @Valid FinishActivityStandardRequest finishActivityRequest) {
+    public ActivityStandardResponse finishActivity(@PathVariable Long activityId, @RequestBody @Valid FinishActivityStandardRequest finishActivityRequest) {
         return this.activityService.finishActivity(activityId, finishActivityRequest);
     }
 

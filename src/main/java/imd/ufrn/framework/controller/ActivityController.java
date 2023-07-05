@@ -12,7 +12,7 @@ public interface ActivityController<A, B, C> {
     public List<C> getAllActivities(Optional<Long> dependentId);
     public C findActivityById(Long activityId);
     public C createActivity(A activity);
-    public C createActivity(Long activityId, B finishActivityRequest);
+    public C finishActivity(Long activityId, B finishActivityRequest);
     public void deleteActivity();
     public void deleteActivityById(Long activityId);
 }

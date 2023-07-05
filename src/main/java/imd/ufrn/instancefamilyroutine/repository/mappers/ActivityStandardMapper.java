@@ -25,7 +25,10 @@ public class ActivityStandardMapper implements RowMapper<ActivityStandard>{
     activity.setCurrentGuardian(resultSet.getLong("currentGuardianId"));
     activity.setActor(resultSet.getLong("actorId"));
     activity.setCreatedBy(resultSet.getLong("createdBy"));
-    activity.setFinishedBy(resultSet.getLong("finishedBy"));
+    Long finishedBy = resultSet.getLong("finishedBy");
+    if(finishedBy != 0){
+        activity.setFinishedBy(finishedBy);
+    } 
     activity.setRecurringActivityId(resultSet.getLong("recurringActivityId"));
     return activity;
   }
