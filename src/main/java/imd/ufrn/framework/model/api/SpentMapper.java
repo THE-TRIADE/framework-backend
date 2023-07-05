@@ -13,6 +13,8 @@ import imd.ufrn.framework.service.DependentService;
 import imd.ufrn.framework.service.GuardianService;
 import imd.ufrn.instancefamilyroutine.service.ActivityStandardService;
 
+import java.sql.Date;
+
 @Component
 public class SpentMapper {
   @Autowired
@@ -27,7 +29,7 @@ public class SpentMapper {
 
     spent.setName(spentRequest.getName());
     spent.setValue(spentRequest.getValue());
-    spent.setPaidOn(spentRequest.getPaidOn());
+    spent.setPaidOn(Date.valueOf(spentRequest.getPaidOn()));
     spent.setDependentId(spentRequest.getDependentId());
     spent.setGuardianId(spentRequest.getGuardianId());
 

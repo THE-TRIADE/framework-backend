@@ -1,6 +1,7 @@
 package imd.ufrn.framework.model.api.request;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.validation.constraints.NotNull;
 
@@ -9,7 +10,7 @@ public class SpentRequest {
   @NotNull
   private Integer value;
   @NotNull
-  private Date paidOn;
+  private LocalDate paidOn;
   @NotNull
   private Long dependentId;
   @NotNull
@@ -35,11 +36,11 @@ public class SpentRequest {
     this.value = value;
   }
 
-  public Date getPaidOn() {
+  public LocalDate getPaidOn() {
     return paidOn;
   }
 
-  public void setPaidOn(Date paidOn) {
+  public void setPaidOn(LocalDate paidOn) {
     this.paidOn = paidOn;
   }
 
