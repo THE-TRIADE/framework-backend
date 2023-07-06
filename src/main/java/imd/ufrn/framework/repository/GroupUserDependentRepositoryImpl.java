@@ -40,7 +40,7 @@ public class GroupUserDependentRepositoryImpl implements GroupUserDependentRepos
 
   @Override
   public Optional<GroupUserDependent> findByDependentId(Long dependentId) {
-    String sql = "SELECT * FROM group_user_dependent INNER JOIN dependent ON group_user_dependent.id = dependent.groupId WHERE dependent.personId = ?";
+    String sql = "SELECT * FROM group_user_dependent INNER JOIN dependent ON group_user_dependent.id = dependent.groupId WHERE dependent.id = ?";
     try {
         return Optional.of(jdbcTemplate.queryForObject(sql, new GroupUserDependentMapper(), dependentId));
     }
