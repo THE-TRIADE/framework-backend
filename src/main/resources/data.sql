@@ -19,13 +19,13 @@ INSERT INTO `dependent` (personId, familyGroupId) VALUES
     (4, 3),
     (5, 2);
 
-INSERT INTO `guard` (daysOfWeek, guardianRole, dependentId, guardianId) 
+INSERT INTO `relation` (daysOfWeek,userRole, dependentId, userId)
     VALUES ('SUNDAY,MONDAY', 'MOTHER', 3, 1),
      ('SUNDAY,MONDAY', 'FATHER', 4, 2),
      ('SUNDAY,MONDAY', 'MOTHER', 5, 2),
      ('SUNDAY,MONDAY', 'FATHER', 4, 2);
 
-INSERT INTO `guard` (guardianRole, dependentId, guardianId) VALUES 
+INSERT INTO `relation` (userRole, dependentId, userId) VALUES
     ('MOTHER', 3, 2);
 
 INSERT INTO `activity` (`name`, dateStart, dateEnd, hourStart, hourEnd,`state`, dependentId, currentGuardianId, actorId, createdBy) VALUES 
