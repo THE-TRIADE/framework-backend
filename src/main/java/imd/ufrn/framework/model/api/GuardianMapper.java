@@ -8,14 +8,14 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import imd.ufrn.framework.model.Guardian;
-import imd.ufrn.framework.model.api.response.FamilyGroupResponse;
+import imd.ufrn.framework.model.api.response.GroupUserDependentResponse;
 import imd.ufrn.framework.model.api.response.GuardResponse;
 import imd.ufrn.framework.model.api.response.GuardToGuardianResponse;
 import imd.ufrn.framework.model.api.response.GuardianResponse;
 
 @Component
 public class GuardianMapper {
-    public GuardianResponse mapGuardianToGuardianReponse(Guardian guardian, List<GuardResponse> guards, Set<FamilyGroupResponse> familyGroups) {
+    public GuardianResponse mapGuardianToGuardianReponse(Guardian guardian, List<GuardResponse> guards, Set<GroupUserDependentResponse> familyGroups) {
         GuardianResponse guardianResponse = new GuardianResponse();
         guardianResponse.setId(guardian.getId());
         guardianResponse.setName(guardian.getName());

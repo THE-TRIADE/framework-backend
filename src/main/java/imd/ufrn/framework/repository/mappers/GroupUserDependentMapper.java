@@ -5,13 +5,13 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import imd.ufrn.framework.model.FamilyGroup;
+import imd.ufrn.framework.model.GroupUserDependent;
 
-public class FamilyGroupMapper implements RowMapper<FamilyGroup> {
+public class GroupUserDependentMapper implements RowMapper<GroupUserDependent> {
 
     @Override
-    public FamilyGroup mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
-        FamilyGroup familyGroup = new FamilyGroup();
+    public GroupUserDependent mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
+        GroupUserDependent familyGroup = new GroupUserDependent();
         familyGroup.setId(resultSet.getBigDecimal("id").longValue());
         familyGroup.setName(resultSet.getString("name"));
         return familyGroup;

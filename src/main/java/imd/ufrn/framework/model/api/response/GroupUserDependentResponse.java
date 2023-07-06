@@ -4,7 +4,7 @@ import java.util.List;
 
 import imd.ufrn.framework.model.Dependent;
 
-public class FamilyGroupResponse {
+public class GroupUserDependentResponse {
     private Long id;
     private String name;
     private List<Dependent> dependents;
@@ -41,7 +41,7 @@ public class FamilyGroupResponse {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        FamilyGroupResponse other = (FamilyGroupResponse) obj;
+        GroupUserDependentResponse other = (GroupUserDependentResponse) obj;
         if (id == null) {
             if (other.id != null)
                 return false;

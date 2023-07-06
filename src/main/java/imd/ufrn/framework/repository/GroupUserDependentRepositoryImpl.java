@@ -13,27 +13,27 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import imd.ufrn.framework.model.Dependent;
-import imd.ufrn.framework.model.FamilyGroup;
+import imd.ufrn.framework.model.GroupUserDependent;
 import imd.ufrn.framework.repository.mappers.DependentMapper;
-import imd.ufrn.framework.repository.mappers.FamilyGroupMapper;
+import imd.ufrn.framework.repository.mappers.GroupUserDependentMapper;
 
 @Repository
-public class FamilyGroupRepositoryImpl implements FamilyGroupRepository {
+public class GroupUserDependentRepositoryImpl implements GroupUserDependentRepository {
 
   @Autowired
   private JdbcTemplate jdbcTemplate;
 
   @Override
-  public List<FamilyGroup> findAll() { 
-    String sql = "SELECT * FROM family_group";
-    return jdbcTemplate.query(sql, new FamilyGroupMapper());
+  public List<GroupUserDependent> findAll() { 
+    String sql = "SELECT * FROM group_user_dependent";
+    return jdbcTemplate.query(sql, new GroupUserDependentMapper());
   }
 
   @Override
-  public Optional<FamilyGroup> findById(Long id) {
-    String sql = "SELECT * FROM family_group WHERE id = ?";
+  public Optional<GroupUserDependent> findById(Long id) {
+    String sql = "SELECT * FROM group_user_dependent WHERE id = ?";
     try {
-        return Optional.of(jdbcTemplate.queryForObject(sql, new FamilyGroupMapper(), id));
+        return Optional.of(jdbcTemplate.queryForObject(sql, new GroupUserDependentMapper(), id));
     }
     catch(EmptyResultDataAccessException ex) {
         return Optional.empty();
@@ -41,10 +41,10 @@ public class FamilyGroupRepositoryImpl implements FamilyGroupRepository {
   }
 
   @Override
-  public Optional<FamilyGroup> findByDependentId(Long dependentId) {
-    String sql = "SELECT * FROM family_group INNER JOIN dependent ON family_group.id = dependent.familyGroupId WHERE dependent.personId = ?";
+  public Optional<GroupUserDependent> findByDependentId(Long dependentId) {
+    String sql = "SELECT * FROM group_user_dependent INNER JOIN dependent ON group_user_dependent.id = dependent.familyGroupId WHERE dependent.personId = ?";
     try {
-        return Optional.of(jdbcTemplate.queryForObject(sql, new FamilyGroupMapper(), dependentId));
+        return Optional.of(jdbcTemplate.queryForObject(sql, new GroupUserDependentMapper(), dependentId));
     }
     catch(EmptyResultDataAccessException ex) {
         return Optional.empty();
@@ -52,9 +52,9 @@ public class FamilyGroupRepositoryImpl implements FamilyGroupRepository {
   }
 
   @Override
-  public FamilyGroup save(FamilyGroup familyGroup) {
+  public GroupUserDependent save(GroupUserDependent familyGroup) {
     KeyHolder keyHolder = new GeneratedKeyHolder();
-    String sql = "INSERT INTO family_group (`name`) VALUES (?)";
+    String sql = "INSERT INTO group_user_dependent (`name`) VALUES (?)";
     
     
     jdbcTemplate.update(connection -> {
@@ -68,18 +68,18 @@ public class FamilyGroupRepositoryImpl implements FamilyGroupRepository {
   
   @Override
   public void deleteById(Long id) {
-    String sql = "DELETE FROM family_group WHERE id = ?";
+    String sql = "DELETE FROM group_user_dependent WHERE id = ?";
     jdbcTemplate.update(sql, new Object[] { id });
   }
 
   @Override
   public void deleteAll() {
-    String sql = "DELETE FROM family_group";
+    String sql = "DELETE FROM group_user_dependent";
     jdbcTemplate.update(sql);
   }
 
   @Override
-  public Optional<List<Dependent>> findDependentsByFamilyGroupId(Long familyGroupId){
+  public Optional<List<Dependent>> findDependentsByGroupUserDependentId(Long familyGroupId){
       String sql = "SELECT * FROM PERSON INNER JOIN DEPENDENT ON PERSON.id = DEPENDENT.personId WHERE familyGroupId = ?";
       try {
         return Optional.of(jdbcTemplate.query(sql, new DependentMapper(), familyGroupId));

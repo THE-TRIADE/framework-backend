@@ -14,7 +14,7 @@ CREATE TABLE `guardian` (
     PRIMARY KEY(personId)
 );
 
-CREATE TABLE `family_group` (
+CREATE TABLE `group_user_dependent` (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(100) NOT NULL
 );
@@ -23,7 +23,7 @@ CREATE TABLE `dependent` (
     personId BIGINT UNIQUE,
 
     familyGroupId BIGINT,
-    FOREIGN KEY (familyGroupId) REFERENCES `family_group`(id),
+    FOREIGN KEY (familyGroupId) REFERENCES `group_user_dependent`(id),
 
     FOREIGN KEY(personId) REFERENCES `person`(id) ON DELETE CASCADE,
     PRIMARY KEY(personId)

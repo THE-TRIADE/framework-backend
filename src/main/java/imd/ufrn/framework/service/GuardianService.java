@@ -16,7 +16,7 @@ import imd.ufrn.framework.model.Guardian;
 import imd.ufrn.framework.model.Person;
 import imd.ufrn.framework.model.api.GuardianMapper;
 import imd.ufrn.framework.model.api.request.LoginRequest;
-import imd.ufrn.framework.model.api.response.FamilyGroupResponse;
+import imd.ufrn.framework.model.api.response.GroupUserDependentResponse;
 import imd.ufrn.framework.model.api.response.GuardResponse;
 import imd.ufrn.framework.model.api.response.GuardianResponse;
 import imd.ufrn.framework.repository.GuardianRepository;
@@ -29,7 +29,7 @@ public class GuardianService {
     @Autowired
     private GuardService guardService;
     @Autowired
-    private FamilyGroupService familyGroupService;
+    private GroupUserDependentService familyGroupService;
 
     @Lazy
     @Autowired
@@ -59,10 +59,10 @@ public class GuardianService {
                                 .findById(guardianId)
                                 .orElseThrow(() -> new EntityNotFoundException(guardianId, Guardian.class));
         List<GuardResponse> guards = this.guardService.findGuardsByGuardianId(guardianId);
-        Set<FamilyGroupResponse> familyGroups = new HashSet<>();
+        Set<GroupUserDependentResponse> familyGroups = new HashSet<>();
         guards.stream()
             .forEach(guard -> {
-                FamilyGroupResponse fg = this.familyGroupService.findByDependentId(guard.getDependentId());
+                GroupUserDependentResponse fg = this.familyGroupService.findByDependentId(guard.getDependentId());
                 familyGroups.add(fg);
             });
         
