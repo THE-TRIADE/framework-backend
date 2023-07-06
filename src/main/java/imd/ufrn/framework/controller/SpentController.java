@@ -31,9 +31,9 @@ public class SpentController {
     return this.spentService.findSpentsByDependentId(dependentId);
   }
 
-  @GetMapping("/by-guardian-id/{guardianId}")
-  public List<SpentResponse> findSpentsByGuardianId(@PathVariable Long guardianId) {
-    return this.spentService.findSpentsByGuardianId(guardianId);
+  @GetMapping("/by-user-id/{userId}")
+  public List<SpentResponse> findSpentsByUserId(@PathVariable Long userId) {
+    return this.spentService.findSpentsByUserId(userId);
   }
 
   @PostMapping

@@ -53,7 +53,7 @@ public class WebSecurityConfig {
                 // .formLogin(withDefaults())
                 // .httpBasic(withDefaults())
                 // .authorizeHttpRequests()
-                // .requestMatchers(HttpMethod.POST, "/guardian/**")
+                // .requestMatchers(HttpMethod.POST, "/user/**")
                 //     .permitAll()
                 // .anyRequest()
                 //     .authenticated()

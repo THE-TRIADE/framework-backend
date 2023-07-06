@@ -22,7 +22,7 @@ public class ActivityStandardMapper implements RowMapper<ActivityStandard>{
     activity.setState(ActivityState.valueOf(resultSet.getString("state")));
     activity.setCommentary(resultSet.getString("commentary"));
     activity.setDependentId(resultSet.getLong("dependentId"));
-    activity.setCurrentGuardian(resultSet.getLong("currentGuardianId"));
+    activity.setCurrentUser(resultSet.getLong("currentUserId"));
     activity.setActor(resultSet.getLong("actorId"));
     activity.setCreatedBy(resultSet.getLong("createdBy"));
     Long finishedBy = resultSet.getLong("finishedBy");

@@ -23,7 +23,7 @@ public abstract class ActivityAbstract {
 
     private Long recurringActivityId;
 
-    private Long currentGuardian;
+    private Long currentUser;
     private Long createdBy;
     private Long finishedBy;
     
@@ -90,11 +90,11 @@ public abstract class ActivityAbstract {
     public void setDependentId(Long dependentId) {
         this.dependentId = dependentId;
     }
-    public Long getCurrentGuardian() {
-        return currentGuardian;
+    public Long getCurrentUser() {
+        return currentUser;
     }
-    public void setCurrentGuardian(Long currentGuardian) {
-        this.currentGuardian = currentGuardian;
+    public void setCurrentUser(Long currentUser) {
+        this.currentUser = currentUser;
     }
     public Long getActor() {
         return actor;

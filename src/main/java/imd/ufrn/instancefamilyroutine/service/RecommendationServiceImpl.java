@@ -18,8 +18,8 @@ public class RecommendationServiceImpl implements RecommendationService {
     }
 
     @Override
-    public List<String> generateRecommendation(Long guardianId) {
-        List<SpentResponse> spents = spentService.findSpentsByGuardianId(guardianId);
+    public List<String> generateRecommendation(Long userId) {
+        List<SpentResponse> spents = spentService.findSpentsByUserId(userId);
 
         double spentsLastMonth = getSpentsLastMonth(spents);
         double spentsCurrentMonth = getSpentsCurrentMonth(spents);

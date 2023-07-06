@@ -1,6 +1,6 @@
 package imd.ufrn.framework.model;
 
-public enum GuardianRole {
+public enum UserRole {
   FATHER,
   MOTHER,
   RELATIVE,

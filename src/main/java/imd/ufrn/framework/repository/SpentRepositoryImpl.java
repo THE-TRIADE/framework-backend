@@ -38,8 +38,8 @@ public class SpentRepositoryImpl implements SpentRepository {
   }
 
   @Override
-  public List<Spent> findByGuardianId(Long id) {
-    String sql = "SELECT * FROM spent WHERE guardianId = ?";
+  public List<Spent> findByUserId(Long id) {
+    String sql = "SELECT * FROM spent WHERE userId = ?";
     return jdbcTemplate.query(sql, new SpentMapper(), id);
   }
 
@@ -52,7 +52,7 @@ public class SpentRepositoryImpl implements SpentRepository {
   @Override
   public Spent save(Spent spent) {
     KeyHolder keyHolder = new GeneratedKeyHolder();
-    String sql = "INSERT INTO spent (name, paidOn, `value`, activityId, dependentId, guardianId) VALUES (?,?,?,?,?,?)";
+    String sql = "INSERT INTO spent (name, paidOn, `value`, activityId, dependentId, userId) VALUES (?,?,?,?,?,?)";
 
     jdbcTemplate.update(connection -> {
       PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -65,7 +65,7 @@ public class SpentRepositoryImpl implements SpentRepository {
         ps.setNull(4, 0);
       }
       ps.setLong(5, spent.getDependentId());
-      ps.setLong(6, spent.getGuardianId());
+      ps.setLong(6, spent.getUserId());
 
       return ps;
     }, keyHolder);

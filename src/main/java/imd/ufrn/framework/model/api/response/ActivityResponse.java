@@ -17,9 +17,9 @@ public abstract class ActivityResponse {
     private Long dependentId;
     private String dependentName;
 
-    private Long currentGuardianId;
-    private String currentGuardianEmail;
-    private String currentGuardianName;
+    private Long currentUserId;
+    private String currentUserEmail;
+    private String currentUserName;
 
     private Long actorId;
     private String actorName; // TODO Rever em outra issue
@@ -117,28 +117,28 @@ public abstract class ActivityResponse {
         this.dependentId = dependentId;
     }
 
-    public Long getCurrentGuardianId() {
-        return currentGuardianId;
+    public Long getCurrentUserId() {
+        return currentUserId;
     }
 
-    public void setCurrentGuardianId(Long currentGuardianId) {
-        this.currentGuardianId = currentGuardianId;
+    public void setCurrentUserId(Long currentUserId) {
+        this.currentUserId = currentUserId;
     }
 
-    public String getCurrentGuardianEmail() {
-        return currentGuardianEmail;
+    public String getCurrentUserEmail() {
+        return currentUserEmail;
     }
 
-    public void setCurrentGuardianEmail(String currentGuardianEmail) {
-        this.currentGuardianEmail = currentGuardianEmail;
+    public void setCurrentUserEmail(String currentUserEmail) {
+        this.currentUserEmail = currentUserEmail;
     }
 
-    public String getCurrentGuardianName() {
-        return currentGuardianName;
+    public String getCurrentUserName() {
+        return currentUserName;
     }
 
-    public void setCurrentGuardianName(String currentGuardianName) {
-        this.currentGuardianName = currentGuardianName;
+    public void setCurrentUserName(String currentUserName) {
+        this.currentUserName = currentUserName;
     }
 
     public Long getActorId() {

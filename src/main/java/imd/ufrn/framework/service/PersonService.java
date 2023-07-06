@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import imd.ufrn.framework.model.Dependent;
-import imd.ufrn.framework.model.Guardian;
+import imd.ufrn.framework.model.User;
 import imd.ufrn.framework.model.Person;
 import imd.ufrn.framework.repository.PersonRepository;
 import imd.ufrn.framework.service.exception.EntityNotFoundException;
@@ -35,8 +35,8 @@ public class PersonService {
         dependents.forEach((dependent) -> this.deletePersonById(dependent.getId()));
     }
 
-    protected void deleteAllGuardians(List<Guardian> guardians) {
-        guardians.forEach((guardian) -> this.deletePersonById(guardian.getId()));
+    protected void deleteAllUsers(List<User> users) {
+        users.forEach((user) -> this.deletePersonById(user.getId()));
     }
 
 }

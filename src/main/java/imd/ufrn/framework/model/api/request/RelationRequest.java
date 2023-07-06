@@ -2,13 +2,13 @@ package imd.ufrn.framework.model.api.request;
 
 import java.util.List;
 
-import imd.ufrn.framework.model.GuardianRole;
+import imd.ufrn.framework.model.UserRole;
 import jakarta.validation.constraints.NotNull;
 
 public class RelationRequest {
   private List<Integer> daysOfWeek;
   @NotNull
-  private GuardianRole userRole;
+  private UserRole userRole;
   @NotNull
   private Long dependentId;
   @NotNull
@@ -25,11 +25,11 @@ public class RelationRequest {
     this.daysOfWeek = daysOfWeek;
   }
 
-  public GuardianRole getUserRole() {
+  public UserRole getUserRole() {
     return userRole;
   }
 
-  public void setUserRole(GuardianRole role) {
+  public void setUserRole(UserRole role) {
     this.userRole = role;
   }
 

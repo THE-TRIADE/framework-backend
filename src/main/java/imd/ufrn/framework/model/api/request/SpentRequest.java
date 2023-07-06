@@ -1,6 +1,5 @@
 package imd.ufrn.framework.model.api.request;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +13,7 @@ public class SpentRequest {
   @NotNull
   private Long dependentId;
   @NotNull
-  private Long guardianId;
+  private Long userId;
   private Long activityId;
 
   public SpentRequest() {
@@ -52,12 +51,12 @@ public class SpentRequest {
     this.dependentId = dependentId;
   }
 
-  public Long getGuardianId() {
-    return guardianId;
+  public Long getUserId() {
+    return userId;
   }
 
-  public void setGuardianId(Long guardianId) {
-    this.guardianId = guardianId;
+  public void setUserId(Long userId) {
+    this.userId = userId;
   }
 
   public Long getActivityId() {

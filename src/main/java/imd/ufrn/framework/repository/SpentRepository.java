@@ -11,7 +11,7 @@ public interface SpentRepository {
 
   Optional<Spent> findById(Long id);
 
-  List<Spent> findByGuardianId(Long id);
+  List<Spent> findByUserId(Long id);
 
   List<Spent> findByDependentId(Long id);
 

@@ -13,8 +13,8 @@ public class RecommendationController {
     @Autowired
     private RecommendationServiceImpl recommendationService;
 
-    @GetMapping("/{guardianId}")
-    public List<String> getRecommendations(@PathVariable Long guardianId) {
-        return recommendationService.generateRecommendation(guardianId);
+    @GetMapping("/{userId}")
+    public List<String> getRecommendations(@PathVariable Long userId) {
+        return recommendationService.generateRecommendation(userId);
     }
 }

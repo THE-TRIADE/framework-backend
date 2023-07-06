@@ -11,14 +11,14 @@ import imd.ufrn.framework.model.*;
 import imd.ufrn.framework.model.api.request.RelationRequest;
 import imd.ufrn.framework.model.api.response.RelationResponse;
 import imd.ufrn.framework.service.DependentService;
-import imd.ufrn.framework.service.GuardianService;
+import imd.ufrn.framework.service.UserService;
 import imd.ufrn.framework.service.exception.InvalidDayException;
 
 @Component
 public class RelationMapper {
   @Lazy
   @Autowired
-  private GuardianService userService;
+  private UserService userService;
   @Autowired
   private DependentService dependentService;
 
@@ -67,7 +67,7 @@ public class RelationMapper {
     relationResponse.setDependentName(dependent.getName());
 
     relationResponse.setUserId(relation.getUserId());
-    Guardian user = this.userService.findGuardianById(relation.getUserId());
+    User user = this.userService.findUserById(relation.getUserId());
     relationResponse.setUserName(user.getName());
     relationResponse.setUserEmail(user.getEmail());
 

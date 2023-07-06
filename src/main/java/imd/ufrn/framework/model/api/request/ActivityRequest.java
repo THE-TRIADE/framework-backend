@@ -23,7 +23,7 @@ public abstract class ActivityRequest {
     @NotNull
     private Long dependentId;
     @NotNull
-    private Long currentGuardian;
+    private Long currentUser;
     @NotNull
     private Long actor;
     @NotNull
@@ -106,11 +106,11 @@ public abstract class ActivityRequest {
         this.dependentId = dependentId;
     }
     
-    public Long getCurrentGuardian() {
-        return currentGuardian;
+    public Long getCurrentUser() {
+        return currentUser;
     }
-    public void setCurrentGuardian(Long currentGuardian) {
-        this.currentGuardian = currentGuardian;
+    public void setCurrentUser(Long currentUser) {
+        this.currentUser = currentUser;
     }
    
     public Long getActor() {

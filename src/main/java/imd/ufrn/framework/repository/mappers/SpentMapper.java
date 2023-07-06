@@ -17,7 +17,7 @@ public class SpentMapper implements RowMapper<Spent> {
     spent.setPaidOn(resultSet.getDate("paidOn"));
     spent.setValue(resultSet.getInt("value"));
     spent.setDependentId(resultSet.getLong("dependentId"));
-    spent.setGuardianId(resultSet.getLong("guardianId"));
+    spent.setUserId(resultSet.getLong("userId"));
     if (resultSet.getObject("activityId") != null) {
       spent.setActivityId(resultSet.getLong("activityId"));
     }

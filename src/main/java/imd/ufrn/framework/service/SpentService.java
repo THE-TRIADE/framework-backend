@@ -27,8 +27,8 @@ public class SpentService {
     return this.spentMapper.mapSpentToSpentResponse(this.getSpentById(spentId));
   }
 
-  public List<SpentResponse> findSpentsByGuardianId(Long guardianId) {
-    return this.spentRepository.findByGuardianId(guardianId).stream().map(spentMapper::mapSpentToSpentResponse)
+  public List<SpentResponse> findSpentsByUserId(Long userId) {
+    return this.spentRepository.findByUserId(userId).stream().map(spentMapper::mapSpentToSpentResponse)
         .toList();
   }
 

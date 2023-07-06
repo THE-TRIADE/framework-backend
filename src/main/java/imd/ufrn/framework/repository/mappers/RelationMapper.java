@@ -27,7 +27,7 @@ public class RelationMapper implements RowMapper<Relation> {
               .collect(Collectors.toList()));
     }
 
-    relation.setUserRole(GuardianRole.valueOf(resultSet.getString("userRole")));
+    relation.setUserRole(UserRole.valueOf(resultSet.getString("userRole")));
     relation.setDependentId(resultSet.getLong("dependentId"));
     relation.setUserId(resultSet.getLong("userId"));
 

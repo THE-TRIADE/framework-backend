@@ -6,12 +6,14 @@ CREATE TABLE `person` (
     PRIMARY KEY(id)
 );
 
-CREATE TABLE `guardian` (
+CREATE TABLE `user` (
+    id BIGINT NOT NULL AUTO_INCREMENT,
     email VARCHAR(100) NOT NULL,
     `password` VARCHAR(256) NOT NULL,
-    personId BIGINT UNIQUE, 
-    FOREIGN KEY(personId) REFERENCES `person`(id) ON DELETE CASCADE,
-    PRIMARY KEY(personId)
+    `name` VARCHAR(100) NOT NULL,
+    cpf VARCHAR(11) NOT NULL,
+    birthDate DATE NOT NULL,
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE `group_user_dependent` (
@@ -22,8 +24,8 @@ CREATE TABLE `group_user_dependent` (
 CREATE TABLE `dependent` (
     personId BIGINT UNIQUE,
 
-    familyGroupId BIGINT,
-    FOREIGN KEY (familyGroupId) REFERENCES `group_user_dependent`(id),
+    groupId BIGINT,
+    FOREIGN KEY (groupId) REFERENCES `group_user_dependent`(id),
 
     FOREIGN KEY(personId) REFERENCES `person`(id) ON DELETE CASCADE,
     PRIMARY KEY(personId)
@@ -44,7 +46,7 @@ CREATE TABLE `relation`(
     userId BIGINT NOT NULL,
 
     FOREIGN KEY(dependentId) REFERENCES `dependent`(personId) ON DELETE CASCADE,
-    FOREIGN KEY(userId) REFERENCES `guardian`(personId) ON DELETE CASCADE
+    FOREIGN KEY(userId) REFERENCES `user`(id) ON DELETE CASCADE
 );
 
 CREATE TABLE `activity`(
@@ -59,17 +61,17 @@ CREATE TABLE `activity`(
     commentary VARCHAR(500),
     
     dependentId BIGINT NOT NULL,
-    currentGuardianId BIGINT NOT NULL, 
+    currentUserId BIGINT NOT NULL, 
     actorId BIGINT NOT NULL, 
     createdBy BIGINT NOT NULL,
     finishedBy BIGINT,   
     recurringActivityId BIGINT,   
       
     FOREIGN KEY(dependentId) REFERENCES `dependent`(personId),
-    FOREIGN KEY(currentGuardianId) REFERENCES `guardian`(personId),
+    FOREIGN KEY(currentUserId) REFERENCES `user`(id),
     FOREIGN KEY(actorId) REFERENCES `person`(id),
-    FOREIGN KEY(createdBy) REFERENCES `guardian`(personId),
-    FOREIGN KEY(finishedBy) REFERENCES `guardian`(personId),
+    FOREIGN KEY(createdBy) REFERENCES `user`(id),
+    FOREIGN KEY(finishedBy) REFERENCES `user`(id),
     FOREIGN KEY(recurringActivityId) REFERENCES `recurring_activity`(id),
     PRIMARY KEY(id)
 );
@@ -81,10 +83,10 @@ CREATE TABLE `spent`(
     paidOn DATE NOT NULL,
 
     dependentId BIGINT NOT NULL, 
-    guardianId BIGINT NOT NULL, 
+    userId BIGINT NOT NULL, 
     activityId BIGINT, 
 
     FOREIGN KEY(dependentId) REFERENCES `dependent`(personId) ON DELETE CASCADE,
-    FOREIGN KEY(guardianId) REFERENCES `guardian`(personId) ON DELETE CASCADE,
+    FOREIGN KEY(userId) REFERENCES `user`(id) ON DELETE CASCADE,
     FOREIGN KEY(activityId) REFERENCES `activity`(id)
 );

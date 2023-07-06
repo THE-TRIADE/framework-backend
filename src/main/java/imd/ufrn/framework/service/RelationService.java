@@ -30,8 +30,8 @@ public class RelationService {
     return this.relationMapper.mapRelationToRelationResponse(this.getRelationById(relationId));
   }
 
-  public List<RelationResponse> findRelationsByUserId(Long guardianId) {
-    return this.relationRepository.findByUserId(guardianId).stream().map(relationMapper::mapRelationToRelationResponse)
+  public List<RelationResponse> findRelationsByUserId(Long userId) {
+    return this.relationRepository.findByUserId(userId).stream().map(relationMapper::mapRelationToRelationResponse)
         .toList();
   }
 
@@ -51,7 +51,7 @@ public class RelationService {
 
     if(!relationUpdated.getDependentId().equals(relation.getDependentId())
         || !relationUpdated.getUserId().equals(relation.getUserId())) {
-            throw new InvalidImmutableArgumentsException("Dependent", "Guardian");
+            throw new InvalidImmutableArgumentsException("Dependent", "User");
     }
     validationService.validDaysOfWeekOrError(guardRequest.getDaysOfWeek());
 

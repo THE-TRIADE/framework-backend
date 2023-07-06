@@ -3,7 +3,7 @@ package imd.ufrn.framework.model.api.request;
 import java.util.List;
 
 import imd.ufrn.framework.model.Dependent;
-import imd.ufrn.framework.model.GuardianRole;
+import imd.ufrn.framework.model.UserRole;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -11,7 +11,7 @@ public class GroupUserDependentRequest {
     @NotEmpty
     private String name;
     @NotNull
-    private GuardianRole userRole;
+    private UserRole userRole;
     @NotNull
     private Long userId;
     @NotNull
@@ -24,10 +24,10 @@ public class GroupUserDependentRequest {
         this.name = name;
     }
     
-    public GuardianRole getUserRole() {
+    public UserRole getUserRole() {
         return userRole;
     }
-    public void setUserRole(GuardianRole userRole) {
+    public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
     }
     public List<Dependent> getDependents() {

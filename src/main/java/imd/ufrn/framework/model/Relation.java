@@ -9,14 +9,14 @@ public class Relation {
   @Id
   private Long id;
   private List<DayOfWeek> daysOfWeek;
-  private GuardianRole userRole;
+  private UserRole userRole;
   private Long dependentId;
   private Long userId;
 
   public Relation() {
   }
 
-  public Relation(Long id, List<DayOfWeek> daysOfWeek, GuardianRole userRole, Long dependentId,
+  public Relation(Long id, List<DayOfWeek> daysOfWeek, UserRole userRole, Long dependentId,
       Long userId) {
     this.id = id;
     this.daysOfWeek = daysOfWeek;
@@ -41,11 +41,11 @@ public class Relation {
     this.daysOfWeek = daysOfWeek;
   }
 
-  public GuardianRole getUserRole() {
+  public UserRole getUserRole() {
     return userRole;
   }
 
-  public void setUserRole(GuardianRole role) {
+  public void setUserRole(UserRole role) {
     this.userRole = role;
   }
 

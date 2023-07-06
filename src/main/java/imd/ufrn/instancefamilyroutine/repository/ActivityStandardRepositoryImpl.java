@@ -42,7 +42,7 @@ public class ActivityStandardRepositoryImpl implements ActivityRepository<Activi
   @Override
   public ActivityStandard save(ActivityStandard activity) {
     KeyHolder keyHolder = new GeneratedKeyHolder();
-    String sql = "INSERT INTO activity (`name`,`description`,dateStart,dateEnd,hourStart,hourEnd,`state`,commentary,dependentId,currentGuardianId,actorId,createdBy,recurringActivityId) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    String sql = "INSERT INTO activity (`name`,`description`,dateStart,dateEnd,hourStart,hourEnd,`state`,commentary,dependentId,currentUserId,actorId,createdBy,recurringActivityId) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
     
     
     jdbcTemplate.update(connection -> {
@@ -56,7 +56,7 @@ public class ActivityStandardRepositoryImpl implements ActivityRepository<Activi
       ps.setString(7, activity.getState().toString());
       ps.setString(8, activity.getCommentary());
       ps.setLong(9, activity.getDependentId());
-      ps.setLong(10, activity.getCurrentGuardian());
+      ps.setLong(10, activity.getCurrentUser());
       ps.setLong(11, activity.getActor());
       ps.setLong(12, activity.getCreatedBy());
       if (activity.getRecurringActivityId() != null){
@@ -74,7 +74,7 @@ public class ActivityStandardRepositoryImpl implements ActivityRepository<Activi
 
   @Override
   public ActivityStandard update(ActivityStandard activity) {
-    String sql = "UPDATE activity SET `name` = ?, `description` = ?, dateStart = ?, dateEnd = ?, hourStart = ?, hourEnd = ?, `state` = ?, commentary = ?, dependentId = ?, currentGuardianId = ?, actorId = ?, createdBy = ?, finishedBy = ? WHERE id = ?";
+    String sql = "UPDATE activity SET `name` = ?, `description` = ?, dateStart = ?, dateEnd = ?, hourStart = ?, hourEnd = ?, `state` = ?, commentary = ?, dependentId = ?, currentUserId = ?, actorId = ?, createdBy = ?, finishedBy = ? WHERE id = ?";
     
     jdbcTemplate.update(sql, 
             activity.getName(),
@@ -86,7 +86,7 @@ public class ActivityStandardRepositoryImpl implements ActivityRepository<Activi
             activity.getState().toString(),
             activity.getCommentary(),
             activity.getDependentId(),
-            activity.getCurrentGuardian(),
+            activity.getCurrentUser(),
             activity.getActor(),
             activity.getCreatedBy(),
             activity.getFinishedBy(),

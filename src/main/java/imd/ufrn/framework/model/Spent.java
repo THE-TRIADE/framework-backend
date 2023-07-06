@@ -13,19 +13,19 @@ public class Spent {
 
   private Long activityId;
   private Long dependentId;
-  private Long guardianId;
+  private Long userId;
 
   public Spent() {
   }
 
-  public Spent(Long id, String name, Integer value, Date paidOn, Long activityId, Long dependentId, Long guardianId) {
+  public Spent(Long id, String name, Integer value, Date paidOn, Long activityId, Long dependentId, Long userId) {
     this.id = id;
     this.name = name;
     this.value = value;
     this.paidOn = paidOn;
     this.activityId = activityId;
     this.dependentId = dependentId;
-    this.guardianId = guardianId;
+    this.userId = userId;
   }
 
   public Long getId() {
@@ -76,12 +76,12 @@ public class Spent {
     this.dependentId = dependentId;
   }
 
-  public Long getGuardianId() {
-    return guardianId;
+  public Long getUserId() {
+    return userId;
   }
 
-  public void setGuardianId(Long guardianId) {
-    this.guardianId = guardianId;
+  public void setUserId(Long userId) {
+    this.userId = userId;
   }
 
 }

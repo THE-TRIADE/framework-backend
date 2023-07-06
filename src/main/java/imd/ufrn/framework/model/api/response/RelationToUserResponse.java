@@ -2,16 +2,16 @@ package imd.ufrn.framework.model.api.response;
 
 import java.util.List;
 
-import imd.ufrn.framework.model.GuardianRole;
+import imd.ufrn.framework.model.UserRole;
 
-public class GuardToGuardianResponse {
+public class RelationToUserResponse {
     private Long id;
     private List<Integer> daysOfWeek;
-    private GuardianRole guardianRole;
+    private UserRole userRole;
     private Long dependentId;
     private String dependentName;
     
-    public GuardToGuardianResponse() {}
+    public RelationToUserResponse() {}
     public Long getId() {
         return id;
     }
@@ -24,11 +24,11 @@ public class GuardToGuardianResponse {
     public void setDaysOfWeek(List<Integer> daysOfWeek) {
         this.daysOfWeek = daysOfWeek;
     }
-    public GuardianRole getGuardianRole() {
-        return guardianRole;
+    public UserRole getUserRole() {
+        return userRole;
     }
-    public void setGuardianRole(GuardianRole guardianRole) {
-        this.guardianRole = guardianRole;
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
     public Long getDependentId() {
         return dependentId;

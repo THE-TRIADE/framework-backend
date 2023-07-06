@@ -11,8 +11,8 @@ public class SpentResponse {
   private Long dependentId;
   private String dependentName;
 
-  private Long guardianId;
-  private String guardianName;
+  private Long userId;
+  private String userName;
 
   private Long activityId;
   private String activityName;
@@ -68,20 +68,20 @@ public class SpentResponse {
     this.dependentName = dependentName;
   }
 
-  public Long getGuardianId() {
-    return guardianId;
+  public Long getUserId() {
+    return userId;
   }
 
-  public void setGuardianId(Long guardianId) {
-    this.guardianId = guardianId;
+  public void setUserId(Long userId) {
+    this.userId = userId;
   }
 
-  public String getGuardianName() {
-    return guardianName;
+  public String getUserName() {
+    return userName;
   }
 
-  public void setGuardianName(String guardianName) {
-    this.guardianName = guardianName;
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
   public Long getActivityId() {
