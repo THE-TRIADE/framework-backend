@@ -9,7 +9,7 @@ INSERT INTO guardian (email, `password`, personId) VALUES
     ('ana@email.com', '$2a$10$RleiVtfl2ikXq1RYADYTC.rsUoA6eScRlk293ygGXzDjmFWE/yBQq', 1),
     ('leandro@email.com', '$2a$10$/8XMU9zaTUp3Hbj9II1OxONTx7zvKaWzL7OW30JoikiDkopZqQOGu', 2);
 
-INSERT INTO family_group (`name`) VALUES
+INSERT INTO group_user_dependent (`name`) VALUES
     ('Família Sampaio'),
     ('Família Oliveira'),
     ('Família Bolevar');

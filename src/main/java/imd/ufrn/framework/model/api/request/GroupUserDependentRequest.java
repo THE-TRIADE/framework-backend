@@ -7,13 +7,13 @@ import imd.ufrn.framework.model.GuardianRole;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-public class FamilyGroupRequest {
+public class GroupUserDependentRequest {
     @NotEmpty
     private String name;
     @NotNull
-    private GuardianRole guardianRole;
+    private GuardianRole userRole;
     @NotNull
-    private Long guardianId;
+    private Long userId;
     @NotNull
     private List<Dependent> dependents;
 
@@ -24,22 +24,22 @@ public class FamilyGroupRequest {
         this.name = name;
     }
     
-    public GuardianRole getGuardianRole() {
-        return guardianRole;
+    public GuardianRole getUserRole() {
+        return userRole;
     }
-    public void setGuardianRole(GuardianRole guardianRole) {
-        this.guardianRole = guardianRole;
-    }
-    public Long getGuardianId() {
-        return guardianId;
-    }
-    public void setGuardianId(Long guardianId) {
-        this.guardianId = guardianId;
+    public void setUserRole(GuardianRole userRole) {
+        this.userRole = userRole;
     }
     public List<Dependent> getDependents() {
         return dependents;
     }
     public void setDependents(List<Dependent> dependents) {
         this.dependents = dependents;
+    }
+    public Long getUserId() {
+        return userId;
+    }
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

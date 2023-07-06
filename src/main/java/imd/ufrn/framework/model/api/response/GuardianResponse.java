@@ -9,7 +9,7 @@ public class GuardianResponse {
     private String cpf;
     private LocalDate birthDate;
     private String email;
-    private List<FamilyGroupResponse> familyGroups;
+    private List<GroupUserDependentResponse> familyGroups;
     private List<GuardToGuardianResponse> guards;
 
     public GuardianResponse() {
@@ -55,11 +55,11 @@ public class GuardianResponse {
         this.birthDate = birthDate;
     }
 
-    public List<FamilyGroupResponse> getFamilyGroups() {
+    public List<GroupUserDependentResponse> getFamilyGroups() {
         return familyGroups;
     }
 
-    public void setFamilyGroups(List<FamilyGroupResponse> familyGroups) {
+    public void setFamilyGroups(List<GroupUserDependentResponse> familyGroups) {
         this.familyGroups = familyGroups;
     }
 

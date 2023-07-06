@@ -1,12 +1,12 @@
 package imd.ufrn.framework.model;
 
-public class FamilyGroup {
+public class GroupUserDependent {
     private Long id;
     private String name;
 
-    public FamilyGroup(){}
+    public GroupUserDependent(){}
 
-    public FamilyGroup(String name){
+    public GroupUserDependent(String name){
         this.name = name;
     }
 
