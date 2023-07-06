@@ -5,16 +5,16 @@ import java.util.List;
 import imd.ufrn.framework.model.GuardianRole;
 import jakarta.validation.constraints.NotNull;
 
-public class GuardRequest {
+public class RelationRequest {
   private List<Integer> daysOfWeek;
   @NotNull
-  private GuardianRole guardianRole;
+  private GuardianRole userRole;
   @NotNull
   private Long dependentId;
   @NotNull
-  private Long guardianId;
+  private Long userId;
 
-  public GuardRequest() {
+  public RelationRequest() {
   }
 
   public List<Integer> getDaysOfWeek() {
@@ -25,12 +25,12 @@ public class GuardRequest {
     this.daysOfWeek = daysOfWeek;
   }
 
-  public GuardianRole getGuardianRole() {
-    return guardianRole;
+  public GuardianRole getUserRole() {
+    return userRole;
   }
 
-  public void setGuardianRole(GuardianRole role) {
-    this.guardianRole = role;
+  public void setUserRole(GuardianRole role) {
+    this.userRole = role;
   }
 
   public Long getDependentId() {
@@ -41,11 +41,11 @@ public class GuardRequest {
     this.dependentId = dependentId;
   }
 
-  public Long getGuardianId() {
-    return guardianId;
+  public Long getUserId() {
+    return userId;
   }
 
-  public void setGuardianId(Long guardianId) {
-    this.guardianId = guardianId;
+  public void setUserId(Long userId) {
+    this.userId = userId;
   }
 }

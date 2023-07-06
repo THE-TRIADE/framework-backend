@@ -35,16 +35,16 @@ CREATE TABLE `recurring_activity` (
     PRIMARY KEY(id)
 );
 
-CREATE TABLE `guard`(
+CREATE TABLE `relation`(
     id BIGINT NOT NULL AUTO_INCREMENT,
     daysOfWeek VARCHAR(56),
-    guardianRole VARCHAR(9) NOT NULL,
+    userRole VARCHAR(9) NOT NULL,
 
     dependentId BIGINT NOT NULL, 
-    guardianId BIGINT NOT NULL, 
+    userId BIGINT NOT NULL,
 
     FOREIGN KEY(dependentId) REFERENCES `dependent`(personId) ON DELETE CASCADE,
-    FOREIGN KEY(guardianId) REFERENCES `guardian`(personId) ON DELETE CASCADE
+    FOREIGN KEY(userId) REFERENCES `guardian`(personId) ON DELETE CASCADE
 );
 
 CREATE TABLE `activity`(
