@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import imd.ufrn.framework.model.User;
-import imd.ufrn.framework.model.Person;
+import imd.ufrn.framework.service.DependentService;
 import imd.ufrn.framework.service.UserService;
-import imd.ufrn.framework.service.PersonService;
 import imd.ufrn.instancefamilyroutine.model.ActivityStandard;
+import imd.ufrn.instancefamilyroutine.model.DependentStandard;
 import imd.ufrn.instancefamilyroutine.model.api.request.ActivityStandardRequest;
 import imd.ufrn.instancefamilyroutine.model.api.response.ActivityStandardResponse;
 
@@ -20,7 +20,7 @@ public class ActivityStandardMapper {
     @Autowired
     private UserService userService;
     @Autowired
-    private PersonService personService;
+    private DependentService<DependentStandard> dependentService;
 
     public ActivityStandard mapActivityRequestToActivity(ActivityStandardRequest activityRequest) {
         ActivityStandard activity = new ActivityStandard();
@@ -47,7 +47,7 @@ public class ActivityStandardMapper {
         activityResponse.setHourStart(activity.getHourStart());
         activityResponse.setHourEnd(activity.getHourEnd());
         activityResponse.setDependentId(activity.getDependentId());
-        Person dependent = this.personService.findPersonById(activity.getDependentId());
+        DependentStandard dependent = this.dependentService.findDependentById(activity.getDependentId());
         activityResponse.setDependentName(dependent.getName());
 
         activityResponse.setCurrentUserId(activity.getCurrentUser());
@@ -56,8 +56,12 @@ public class ActivityStandardMapper {
         activityResponse.setCurrentUserName(currentUser.getName());
         
         activityResponse.setActorId(activity.getActor());
-        Person actor = this.personService.findPersonById(activity.getActor());
-        activityResponse.setActorName(actor.getName());
+        if(activity.getActor() == activity.getDependentId()){
+            activityResponse.setActorName(dependent.getName());
+        }else{
+            User user = this.userService.findUserById(activity.getActor());
+            activityResponse.setActorName(user.getName());
+        }
 
         activityResponse.setCreatedById(activity.getCreatedBy());
         User createdByUser = this.userService.findUserById(activity.getCreatedBy());

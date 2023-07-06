@@ -15,7 +15,7 @@ public class GroupUserDependentRequest {
     @NotNull
     private Long userId;
     @NotNull
-    private List<Dependent> dependents;
+    private List<? extends Dependent> dependents;
 
     public String getName() {
         return name;
@@ -30,10 +30,10 @@ public class GroupUserDependentRequest {
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
     }
-    public List<Dependent> getDependents() {
+    public List<? extends Dependent> getDependents() {
         return dependents;
     }
-    public void setDependents(List<Dependent> dependents) {
+    public void setDependents(List<? extends Dependent> dependents) {
         this.dependents = dependents;
     }
     public Long getUserId() {

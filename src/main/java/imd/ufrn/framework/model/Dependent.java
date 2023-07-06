@@ -1,10 +1,28 @@
 package imd.ufrn.framework.model;
 
-import java.sql.Date;
+import org.springframework.data.annotation.Id;
 
-public class Dependent extends Person {
-
+public abstract class Dependent {
+  @Id
+  private Long id;
   private Long groupId;
+  private String name;
+
+  public Dependent() {}
+
+  public Dependent(Long id, Long groupId, String name) {
+    this.id = id;
+    this.groupId = groupId;
+    this.name = name;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 
   public Long getGroupId() {
     return groupId;
@@ -14,11 +32,11 @@ public class Dependent extends Person {
     this.groupId = groupId;
   }
 
-  public Dependent() {
-
+    public Long getId() {
+    return id;
   }
 
-  public Dependent(Long id, String name, String cpf, Date birthDate) {
-    super(id, name, cpf, birthDate);
+  public void setId(Long id) {
+    this.id = id;
   }
 }

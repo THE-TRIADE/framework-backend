@@ -18,23 +18,23 @@ import imd.ufrn.framework.service.DependentService;
 @CrossOrigin
 @RestController
 @RequestMapping("/dependent")
-public class DependentController {
+public abstract class DependentController<T extends Dependent> {
     @Autowired
-    private DependentService dependentService;
+    private DependentService<T> dependentService;
 
     @GetMapping
-    public List<Dependent> getAllDependents() {
+    public List<T> getAllDependents() {
         return this.dependentService.findAll();
     }
 
     @GetMapping("{dependentId}")
-    public Dependent findDependentById(@PathVariable Long dependentId) {
+    public T findDependentById(@PathVariable Long dependentId) {
         return this.dependentService.findDependentById(dependentId);
     }
 
     @PostMapping
-    public Dependent createDependent(@RequestBody Dependent newDependent) {
-        return this.dependentService.createDependentInCascade(newDependent);
+    public T createDependent(@RequestBody T newDependent) {
+        return this.dependentService.createDependent(newDependent);
     }
 
     @DeleteMapping

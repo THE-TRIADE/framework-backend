@@ -7,7 +7,7 @@ import imd.ufrn.framework.model.Dependent;
 public class GroupUserDependentResponse {
     private Long id;
     private String name;
-    private List<Dependent> dependents;
+    private List<? extends Dependent> dependents;
     public Long getId() {
         return id;
     }
@@ -20,10 +20,10 @@ public class GroupUserDependentResponse {
     public void setName(String name) {
         this.name = name;
     }
-    public List<Dependent> getDependents() {
+    public List<? extends Dependent> getDependents() {
         return dependents;
     }
-    public void setDependents(List<Dependent> dependents) {
+    public void setDependents(List<? extends Dependent> dependents) {
         this.dependents = dependents;
     }
     @Override

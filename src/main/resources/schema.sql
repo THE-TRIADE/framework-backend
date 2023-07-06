@@ -1,11 +1,3 @@
-CREATE TABLE `person` (
-    id BIGINT NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(100) NOT NULL,
-    cpf VARCHAR(11) NOT NULL,
-    birthDate DATE NOT NULL,
-    PRIMARY KEY(id)
-);
-
 CREATE TABLE `user` (
     id BIGINT NOT NULL AUTO_INCREMENT,
     email VARCHAR(100) NOT NULL,
@@ -22,14 +14,14 @@ CREATE TABLE `group_user_dependent` (
 );
 
 CREATE TABLE `dependent` (
-    personId BIGINT UNIQUE,
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    groupId BIGINT NOT NULL,
+    `name` VARCHAR(100) NOT NULL,
+    cpf VARCHAR(11) NOT NULL,
+    birthDate DATE NOT NULL,
 
-    groupId BIGINT,
     FOREIGN KEY (groupId) REFERENCES `group_user_dependent`(id),
-
-    FOREIGN KEY(personId) REFERENCES `person`(id) ON DELETE CASCADE,
-    PRIMARY KEY(personId)
-
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE `recurring_activity` (
@@ -45,7 +37,7 @@ CREATE TABLE `relation`(
     dependentId BIGINT NOT NULL, 
     userId BIGINT NOT NULL,
 
-    FOREIGN KEY(dependentId) REFERENCES `dependent`(personId) ON DELETE CASCADE,
+    FOREIGN KEY(dependentId) REFERENCES `dependent`(id) ON DELETE CASCADE,
     FOREIGN KEY(userId) REFERENCES `user`(id) ON DELETE CASCADE
 );
 
@@ -67,9 +59,8 @@ CREATE TABLE `activity`(
     finishedBy BIGINT,   
     recurringActivityId BIGINT,   
       
-    FOREIGN KEY(dependentId) REFERENCES `dependent`(personId),
+    FOREIGN KEY(dependentId) REFERENCES `dependent`(id),
     FOREIGN KEY(currentUserId) REFERENCES `user`(id),
-    FOREIGN KEY(actorId) REFERENCES `person`(id),
     FOREIGN KEY(createdBy) REFERENCES `user`(id),
     FOREIGN KEY(finishedBy) REFERENCES `user`(id),
     FOREIGN KEY(recurringActivityId) REFERENCES `recurring_activity`(id),
@@ -86,7 +77,7 @@ CREATE TABLE `spent`(
     userId BIGINT NOT NULL, 
     activityId BIGINT, 
 
-    FOREIGN KEY(dependentId) REFERENCES `dependent`(personId) ON DELETE CASCADE,
+    FOREIGN KEY(dependentId) REFERENCES `dependent`(id) ON DELETE CASCADE,
     FOREIGN KEY(userId) REFERENCES `user`(id) ON DELETE CASCADE,
-    FOREIGN KEY(activityId) REFERENCES `activity`(id)
+    FOREIGN KEY(activityId) REFERENCES `activity`(id) ON DELETE SET NULL
 );

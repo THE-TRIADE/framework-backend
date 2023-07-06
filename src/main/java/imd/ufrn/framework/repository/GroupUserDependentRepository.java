@@ -4,8 +4,6 @@ package imd.ufrn.framework.repository;
 import java.util.List;
 import java.util.Optional;
 
-import imd.ufrn.framework.model.Dependent;
-
 import imd.ufrn.framework.model.GroupUserDependent;
 
 public interface GroupUserDependentRepository {
@@ -19,8 +17,6 @@ public interface GroupUserDependentRepository {
   void deleteById(Long id);
 
   void deleteAll();
-
-  Optional<List<Dependent>> findDependentsByGroupUserDependentId(Long groupId);
 
   Optional<GroupUserDependent> findByDependentId(Long dependentId);
 
