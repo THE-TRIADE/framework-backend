@@ -16,7 +16,7 @@ public class DependentMapper implements RowMapper<Dependent> {
     dependent.setName(resultSet.getString("name"));
     dependent.setCpf(resultSet.getString("cpf"));
     dependent.setBirthDate(resultSet.getDate("birthDate"));
-    dependent.setFamilyGroupId(resultSet.getLong("familyGroupId"));
+    dependent.setGroupId(resultSet.getLong("groupId"));
     return dependent;
   }
 }

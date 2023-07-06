@@ -59,8 +59,8 @@ public class UserResponse {
         return groups;
     }
 
-    public void setGroups(List<GroupUserDependentResponse> familyGroups) {
-        this.groups = familyGroups;
+    public void setGroups(List<GroupUserDependentResponse> groups) {
+        this.groups = groups;
     }
 
     public List<RelationToUserResponse> getRelations() {

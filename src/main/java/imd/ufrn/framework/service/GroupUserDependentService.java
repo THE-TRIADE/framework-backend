@@ -60,7 +60,7 @@ public class GroupUserDependentService {
             return this.groupUserDependentMapper.mapGroupUserDependentToGroupUserDependentResponse(groupUserDependent);
         }
         for (Dependent dependent : groupUserDependentRequest.getDependents()) {
-            dependent.setFamilyGroupId(groupUserDependent.getId());
+            dependent.setGroupId(groupUserDependent.getId());
             dependent.setId(dependentService.createDependentInCascade(dependent).getId());
         }
 

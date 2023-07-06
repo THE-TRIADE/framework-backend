@@ -42,7 +42,7 @@ public class GroupUserDependentRepositoryImpl implements GroupUserDependentRepos
 
   @Override
   public Optional<GroupUserDependent> findByDependentId(Long dependentId) {
-    String sql = "SELECT * FROM group_user_dependent INNER JOIN dependent ON group_user_dependent.id = dependent.familyGroupId WHERE dependent.personId = ?";
+    String sql = "SELECT * FROM group_user_dependent INNER JOIN dependent ON group_user_dependent.id = dependent.groupId WHERE dependent.personId = ?";
     try {
         return Optional.of(jdbcTemplate.queryForObject(sql, new GroupUserDependentMapper(), dependentId));
     }
@@ -52,14 +52,14 @@ public class GroupUserDependentRepositoryImpl implements GroupUserDependentRepos
   }
 
   @Override
-  public GroupUserDependent save(GroupUserDependent familyGroup) {
+  public GroupUserDependent save(GroupUserDependent group) {
     KeyHolder keyHolder = new GeneratedKeyHolder();
     String sql = "INSERT INTO group_user_dependent (`name`) VALUES (?)";
     
     
     jdbcTemplate.update(connection -> {
       PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-      ps.setString(1, familyGroup.getName());
+      ps.setString(1, group.getName());
       return ps;
     }, keyHolder);
 
@@ -79,10 +79,10 @@ public class GroupUserDependentRepositoryImpl implements GroupUserDependentRepos
   }
 
   @Override
-  public Optional<List<Dependent>> findDependentsByGroupUserDependentId(Long familyGroupId){
-      String sql = "SELECT * FROM PERSON INNER JOIN DEPENDENT ON PERSON.id = DEPENDENT.personId WHERE familyGroupId = ?";
+  public Optional<List<Dependent>> findDependentsByGroupUserDependentId(Long groupId){
+      String sql = "SELECT * FROM PERSON INNER JOIN DEPENDENT ON PERSON.id = DEPENDENT.personId WHERE groupId = ?";
       try {
-        return Optional.of(jdbcTemplate.query(sql, new DependentMapper(), familyGroupId));
+        return Optional.of(jdbcTemplate.query(sql, new DependentMapper(), groupId));
       }
       catch(EmptyResultDataAccessException ex) {
           return Optional.empty();

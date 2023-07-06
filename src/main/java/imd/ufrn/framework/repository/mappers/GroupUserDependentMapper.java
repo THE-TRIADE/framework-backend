@@ -11,10 +11,10 @@ public class GroupUserDependentMapper implements RowMapper<GroupUserDependent> {
 
     @Override
     public GroupUserDependent mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
-        GroupUserDependent familyGroup = new GroupUserDependent();
-        familyGroup.setId(resultSet.getBigDecimal("id").longValue());
-        familyGroup.setName(resultSet.getString("name"));
-        return familyGroup;
+        GroupUserDependent group = new GroupUserDependent();
+        group.setId(resultSet.getBigDecimal("id").longValue());
+        group.setName(resultSet.getString("name"));
+        return group;
     }
     
 }

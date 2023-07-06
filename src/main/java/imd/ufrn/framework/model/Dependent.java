@@ -4,14 +4,14 @@ import java.sql.Date;
 
 public class Dependent extends Person {
 
-  private Long familyGroupId;
+  private Long groupId;
 
-  public Long getFamilyGroupId() {
-    return familyGroupId;
+  public Long getGroupId() {
+    return groupId;
   }
 
-  public void setFamilyGroupId(Long familyGroupId) {
-    this.familyGroupId = familyGroupId;
+  public void setGroupId(Long groupId) {
+    this.groupId = groupId;
   }
 
   public Dependent() {

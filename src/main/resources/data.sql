@@ -26,12 +26,11 @@ INSERT INTO `relation` (daysOfWeek, userRole, dependentId, userId) VALUES
 INSERT INTO `relation` (userRole, dependentId, userId) VALUES
     ('MOTHER', 3, 2);
 
--- INSERT INTO `activity` (`name`, dateStart, dateEnd, hourStart, hourEnd,`state`, dependentId, currentUserId, actorId, createdBy) VALUES 
---     ('Tomar banho', '2023-04-21', '2023-04-21', '20:00:00', '21:00:00', 'CREATED', 3, 1, 1, 1),
---     ('Pagar escola', '2023-04-21', '2023-04-21', '20:00:00', '21:00:00', 'CREATED', 3, 1, 1, 1),
---     ('Teste', '2023-05-18', '2023-05-21', '20:00:00', '21:00:00', 'CREATED', 5, 2, 2, 2);
+INSERT INTO `activity` (`name`, dateStart, dateEnd, hourStart, hourEnd,`state`, dependentId, currentUserId, actorId, createdBy) VALUES 
+    ('Tomar banho', '2023-04-21', '2023-04-21', '20:00:00', '21:00:00', 'CREATED', 1, 1, 1, 1),
+    ('Pagar escola', '2023-04-21', '2023-04-21', '20:00:00', '21:00:00', 'CREATED', 1, 1, 1, 1),
+    ('Teste', '2023-05-18', '2023-05-21', '20:00:00', '21:00:00', 'CREATED', 3, 2, 2, 2);
 
--- INSERT INTO `spent` (`name`, paidOn, `value`, activityId, dependentId, userId) VALUES 
---     ('Odontologia', '2021-04-26', 100000, 1, 3, 1);
--- INSERT INTO `spent` (`name`, paidOn, `value`, activityId, dependentId, userId) VALUES 
---     ('Lazer', '2021-04-27', 100000, NULL, 3, 1);
+INSERT INTO `spent` (`name`, paidOn, `value`, activityId, dependentId, userId) VALUES 
+    ('Odontologia', '2021-04-26', 100000, 1, 1, 1),
+    ('Lazer', '2021-04-27', 100000, NULL, 1, 1);

@@ -14,13 +14,13 @@ public interface GroupUserDependentRepository {
 
   Optional<GroupUserDependent> findById(Long id);
 
-  GroupUserDependent save(GroupUserDependent familyGroup);
+  GroupUserDependent save(GroupUserDependent group);
 
   void deleteById(Long id);
 
   void deleteAll();
 
-  Optional<List<Dependent>> findDependentsByGroupUserDependentId(Long familyGroupId);
+  Optional<List<Dependent>> findDependentsByGroupUserDependentId(Long groupId);
 
   Optional<GroupUserDependent> findByDependentId(Long dependentId);
 

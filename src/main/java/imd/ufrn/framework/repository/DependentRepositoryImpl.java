@@ -35,8 +35,8 @@ public class DependentRepositoryImpl implements DependentRepository {
 
   @Override
   public Dependent save(Dependent dependent) {
-    String sql = "INSERT INTO dependent (personId, familyGroupId) VALUES (?, ?)";
-    jdbcTemplate.update(sql, dependent.getId(), dependent.getFamilyGroupId());
+    String sql = "INSERT INTO dependent (personId, groupId) VALUES (?, ?)";
+    jdbcTemplate.update(sql, dependent.getId(), dependent.getGroupId());
     return dependent;
   }
 
