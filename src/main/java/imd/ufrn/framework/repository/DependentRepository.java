@@ -5,12 +5,17 @@ import java.util.Optional;
 
 import imd.ufrn.framework.model.Dependent;
 
-public interface DependentRepository {
+public interface DependentRepository <T extends Dependent> {
 
-  List<Dependent> findAll();
+  List<T> findAll();
 
-  Optional<Dependent> findById(Long id);
+  Optional<T> findById(Long id);
 
-  Dependent save(Dependent dependent);
+  T save(T dependent);
 
+  void deleteAll();
+
+  void deleteById(Long id);
+
+  Optional<List<T>> findDependentsByGroupUserDependentId(Long groupId);
 }

@@ -1,6 +1,5 @@
 package imd.ufrn.framework.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +14,14 @@ import imd.ufrn.framework.model.api.request.RelationRequest;
 import imd.ufrn.framework.model.api.response.GroupUserDependentResponse;
 import imd.ufrn.framework.repository.GroupUserDependentRepository;
 import imd.ufrn.framework.service.exception.EntityNotFoundException;
+import imd.ufrn.instancefamilyroutine.model.DependentStandard;
 
 @Service
 public class GroupUserDependentService {
     @Autowired
     private GroupUserDependentRepository groupUserDependentRepository;
     @Autowired
-    private DependentService dependentService;
+    private DependentService<DependentStandard> dependentService;
     @Autowired
     private RelationService guardService;
     @Autowired
@@ -60,8 +60,9 @@ public class GroupUserDependentService {
             return this.groupUserDependentMapper.mapGroupUserDependentToGroupUserDependentResponse(groupUserDependent);
         }
         for (Dependent dependent : groupUserDependentRequest.getDependents()) {
-            dependent.setGroupId(groupUserDependent.getId());
-            dependent.setId(dependentService.createDependentInCascade(dependent).getId());
+            DependentStandard dependentStandard = (DependentStandard)dependent;
+            dependentStandard.setGroupId(groupUserDependent.getId());
+            dependentStandard.setId(dependentService.createDependent(dependentStandard).getId());
         }
 
         for (Dependent dependent : groupUserDependentRequest.getDependents()) {
@@ -75,9 +76,8 @@ public class GroupUserDependentService {
         return this.groupUserDependentMapper.mapGroupUserDependentToGroupUserDependentResponse(groupUserDependent);
     }
 
-    public List<Dependent> getGroupUserDependentDependentsByGroupUserDependentId(Long groupUserDependentId){
-        return groupUserDependentRepository.findDependentsByGroupUserDependentId(groupUserDependentId)
-                .orElse(new ArrayList<Dependent>());
+    public List<DependentStandard> getGroupUserDependentDependentsByGroupUserDependentId(Long groupUserDependentId){
+        return dependentService.findDependentsByGroupUserDependentId(groupUserDependentId);
     }
 
     public GroupUserDependentResponse findByDependentId(Long dependentId) {

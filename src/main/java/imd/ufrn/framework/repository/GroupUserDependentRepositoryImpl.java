@@ -12,9 +12,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import imd.ufrn.framework.model.Dependent;
 import imd.ufrn.framework.model.GroupUserDependent;
-import imd.ufrn.framework.repository.mappers.DependentMapper;
 import imd.ufrn.framework.repository.mappers.GroupUserDependentMapper;
 
 @Repository
@@ -42,7 +40,7 @@ public class GroupUserDependentRepositoryImpl implements GroupUserDependentRepos
 
   @Override
   public Optional<GroupUserDependent> findByDependentId(Long dependentId) {
-    String sql = "SELECT * FROM group_user_dependent INNER JOIN dependent ON group_user_dependent.id = dependent.groupId WHERE dependent.personId = ?";
+    String sql = "SELECT * FROM group_user_dependent INNER JOIN dependent ON group_user_dependent.id = dependent.groupId WHERE dependent.id = ?";
     try {
         return Optional.of(jdbcTemplate.queryForObject(sql, new GroupUserDependentMapper(), dependentId));
     }
@@ -76,17 +74,6 @@ public class GroupUserDependentRepositoryImpl implements GroupUserDependentRepos
   public void deleteAll() {
     String sql = "DELETE FROM group_user_dependent";
     jdbcTemplate.update(sql);
-  }
-
-  @Override
-  public Optional<List<Dependent>> findDependentsByGroupUserDependentId(Long groupId){
-      String sql = "SELECT * FROM PERSON INNER JOIN DEPENDENT ON PERSON.id = DEPENDENT.personId WHERE groupId = ?";
-      try {
-        return Optional.of(jdbcTemplate.query(sql, new DependentMapper(), groupId));
-      }
-      catch(EmptyResultDataAccessException ex) {
-          return Optional.empty();
-      }
   }
 
 }

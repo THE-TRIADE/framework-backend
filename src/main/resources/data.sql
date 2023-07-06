@@ -1,8 +1,3 @@
-INSERT INTO `person` (`name`, cpf, birthDate) VALUES 
-    ('Joãozinho', 99999999999, '2012-07-13'),
-    ('Pedrinho', 88888888888, '2013-04-25'),
-    ('Josenildo', 11111111111, '2012-04-25');
-
 INSERT INTO `user` (email, `password`, `name`, cpf, birthDate) VALUES 
     ('ana@email.com', '$2a$10$RleiVtfl2ikXq1RYADYTC.rsUoA6eScRlk293ygGXzDjmFWE/yBQq', 'Ana Holanda', 99999999999, '2002-07-13'),
     ('leandro@email.com', '$2a$10$/8XMU9zaTUp3Hbj9II1OxONTx7zvKaWzL7OW30JoikiDkopZqQOGu', 'Leandro Assunção', 88888888888, '2003-04-25');
@@ -12,10 +7,11 @@ INSERT INTO group_user_dependent (`name`) VALUES
     ('Família Oliveira'),
     ('Família Boulevar');
 
-INSERT INTO `dependent` (personId, groupId) VALUES 
-    (1, 3),
-    (2, 3),
-    (3, 2);
+INSERT INTO `dependent` (`name`, cpf, birthDate, groupId) VALUES 
+    ('Joãozinho', 99999999999, '2012-07-13', 3),
+    ('Pedrinho', 88888888888, '2013-04-25', 3),
+    ('Josenildo', 11111111111, '2012-04-25', 2);
+    
 
 INSERT INTO `relation` (daysOfWeek, userRole, dependentId, userId) VALUES 
     ('SUNDAY,MONDAY', 'MOTHER', 1, 1),
