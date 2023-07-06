@@ -5,24 +5,24 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 
-public class Guard {
+public class Relation {
   @Id
   private Long id;
   private List<DayOfWeek> daysOfWeek;
-  private GuardianRole guardianRole;
+  private GuardianRole userRole;
   private Long dependentId;
-  private Long guardianId;
+  private Long userId;
 
-  public Guard() {
+  public Relation() {
   }
 
-  public Guard(Long id, List<DayOfWeek> daysOfWeek, GuardianRole guardianRole, Long dependentId,
-      Long guardianId) {
+  public Relation(Long id, List<DayOfWeek> daysOfWeek, GuardianRole userRole, Long dependentId,
+      Long userId) {
     this.id = id;
     this.daysOfWeek = daysOfWeek;
-    this.guardianRole = guardianRole;
+    this.userRole = userRole;
     this.dependentId = dependentId;
-    this.guardianId = guardianId;
+    this.userId = userId;
   }
 
   public Long getId() {
@@ -41,12 +41,12 @@ public class Guard {
     this.daysOfWeek = daysOfWeek;
   }
 
-  public GuardianRole getGuardianRole() {
-    return guardianRole;
+  public GuardianRole getUserRole() {
+    return userRole;
   }
 
-  public void setGuardianRole(GuardianRole role) {
-    this.guardianRole = role;
+  public void setUserRole(GuardianRole role) {
+    this.userRole = role;
   }
 
   public Long getDependentId() {
@@ -57,11 +57,11 @@ public class Guard {
     this.dependentId = dependentId;
   }
 
-  public Long getGuardianId() {
-    return guardianId;
+  public Long getUserId() {
+    return userId;
   }
 
-  public void setGuardianId(Long guardianId) {
-    this.guardianId = guardianId;
+  public void setUserId(Long userId) {
+    this.userId = userId;
   }
 }

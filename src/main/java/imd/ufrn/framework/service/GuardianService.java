@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import imd.ufrn.framework.model.api.response.RelationResponse;
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,7 +18,7 @@ import imd.ufrn.framework.model.Person;
 import imd.ufrn.framework.model.api.GuardianMapper;
 import imd.ufrn.framework.model.api.request.LoginRequest;
 import imd.ufrn.framework.model.api.response.FamilyGroupResponse;
-import imd.ufrn.framework.model.api.response.GuardResponse;
+import imd.ufrn.framework.model.api.response.RelationResponse;
 import imd.ufrn.framework.model.api.response.GuardianResponse;
 import imd.ufrn.framework.repository.GuardianRepository;
 import imd.ufrn.framework.service.exception.EntityNotFoundException;
@@ -27,7 +28,7 @@ public class GuardianService {
     @Autowired
     private GuardianRepository guardianRepository;
     @Autowired
-    private GuardService guardService;
+    private RelationService relationService;
     @Autowired
     private FamilyGroupService familyGroupService;
 
@@ -58,7 +59,7 @@ public class GuardianService {
         Guardian guardian = this.guardianRepository
                                 .findById(guardianId)
                                 .orElseThrow(() -> new EntityNotFoundException(guardianId, Guardian.class));
-        List<GuardResponse> guards = this.guardService.findGuardsByGuardianId(guardianId);
+        List<RelationResponse> guards = this.relationService.findRelationsByUserId(guardianId);
         Set<FamilyGroupResponse> familyGroups = new HashSet<>();
         guards.stream()
             .forEach(guard -> {

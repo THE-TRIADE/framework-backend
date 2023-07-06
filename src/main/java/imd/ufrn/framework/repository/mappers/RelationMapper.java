@@ -10,28 +10,28 @@ import org.springframework.jdbc.core.RowMapper;
 
 import imd.ufrn.framework.model.*;
 
-public class GuardMapper implements RowMapper<Guard> {
+public class RelationMapper implements RowMapper<Relation> {
 
   @Override
-  public Guard mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
-    Guard guard = new Guard();
-    guard.setId(resultSet.getLong("id"));
+  public Relation mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
+    Relation relation = new Relation();
+    relation.setId(resultSet.getLong("id"));
 
     String daysOfWeek = resultSet.getString("daysOfWeek");
 
     if (daysOfWeek != null) {
-      guard.setDaysOfWeek(
+      relation.setDaysOfWeek(
           List.of(daysOfWeek.split(","))
               .stream()
               .map(string -> DayOfWeek.valueOf(string))
               .collect(Collectors.toList()));
     }
 
-    guard.setGuardianRole(GuardianRole.valueOf(resultSet.getString("guardianRole")));
-    guard.setDependentId(resultSet.getLong("dependentId"));
-    guard.setGuardianId(resultSet.getLong("guardianId"));
+    relation.setUserRole(GuardianRole.valueOf(resultSet.getString("userRole")));
+    relation.setDependentId(resultSet.getLong("dependentId"));
+    relation.setUserId(resultSet.getLong("userId"));
 
-    return guard;
+    return relation;
   }
 
 }

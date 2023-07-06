@@ -4,19 +4,19 @@ import java.util.List;
 
 import imd.ufrn.framework.model.GuardianRole;
 
-public class GuardResponse {
+public class RelationResponse {
   private Long id;
   private List<Integer> daysOfWeek;
-  private GuardianRole guardianRole;
+  private GuardianRole userRole;
 
   private Long dependentId;
   private String dependentName;
 
-  private Long guardianId;
-  private String guardianName;
-  private String guardianEmail;
+  private Long userId;
+  private String userName;
+  private String userEmail;
 
-  public GuardResponse() {
+  public RelationResponse() {
   }
 
   public Long getId() {
@@ -35,12 +35,12 @@ public class GuardResponse {
     this.daysOfWeek = daysOfWeek;
   }
 
-  public GuardianRole getGuardianRole() {
-    return guardianRole;
+  public GuardianRole getUserRole() {
+    return userRole;
   }
 
-  public void setGuardianRole(GuardianRole role) {
-    this.guardianRole = role;
+  public void setUserRole(GuardianRole role) {
+    this.userRole = role;
   }
 
   public Long getDependentId() {
@@ -51,12 +51,12 @@ public class GuardResponse {
     this.dependentId = dependentId;
   }
 
-  public Long getGuardianId() {
-    return guardianId;
+  public Long getUserId() {
+    return userId;
   }
 
-  public void setGuardianId(Long guardianId) {
-    this.guardianId = guardianId;
+  public void setUserId(Long userId) {
+    this.userId = userId;
   }
 
   public String getDependentName() {
@@ -67,19 +67,19 @@ public class GuardResponse {
     this.dependentName = dependentName;
   }
 
-  public String getGuardianName() {
-    return guardianName;
+  public String getUserName() {
+    return userName;
   }
 
-  public void setGuardianName(String guardianName) {
-    this.guardianName = guardianName;
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
-  public String getGuardianEmail() {
-    return guardianEmail;
+  public String getUserEmail() {
+    return userEmail;
   }
 
-  public void setGuardianEmail(String guardianEmail) {
-    this.guardianEmail = guardianEmail;
+  public void setUserEmail(String userEmail) {
+    this.userEmail = userEmail;
   }
 }

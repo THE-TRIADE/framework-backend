@@ -11,7 +11,7 @@ import imd.ufrn.framework.model.Dependent;
 import imd.ufrn.framework.model.FamilyGroup;
 import imd.ufrn.framework.model.api.FamilyGroupMapper;
 import imd.ufrn.framework.model.api.request.FamilyGroupRequest;
-import imd.ufrn.framework.model.api.request.GuardRequest;
+import imd.ufrn.framework.model.api.request.RelationRequest;
 import imd.ufrn.framework.model.api.response.FamilyGroupResponse;
 import imd.ufrn.framework.repository.FamilyGroupRepository;
 import imd.ufrn.framework.service.exception.EntityNotFoundException;
@@ -23,7 +23,7 @@ public class FamilyGroupService{
     @Autowired
     private DependentService dependentService;
     @Autowired
-    private GuardService guardService;
+    private RelationService relationService;
     @Autowired
     private FamilyGroupMapper familyGroupMapper;
 
@@ -65,11 +65,11 @@ public class FamilyGroupService{
         }
 
         for (Dependent dependent : familyGroupRequest.getDependents()) {
-            GuardRequest newGuard = new GuardRequest();
-            newGuard.setDependentId(dependent.getId());
-            newGuard.setGuardianId(familyGroupRequest.getGuardianId());
-            newGuard.setGuardianRole(familyGroupRequest.getGuardianRole());
-            this.guardService.createGuard(newGuard);
+            RelationRequest newRelation = new RelationRequest();
+            newRelation.setDependentId(dependent.getId());
+            newRelation.setUserId(familyGroupRequest.getGuardianId());
+            newRelation.setUserRole(familyGroupRequest.getGuardianRole());
+            this.relationService.createRelation(newRelation);
         }
 
         return this.familyGroupMapper.mapFamilyGroupToFamilyGroupResponse(familyGroup);
