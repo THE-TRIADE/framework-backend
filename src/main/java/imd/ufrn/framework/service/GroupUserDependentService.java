@@ -11,7 +11,7 @@ import imd.ufrn.framework.model.Dependent;
 import imd.ufrn.framework.model.GroupUserDependent;
 import imd.ufrn.framework.model.api.GroupUserDependentMapper;
 import imd.ufrn.framework.model.api.request.GroupUserDependentRequest;
-import imd.ufrn.framework.model.api.request.GuardRequest;
+import imd.ufrn.framework.model.api.request.RelationRequest;
 import imd.ufrn.framework.model.api.response.GroupUserDependentResponse;
 import imd.ufrn.framework.repository.GroupUserDependentRepository;
 import imd.ufrn.framework.service.exception.EntityNotFoundException;
@@ -23,7 +23,7 @@ public class GroupUserDependentService {
     @Autowired
     private DependentService dependentService;
     @Autowired
-    private GuardService guardService;
+    private RelationService guardService;
     @Autowired
     private GroupUserDependentMapper groupUserDependentMapper;
 
@@ -65,11 +65,11 @@ public class GroupUserDependentService {
         }
 
         for (Dependent dependent : groupUserDependentRequest.getDependents()) {
-            GuardRequest newGuard = new GuardRequest();
-            newGuard.setDependentId(dependent.getId());
-            newGuard.setGuardianId(groupUserDependentRequest.getUserId());
-            newGuard.setGuardianRole(groupUserDependentRequest.getUserRole());
-            this.guardService.createGuard(newGuard);
+            RelationRequest newRelation = new RelationRequest();
+            newRelation.setDependentId(dependent.getId());
+            newRelation.setUserId(groupUserDependentRequest.getUserId());
+            newRelation.setUserRole(groupUserDependentRequest.getUserRole());
+            this.guardService.createRelation(newRelation);
         }
 
         return this.groupUserDependentMapper.mapGroupUserDependentToGroupUserDependentResponse(groupUserDependent);

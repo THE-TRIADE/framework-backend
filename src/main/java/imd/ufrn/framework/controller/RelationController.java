@@ -3,6 +3,8 @@ package imd.ufrn.framework.controller;
 import java.util.List;
 
 import imd.ufrn.framework.service.RelationService;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +39,7 @@ public class RelationController {
   }
 
   @PostMapping
-  public RelationResponse createRelation(@RequestBody RelationRequest newRelation) {
+  public RelationResponse createRelation(@RequestBody @Valid RelationRequest newRelation) {
     return this.relationService.createRelation(newRelation);
   }
 

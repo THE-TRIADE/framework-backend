@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import imd.ufrn.framework.model.Guardian;
 import imd.ufrn.framework.model.api.response.GroupUserDependentResponse;
-import imd.ufrn.framework.model.api.response.RelationResponse;
 import imd.ufrn.framework.model.api.response.GuardToGuardianResponse;
 import imd.ufrn.framework.model.api.response.GuardianResponse;
 
