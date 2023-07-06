@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import imd.ufrn.framework.model.Dependent;
-import imd.ufrn.framework.model.Guardian;
+import imd.ufrn.framework.model.User;
 import imd.ufrn.framework.model.Spent;
 import imd.ufrn.framework.model.api.request.SpentRequest;
 import imd.ufrn.framework.model.api.response.ActivityResponse;
 import imd.ufrn.framework.model.api.response.SpentResponse;
 import imd.ufrn.framework.service.DependentService;
-import imd.ufrn.framework.service.GuardianService;
+import imd.ufrn.framework.service.UserService;
 import imd.ufrn.instancefamilyroutine.service.ActivityStandardService;
 
 import java.sql.Date;
@@ -18,7 +18,7 @@ import java.sql.Date;
 @Component
 public class SpentMapper {
   @Autowired
-  private GuardianService guardianService;
+  private UserService guardianService;
   @Autowired
   private DependentService dependentService;
   @Autowired
@@ -52,7 +52,7 @@ public class SpentMapper {
     spentResponse.setDependentName(dependent.getName());
 
     spentResponse.setGuardianId(spent.getGuardianId());
-    Guardian guardian = this.guardianService.findGuardianById(spent.getGuardianId());
+    User guardian = this.guardianService.findUserById(spent.getGuardianId());
     spentResponse.setGuardianName(guardian.getName());
 
     if (spent.getActivityId() != null) {

@@ -3,16 +3,16 @@ package imd.ufrn.framework.model.api.response;
 import java.time.LocalDate;
 import java.util.List;
 
-public class GuardianResponse {
+public class UserResponse {
     private Long id;
     private String name;
     private String cpf;
     private LocalDate birthDate;
     private String email;
     private List<FamilyGroupResponse> familyGroups;
-    private List<GuardToGuardianResponse> guards;
+    private List<GuardToUserResponse> guards;
 
-    public GuardianResponse() {
+    public UserResponse() {
     }
 
     public Long getId() {
@@ -63,11 +63,11 @@ public class GuardianResponse {
         this.familyGroups = familyGroups;
     }
 
-    public List<GuardToGuardianResponse> getGuards() {
+    public List<GuardToUserResponse> getGuards() {
         return guards;
     }
 
-    public void setGuards(List<GuardToGuardianResponse> guards) {
+    public void setGuards(List<GuardToUserResponse> guards) {
         this.guards = guards;
     }
 

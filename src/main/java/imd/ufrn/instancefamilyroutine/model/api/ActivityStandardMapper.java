@@ -6,9 +6,9 @@ import java.sql.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import imd.ufrn.framework.model.Guardian;
+import imd.ufrn.framework.model.User;
 import imd.ufrn.framework.model.Person;
-import imd.ufrn.framework.service.GuardianService;
+import imd.ufrn.framework.service.UserService;
 import imd.ufrn.framework.service.PersonService;
 import imd.ufrn.instancefamilyroutine.model.ActivityStandard;
 import imd.ufrn.instancefamilyroutine.model.api.request.ActivityStandardRequest;
@@ -18,7 +18,7 @@ import imd.ufrn.instancefamilyroutine.model.api.response.ActivityStandardRespons
 public class ActivityStandardMapper {
 
     @Autowired
-    private GuardianService guardianService;
+    private UserService guardianService;
     @Autowired
     private PersonService personService;
 
@@ -51,7 +51,7 @@ public class ActivityStandardMapper {
         activityResponse.setDependentName(dependent.getName());
 
         activityResponse.setCurrentGuardianId(activity.getCurrentGuardian());
-        Guardian currentGuardian = this.guardianService.findGuardianById(activity.getCurrentGuardian());
+        User currentGuardian = this.guardianService.findUserById(activity.getCurrentGuardian());
         activityResponse.setCurrentGuardianEmail(currentGuardian.getEmail());
         activityResponse.setCurrentGuardianName(currentGuardian.getName());
         
@@ -60,7 +60,7 @@ public class ActivityStandardMapper {
         activityResponse.setActorName(actor.getName());
 
         activityResponse.setCreatedById(activity.getCreatedBy());
-        Guardian createdByGuardian = this.guardianService.findGuardianById(activity.getCreatedBy());
+        User createdByGuardian = this.guardianService.findUserById(activity.getCreatedBy());
         activityResponse.setCreatedByEmail(createdByGuardian.getEmail());
         activityResponse.setCreatedByName(createdByGuardian.getName());
         activityResponse.setRecurringActivityId(activity.getRecurringActivityId());
@@ -70,7 +70,7 @@ public class ActivityStandardMapper {
         }
         if(activity.getFinishedBy() != null) {
             activityResponse.setFinishedById(activity.getFinishedBy());
-            Guardian finishedByGuardian = this.guardianService.findGuardianById(activity.getFinishedBy());
+            User finishedByGuardian = this.guardianService.findUserById(activity.getFinishedBy());
             activityResponse.setFinishedByName(finishedByGuardian.getName());
         }
 

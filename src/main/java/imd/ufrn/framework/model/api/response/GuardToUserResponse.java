@@ -4,14 +4,14 @@ import java.util.List;
 
 import imd.ufrn.framework.model.GuardianRole;
 
-public class GuardToGuardianResponse {
+public class GuardToUserResponse {
     private Long id;
     private List<Integer> daysOfWeek;
-    private GuardianRole guardianRole;
+    private GuardianRole userRole;
     private Long dependentId;
     private String dependentName;
     
-    public GuardToGuardianResponse() {}
+    public GuardToUserResponse() {}
     public Long getId() {
         return id;
     }
@@ -24,11 +24,11 @@ public class GuardToGuardianResponse {
     public void setDaysOfWeek(List<Integer> daysOfWeek) {
         this.daysOfWeek = daysOfWeek;
     }
-    public GuardianRole getGuardianRole() {
-        return guardianRole;
+    public GuardianRole getUserRole() {
+        return userRole;
     }
-    public void setGuardianRole(GuardianRole guardianRole) {
-        this.guardianRole = guardianRole;
+    public void setUserRole(GuardianRole guardianRole) {
+        this.userRole = guardianRole;
     }
     public Long getDependentId() {
         return dependentId;

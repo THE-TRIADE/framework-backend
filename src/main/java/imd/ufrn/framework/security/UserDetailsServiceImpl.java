@@ -6,14 +6,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import imd.ufrn.framework.repository.GuardianRepository;
+import imd.ufrn.framework.repository.UserRepository;
 import imd.ufrn.framework.service.exception.InvalidUserException;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private GuardianRepository guardianRepository;
+    private UserRepository guardianRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

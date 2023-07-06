@@ -11,14 +11,14 @@ import imd.ufrn.framework.model.*;
 import imd.ufrn.framework.model.api.request.GuardRequest;
 import imd.ufrn.framework.model.api.response.GuardResponse;
 import imd.ufrn.framework.service.DependentService;
-import imd.ufrn.framework.service.GuardianService;
+import imd.ufrn.framework.service.UserService;
 import imd.ufrn.framework.service.exception.InvalidDayException;
 
 @Component
 public class GuardMapper {
   @Lazy
   @Autowired
-  private GuardianService guardianService;
+  private UserService guardianService;
   @Autowired
   private DependentService dependentService;
 
@@ -67,7 +67,7 @@ public class GuardMapper {
     guardResponse.setDependentName(dependent.getName());
 
     guardResponse.setGuardianId(guard.getGuardianId());
-    Guardian guardian = this.guardianService.findGuardianById(guard.getGuardianId());
+    User guardian = this.guardianService.findUserById(guard.getGuardianId());
     guardResponse.setGuardianName(guardian.getName());
     guardResponse.setGuardianEmail(guardian.getEmail());
 
