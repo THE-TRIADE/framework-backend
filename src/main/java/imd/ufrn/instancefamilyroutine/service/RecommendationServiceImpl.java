@@ -1,6 +1,7 @@
 package imd.ufrn.instancefamilyroutine.service;
 
 import imd.ufrn.framework.model.api.response.SpentResponse;
+import imd.ufrn.framework.service.RecommendationService;
 import imd.ufrn.framework.service.SpentService;
 import org.springframework.stereotype.Service;
 

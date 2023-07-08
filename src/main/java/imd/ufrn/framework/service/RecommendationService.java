@@ -1,4 +1,4 @@
-package imd.ufrn.instancefamilyroutine.service;
+package imd.ufrn.framework.service;
 
 import java.util.List;
 
