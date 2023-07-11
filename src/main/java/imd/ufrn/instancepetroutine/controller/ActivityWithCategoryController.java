@@ -40,6 +40,14 @@ public class ActivityWithCategoryController implements ActivityController<Activi
         return this.activityService.findActivityById(activityId);
     }
 
+    @GetMapping("/by-category-id/{categoryId}")
+    public List<ActivityWithCategoryResponse> findActivitiesByCategoryId(@PathVariable Long categoryId) {
+        return this.activityService.findActivitiesByCategoryId(categoryId);
+    }
+    @GetMapping("/by-dependent-id/{dependentId}/by-category-id/{categoryId}")
+    public List<ActivityWithCategoryResponse> findActivitiesByDependentIdAndCategoryId(@PathVariable Long dependentId, @PathVariable Long categoryId) {
+        return this.activityService.findActivitiesByDependentIdAndCategoryId(dependentId,categoryId);
+    }
     @PostMapping
     public ActivityWithCategoryResponse createActivity(@RequestBody @Valid ActivityWithCategoryRequest activity) {
         return this.activityService.handleActivityRequest(activity);

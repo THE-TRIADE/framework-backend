@@ -38,12 +38,19 @@ public class ActivityWithCategoryService extends ActivityService<ActivityWithCat
         return activity;
     }
 
-    protected List<ActivityWithCategoryResponse> findActivitiesByCategoryId(Long categoryId) {
+    public List<ActivityWithCategoryResponse> findActivitiesByCategoryId(Long categoryId) {
         return this
             .findAll()
             .stream()
             .filter(activity -> activity.getCategoryId().equals(categoryId))
             .toList();
     }
-	
+
+    public List<ActivityWithCategoryResponse> findActivitiesByDependentIdAndCategoryId(Long dependentId, Long categoryId) {
+        return this.findAll()
+                .stream()
+                .filter(activity -> activity.getDependentId().equals(dependentId) && activity.getCategoryId().equals(categoryId))
+                .toList();
+    }
+
 }
