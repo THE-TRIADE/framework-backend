@@ -18,8 +18,8 @@ INSERT INTO `dependent_group` (dependentId, groupId) VALUES
     (3, 2);
 
 INSERT INTO `relation` (daysOfWeek, userRole, dependentId, userId) VALUES 
-    ('SUNDAY,MONDAY', 'MOTHER', 1, 1),
     ('SUNDAY,MONDAY', 'MOTHER', 2, 1),
+    ('SUNDAY,MONDAY', 'MOTHER', 1, 1),
     ('SUNDAY,MONDAY', 'FATHER', 2, 2),
     ('SUNDAY,MONDAY', 'FATHER', 3, 2);
 
