@@ -11,7 +11,7 @@ CREATE TABLE `user` (
 CREATE TABLE `dependent` (
     id BIGINT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(100) NOT NULL,
-    cpf CHAR(11) UNIQUE NOT NULL,
+    race VARCHAR(30) NOT NULL,
     birthDate DATE NOT NULL,
     PRIMARY KEY(id)
 );
@@ -71,10 +71,10 @@ CREATE TABLE `activity`(
     recurringActivityId BIGINT,   
       
     categoryId BIGINT NOT NULL,
-    FOREIGN KEY(dependentId) REFERENCES `dependent`(id),
+    FOREIGN KEY(dependentId) REFERENCES `dependent`(id) ON DELETE CASCADE,
     FOREIGN KEY(currentUserId) REFERENCES `user`(id),
     FOREIGN KEY(createdBy) REFERENCES `user`(id),
-    FOREIGN KEY(finishedBy) REFERENCES `user`(id),
+    FOREIGN KEY(finishedBy) REFERENCES `user`(id) ON DELETE SET NULL,
     FOREIGN KEY(recurringActivityId) REFERENCES `recurring_activity`(id),
     FOREIGN KEY(categoryId) REFERENCES `category`(id),
     PRIMARY KEY(id)

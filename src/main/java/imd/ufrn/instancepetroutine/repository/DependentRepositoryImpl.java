@@ -41,12 +41,12 @@ public class DependentRepositoryImpl implements DependentRepository<DependentSta
   @Override
   public DependentStandard save(DependentStandard dependent) {
     KeyHolder keyHolder = new GeneratedKeyHolder();
-    String sql = "INSERT INTO dependent (`name`, cpf, birthDate) VALUES (?, ?, ?)";
+    String sql = "INSERT INTO dependent (`name`, race, birthDate) VALUES (?, ?, ?)";
 
     jdbcTemplate.update(connection -> { 
     PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
       ps.setString(1, dependent.getName());
-      ps.setString(2, dependent.getCpf());
+      ps.setString(2, dependent.getRace());
       ps.setDate(3, dependent.getBirthDate());
       return ps;
     }, keyHolder);
