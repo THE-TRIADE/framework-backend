@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import imd.ufrn.framework.model.api.request.GroupUserDependentRequest;
 import imd.ufrn.framework.model.api.response.GroupUserDependentResponse;
 import imd.ufrn.framework.service.GroupUserDependentService;
+import jakarta.validation.Valid;
 
 @CrossOrigin
 @RestController
@@ -34,7 +35,7 @@ public class GroupUserDependentController {
     }
 
     @PostMapping
-    public GroupUserDependentResponse createGroupUserDependent(@RequestBody GroupUserDependentRequest newGroupUserDependent) {
+    public GroupUserDependentResponse createGroupUserDependent(@RequestBody @Valid GroupUserDependentRequest newGroupUserDependent) {
         return this.groupUserDependentService.createGroupUserDependent(newGroupUserDependent);
     }
 

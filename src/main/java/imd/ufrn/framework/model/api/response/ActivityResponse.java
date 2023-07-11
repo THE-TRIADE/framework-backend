@@ -22,7 +22,7 @@ public abstract class ActivityResponse {
     private String currentUserName;
 
     private Long actorId;
-    private String actorName; // TODO Rever em outra issue
+    private String actorName;
 
     private Long createdById;
     private String createdByEmail;

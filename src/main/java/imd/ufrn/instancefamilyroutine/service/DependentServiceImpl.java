@@ -1,7 +1,6 @@
 package imd.ufrn.instancefamilyroutine.service;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,10 +42,4 @@ public class DependentServiceImpl implements DependentService<DependentStandard>
     public void deleteDependentById(Long dependentId) {
         this.dependentRepository.deleteById(dependentId);
     }
-
-    @Override
-    public List<DependentStandard> findDependentsByGroupUserDependentId(Long groupId) {
-        return dependentRepository.findDependentsByGroupUserDependentId(groupId).orElse(new ArrayList<>());
-    }
-
 }

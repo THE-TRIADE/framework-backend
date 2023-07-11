@@ -12,7 +12,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import imd.ufrn.framework.model.Dependent;
 import imd.ufrn.framework.repository.DependentRepository;
 import imd.ufrn.instancefamilyroutine.model.DependentStandard;
 import imd.ufrn.instancefamilyroutine.repository.mappers.DependentStandardMapper;
@@ -42,14 +41,13 @@ public class DependentRepositoryImpl implements DependentRepository<DependentSta
   @Override
   public DependentStandard save(DependentStandard dependent) {
     KeyHolder keyHolder = new GeneratedKeyHolder();
-    String sql = "INSERT INTO dependent (groupId, `name`, cpf, birthDate) VALUES (?, ?, ?, ?)";
+    String sql = "INSERT INTO dependent (`name`, cpf, birthDate) VALUES (?, ?, ?)";
 
     jdbcTemplate.update(connection -> { 
     PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-      ps.setLong(1, dependent.getGroupId());
-      ps.setString(2, dependent.getName());
-      ps.setString(3, dependent.getCpf());
-      ps.setDate(4, dependent.getBirthDate());
+      ps.setString(1, dependent.getName());
+      ps.setString(2, dependent.getCpf());
+      ps.setDate(3, dependent.getBirthDate());
       return ps;
     }, keyHolder);
 
@@ -67,14 +65,4 @@ public class DependentRepositoryImpl implements DependentRepository<DependentSta
         String sql = "DELETE FROM `dependent`";
         jdbcTemplate.update(sql);
     }
-    
-    @Override
-    public Optional<List<DependentStandard>> findDependentsByGroupUserDependentId(Long groupId){
-      String sql = "SELECT * FROM DEPENDENT WHERE groupId = ?";
-      try {
-          return Optional.of(jdbcTemplate.query(sql, new DependentStandardMapper(), groupId));
-      } catch (EmptyResultDataAccessException e) {
-          return Optional.empty();
-      } 
-    } 
 }

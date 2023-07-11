@@ -1,6 +1,6 @@
 CREATE TABLE `user` (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    email VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
     `password` VARCHAR(256) NOT NULL,
     `name` VARCHAR(100) NOT NULL,
     cpf VARCHAR(11) NOT NULL,
@@ -15,13 +15,19 @@ CREATE TABLE `group_user_dependent` (
 
 CREATE TABLE `dependent` (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    groupId BIGINT NOT NULL,
     `name` VARCHAR(100) NOT NULL,
-    cpf VARCHAR(11) NOT NULL,
+    cpf CHAR(11) UNIQUE NOT NULL,
     birthDate DATE NOT NULL,
-
-    FOREIGN KEY (groupId) REFERENCES `group_user_dependent`(id),
     PRIMARY KEY(id)
+);
+
+CREATE TABLE `dependent_group` (
+    dependentId BIGINT NOT NULL,
+    groupId BIGINT NOT NULL,
+
+    FOREIGN KEY (dependentId) REFERENCES `dependent`(id) ON DELETE CASCADE,
+    FOREIGN KEY (groupId) REFERENCES `group_user_dependent`(id) ON DELETE CASCADE,
+    PRIMARY KEY (groupId, dependentId)
 );
 
 CREATE TABLE `recurring_activity` (
@@ -81,3 +87,9 @@ CREATE TABLE `spent`(
     FOREIGN KEY(userId) REFERENCES `user`(id) ON DELETE CASCADE,
     FOREIGN KEY(activityId) REFERENCES `activity`(id) ON DELETE SET NULL
 );
+
+-- TABELA CORRESPONDENTE À INSTÂNCIA 2
+-- CREATE TABLE `category` (
+--     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+--     `name` VARCHAR(100) NOT NULL
+-- );

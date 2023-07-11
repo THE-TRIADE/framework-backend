@@ -25,7 +25,7 @@ public class GroupUserDependentMapper {
         GroupUserDependentResponse groupUserDependentResponse = new GroupUserDependentResponse();
         groupUserDependentResponse.setId(groupUserDependent.getId());
         groupUserDependentResponse.setName(groupUserDependent.getName());
-        groupUserDependentResponse.setDependents(groupUserDependentService.getGroupUserDependentDependentsByGroupUserDependentId(groupUserDependent.getId()));
+        groupUserDependentResponse.setDependents(groupUserDependentService.getDependentsByGroupUserDependentId(groupUserDependent.getId()));
 
         return groupUserDependentResponse;
     }
