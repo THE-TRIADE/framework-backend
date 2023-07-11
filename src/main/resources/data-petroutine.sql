@@ -7,10 +7,10 @@ INSERT INTO group_user_dependent (`name`) VALUES
     ('Família Oliveira'),
     ('Família Boulevar');
 
-INSERT INTO `dependent` (`name`, cpf, birthDate) VALUES 
-    ('Joãozinho', 99999999999, '2012-07-13'),
-    ('Pedrinho', 88888888888, '2013-04-25'),
-    ('Josenildo', 11111111111, '2012-04-25');
+INSERT INTO `dependent` (`name`, race, birthDate) VALUES 
+    ('Destruidor', 'puddle', '2022-07-13'),
+    ('Pãozinho', 'labrador', '2015-04-25'),
+    ('Pacificador', 'cão brabo', '2013-04-25');
 
 INSERT INTO `dependent_group` (dependentId, groupId) VALUES
     (1, 3),

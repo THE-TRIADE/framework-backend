@@ -14,8 +14,8 @@ public class DependentStandardMapper implements RowMapper<DependentStandard> {
     DependentStandard dependentstandard = new DependentStandard();
     dependentstandard.setId(resultSet.getLong("id"));
     dependentstandard.setName(resultSet.getString("name"));
+    dependentstandard.setRace(resultSet.getString("race"));
     dependentstandard.setBirthDate(resultSet.getDate("birthDate"));
-    dependentstandard.setCpf(resultSet.getString("cpf"));
     
     return dependentstandard;
   }
