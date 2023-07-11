@@ -16,6 +16,4 @@ public interface DependentRepository <T extends Dependent> {
   void deleteAll();
 
   void deleteById(Long id);
-
-  Optional<List<T>> findDependentsByGroupUserDependentId(Long groupId);
 }

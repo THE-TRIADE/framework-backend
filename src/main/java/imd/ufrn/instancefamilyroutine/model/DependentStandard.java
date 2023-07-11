@@ -11,8 +11,8 @@ public class DependentStandard extends Dependent{
 
   public DependentStandard(){}
 
-  public DependentStandard(Long id, Long groupId, String name) {
-    super(id, groupId, name);
+  public DependentStandard(Long id, String name) {
+    super(id, name);
   }
 
   public String getCpf() {

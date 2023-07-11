@@ -2,17 +2,24 @@ package imd.ufrn.framework.model;
 
 import org.springframework.data.annotation.Id;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import imd.ufrn.instancefamilyroutine.model.DependentStandard;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = DependentStandard.class, name ="DependentStandard"),
+})
 public abstract class Dependent {
   @Id
   private Long id;
-  private Long groupId;
   private String name;
 
   public Dependent() {}
 
-  public Dependent(Long id, Long groupId, String name) {
+  public Dependent(Long id, String name) {
     this.id = id;
-    this.groupId = groupId;
     this.name = name;
   }
 
@@ -22,14 +29,6 @@ public abstract class Dependent {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public Long getGroupId() {
-    return groupId;
-  }
-
-  public void setGroupId(Long groupId) {
-    this.groupId = groupId;
   }
 
     public Long getId() {

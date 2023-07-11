@@ -7,11 +7,15 @@ INSERT INTO group_user_dependent (`name`) VALUES
     ('Família Oliveira'),
     ('Família Boulevar');
 
-INSERT INTO `dependent` (`name`, cpf, birthDate, groupId) VALUES 
-    ('Joãozinho', 99999999999, '2012-07-13', 3),
-    ('Pedrinho', 88888888888, '2013-04-25', 3),
-    ('Josenildo', 11111111111, '2012-04-25', 2);
-    
+INSERT INTO `dependent` (`name`, cpf, birthDate) VALUES 
+    ('Joãozinho', 99999999999, '2012-07-13'),
+    ('Pedrinho', 88888888888, '2013-04-25'),
+    ('Josenildo', 11111111111, '2012-04-25');
+
+INSERT INTO `dependent_group` (dependentId, groupId) VALUES
+    (1, 3),
+    (2, 3),
+    (3, 2);
 
 INSERT INTO `relation` (daysOfWeek, userRole, dependentId, userId) VALUES 
     ('SUNDAY,MONDAY', 'MOTHER', 1, 1),
@@ -30,3 +34,12 @@ INSERT INTO `activity` (`name`, dateStart, dateEnd, hourStart, hourEnd,`state`, 
 INSERT INTO `spent` (`name`, paidOn, `value`, activityId, dependentId, userId) VALUES 
     ('Odontologia', '2021-04-26', 100000, 1, 1, 1),
     ('Lazer', '2021-04-27', 100000, NULL, 1, 1);
+
+-- SCRIPT CORRESPONDENTE À INSTÂNCIA 2
+-- INSERT INTO `category` (`name`) VALUES
+--     ('Saúde'),
+--     ('Limpeza'),
+--     ('Vacina'),
+--     ('Alimentação'),
+--     ('Lazer'),
+--     ('Outros');
