@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import imd.ufrn.instancepetroutine.model.DependentStandard;
 // import imd.ufrn.instancefamilyroutine.model.DependentStandard;
+import jakarta.validation.constraints.NotNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
 @JsonSubTypes({
@@ -15,6 +16,7 @@ import imd.ufrn.instancepetroutine.model.DependentStandard;
 public abstract class Dependent {
   @Id
   private Long id;
+  @NotNull
   private String name;
 
   public Dependent() {}

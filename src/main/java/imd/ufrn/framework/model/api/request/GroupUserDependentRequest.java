@@ -4,6 +4,7 @@ import java.util.List;
 
 import imd.ufrn.framework.model.Dependent;
 import imd.ufrn.framework.model.UserRole;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -15,6 +16,7 @@ public class GroupUserDependentRequest {
     @NotNull
     private Long userId;
     @NotNull
+    @Valid
     private List<? extends Dependent> dependents;
 
     public String getName() {

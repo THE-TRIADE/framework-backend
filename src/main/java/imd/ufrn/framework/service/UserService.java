@@ -69,7 +69,7 @@ public class UserService {
     @Transactional
     public User createUser(UserRequest newUser) {
         User user = this.UserMapper.mapUserRequestToUser(newUser);
-        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         
         return this.userRepository.save(user);
     }
