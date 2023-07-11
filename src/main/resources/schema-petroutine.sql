@@ -8,17 +8,17 @@ CREATE TABLE `user` (
     PRIMARY KEY(id)
 );
 
-CREATE TABLE `group_user_dependent` (
-    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(100) NOT NULL
-);
-
 CREATE TABLE `dependent` (
     id BIGINT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(100) NOT NULL,
     cpf CHAR(11) UNIQUE NOT NULL,
     birthDate DATE NOT NULL,
     PRIMARY KEY(id)
+);
+
+CREATE TABLE `group_user_dependent` (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE `dependent_group` (
@@ -47,6 +47,11 @@ CREATE TABLE `relation`(
     FOREIGN KEY(userId) REFERENCES `user`(id) ON DELETE CASCADE
 );
 
+CREATE TABLE `category` (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(100) NOT NULL
+);
+
 CREATE TABLE `activity`(
     id BIGINT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(100) NOT NULL,
@@ -65,11 +70,13 @@ CREATE TABLE `activity`(
     finishedBy BIGINT,   
     recurringActivityId BIGINT,   
       
+    categoryId BIGINT NOT NULL,
     FOREIGN KEY(dependentId) REFERENCES `dependent`(id),
     FOREIGN KEY(currentUserId) REFERENCES `user`(id),
     FOREIGN KEY(createdBy) REFERENCES `user`(id),
     FOREIGN KEY(finishedBy) REFERENCES `user`(id),
     FOREIGN KEY(recurringActivityId) REFERENCES `recurring_activity`(id),
+    FOREIGN KEY(categoryId) REFERENCES `category`(id),
     PRIMARY KEY(id)
 );
 
@@ -87,9 +94,3 @@ CREATE TABLE `spent`(
     FOREIGN KEY(userId) REFERENCES `user`(id) ON DELETE CASCADE,
     FOREIGN KEY(activityId) REFERENCES `activity`(id) ON DELETE SET NULL
 );
-
--- TABELA CORRESPONDENTE À INSTÂNCIA 2
--- CREATE TABLE `category` (
---     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
---     `name` VARCHAR(100) NOT NULL
--- );

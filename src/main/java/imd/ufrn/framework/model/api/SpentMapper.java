@@ -1,19 +1,19 @@
 package imd.ufrn.framework.model.api;
 
+import java.sql.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import imd.ufrn.framework.model.Dependent;
-import imd.ufrn.framework.model.User;
 import imd.ufrn.framework.model.Spent;
+import imd.ufrn.framework.model.User;
 import imd.ufrn.framework.model.api.request.SpentRequest;
 import imd.ufrn.framework.model.api.response.ActivityResponse;
 import imd.ufrn.framework.model.api.response.SpentResponse;
+import imd.ufrn.framework.service.ActivityService;
 import imd.ufrn.framework.service.DependentService;
 import imd.ufrn.framework.service.UserService;
-import imd.ufrn.instancefamilyroutine.service.ActivityStandardService;
-
-import java.sql.Date;
 
 @Component
 public class SpentMapper {
@@ -22,7 +22,7 @@ public class SpentMapper {
   @Autowired
   private DependentService dependentService;
   @Autowired
-  private ActivityStandardService activityService;
+  private ActivityService activityService;
 
   public Spent mapSpentRequestToSpent(SpentRequest spentRequest) {
     Spent spent = new Spent();

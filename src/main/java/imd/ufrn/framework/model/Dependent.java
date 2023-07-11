@@ -5,7 +5,8 @@ import org.springframework.data.annotation.Id;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import imd.ufrn.instancefamilyroutine.model.DependentStandard;
+import imd.ufrn.instancepetroutine.model.DependentStandard;
+// import imd.ufrn.instancefamilyroutine.model.DependentStandard;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
 @JsonSubTypes({

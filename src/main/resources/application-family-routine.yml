@@ -1,0 +1,5 @@
+spring:
+  sql:
+    init:
+      schema-locations: classpath:/schema-familyroutine.sql
+      data-locations: classpath:/data-familyroutine.sql

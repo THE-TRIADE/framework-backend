@@ -34,12 +34,3 @@ INSERT INTO `activity` (`name`, dateStart, dateEnd, hourStart, hourEnd,`state`, 
 INSERT INTO `spent` (`name`, paidOn, `value`, activityId, dependentId, userId) VALUES 
     ('Odontologia', '2021-04-26', 100000, 1, 1, 1),
     ('Lazer', '2021-04-27', 100000, NULL, 1, 1);
-
--- SCRIPT CORRESPONDENTE À INSTÂNCIA 2
--- INSERT INTO `category` (`name`) VALUES
---     ('Saúde'),
---     ('Limpeza'),
---     ('Vacina'),
---     ('Alimentação'),
---     ('Lazer'),
---     ('Outros');
