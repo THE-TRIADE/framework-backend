@@ -11,7 +11,7 @@ import imd.ufrn.framework.service.DependentService;
 import imd.ufrn.framework.service.UserService;
 import imd.ufrn.instancepetroutine.model.ActivityWithCategory;
 import imd.ufrn.instancepetroutine.model.Category;
-import imd.ufrn.instancepetroutine.model.DependentStandard;
+import imd.ufrn.instancepetroutine.model.DependentPet;
 import imd.ufrn.instancepetroutine.model.api.request.ActivityWithCategoryRequest;
 import imd.ufrn.instancepetroutine.model.api.response.ActivityWithCategoryResponse;
 import imd.ufrn.instancepetroutine.service.CategoryService;
@@ -22,7 +22,7 @@ public class ActivityWithCategoryMapper {
     @Autowired
     private UserService userService;
     @Autowired
-    private DependentService<DependentStandard> dependentService;
+    private DependentService<DependentPet> dependentService;
     @Autowired
     private CategoryService categoryService;
 
@@ -52,7 +52,7 @@ public class ActivityWithCategoryMapper {
         activityResponse.setHourStart(activity.getHourStart());
         activityResponse.setHourEnd(activity.getHourEnd());
         activityResponse.setDependentId(activity.getDependentId());
-        DependentStandard dependent = this.dependentService.findDependentById(activity.getDependentId());
+        DependentPet dependent = this.dependentService.findDependentById(activity.getDependentId());
         activityResponse.setDependentName(dependent.getName());
 
         activityResponse.setCurrentUserId(activity.getCurrentUser());

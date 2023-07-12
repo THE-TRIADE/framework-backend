@@ -13,33 +13,33 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import imd.ufrn.framework.repository.DependentRepository;
-import imd.ufrn.instancepetroutine.model.DependentStandard;
-import imd.ufrn.instancepetroutine.repository.mappers.DependentStandardMapper;
+import imd.ufrn.instancepetroutine.model.DependentPet;
+import imd.ufrn.instancepetroutine.repository.mappers.DependentPetMapper;
 
 @Repository
-public class DependentRepositoryImpl implements DependentRepository<DependentStandard> {
+public class DependentPetRepositoryImpl implements DependentRepository<DependentPet> {
 
   @Autowired
   private JdbcTemplate jdbcTemplate;
 
   @Override
-  public List<DependentStandard> findAll() {
+  public List<DependentPet> findAll() {
     String sql = "SELECT * FROM DEPENDENT";
-    return jdbcTemplate.query(sql, new DependentStandardMapper());
+    return jdbcTemplate.query(sql, new DependentPetMapper());
   }
 
   @Override
-  public Optional<DependentStandard> findById(Long id) {
+  public Optional<DependentPet> findById(Long id) {
     String sql = "SELECT * FROM DEPENDENT WHERE id = ?";
     try {
-        return Optional.of(jdbcTemplate.queryForObject(sql, new DependentStandardMapper(), id));
+        return Optional.of(jdbcTemplate.queryForObject(sql, new DependentPetMapper(), id));
     } catch (EmptyResultDataAccessException e) {
         return Optional.empty();
     } 
   }
 
   @Override
-  public DependentStandard save(DependentStandard dependent) {
+  public DependentPet save(DependentPet dependent) {
     KeyHolder keyHolder = new GeneratedKeyHolder();
     String sql = "INSERT INTO dependent (`name`, race, birthDate) VALUES (?, ?, ?)";
 

@@ -5,15 +5,15 @@ import java.sql.Date;
 import imd.ufrn.framework.model.Dependent;
 import jakarta.validation.constraints.NotNull;
 
-public class DependentStandard extends Dependent{
+public class DependentPet extends Dependent{
   @NotNull
   private String race;
   @NotNull
   private Date birthDate;
 
-  public DependentStandard(){}
+  public DependentPet(){}
 
-  public DependentStandard(Long id, String name) {
+  public DependentPet(Long id, String name) {
     super(id, name);
   }
 

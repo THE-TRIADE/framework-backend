@@ -3,7 +3,7 @@ package imd.ufrn.instancepetroutine.service;
 import imd.ufrn.framework.model.api.response.ActivityResponse;
 import imd.ufrn.framework.service.RecommendationService;
 import imd.ufrn.instancepetroutine.model.Category;
-import imd.ufrn.instancepetroutine.model.DependentStandard;
+import imd.ufrn.instancepetroutine.model.DependentPet;
 import imd.ufrn.instancepetroutine.model.api.response.ActivityWithCategoryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class RecommendationServiceImpl implements RecommendationService {
     private CategoryService categoryService;
 
     @Autowired
-    private DependentServiceImpl dependentService;
+    private DependentPetServiceImpl dependentService;
 
     @Override
     public List<String> generateRecommendation(Long dependentId) {
@@ -59,7 +59,7 @@ public class RecommendationServiceImpl implements RecommendationService {
         return category.getName();
     }
     private String getDependentName(Long dependentId) {
-        DependentStandard dependent = dependentService.findDependentById(dependentId);
+        DependentPet dependent = dependentService.findDependentById(dependentId);
         return dependent.getName();
     }
     private String getActivityState(ActivityResponse activity) {

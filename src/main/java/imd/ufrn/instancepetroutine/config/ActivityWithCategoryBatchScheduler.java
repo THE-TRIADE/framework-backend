@@ -9,7 +9,7 @@ import imd.ufrn.instancepetroutine.repository.mappers.ActivityWithCategoryMapper
 
 @Configuration
 @EnableScheduling
-public class ActivityStandardBatchScheduler extends ActivityBatchScheduler<ActivityWithCategory, ActivityWithCategoryMapper> {
+public class ActivityWithCategoryBatchScheduler extends ActivityBatchScheduler<ActivityWithCategory, ActivityWithCategoryMapper> {
 
     @Override
     public ActivityWithCategoryMapper createRowMapperInstance() {

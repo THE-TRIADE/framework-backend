@@ -8,28 +8,28 @@ import org.springframework.stereotype.Service;
 
 import imd.ufrn.framework.service.DependentService;
 import imd.ufrn.framework.service.exception.EntityNotFoundException;
-import imd.ufrn.instancepetroutine.model.DependentStandard;
-import imd.ufrn.instancepetroutine.repository.DependentRepositoryImpl;
+import imd.ufrn.instancepetroutine.model.DependentPet;
+import imd.ufrn.instancepetroutine.repository.DependentPetRepositoryImpl;
 
 @Service
-public class DependentServiceImpl implements DependentService<DependentStandard>{
+public class DependentPetServiceImpl implements DependentService<DependentPet>{
     @Autowired
-    private DependentRepositoryImpl dependentRepository;
+    private DependentPetRepositoryImpl dependentRepository;
 
     @Override
-    public List<DependentStandard> findAll() {
+    public List<DependentPet> findAll() {
         return this.dependentRepository.findAll();
     }
 
     @Override
-    public DependentStandard findDependentById(Long dependentId) {
+    public DependentPet findDependentById(Long dependentId) {
         return this.dependentRepository
             .findById(dependentId)
-            .orElseThrow(() -> new EntityNotFoundException(dependentId, DependentStandard.class));
+            .orElseThrow(() -> new EntityNotFoundException(dependentId, DependentPet.class));
     }
 
     @Override
-    public DependentStandard createDependent(DependentStandard newDependent) {
+    public DependentPet createDependent(DependentPet newDependent) {
         return this.dependentRepository.save(newDependent);
     }
 
