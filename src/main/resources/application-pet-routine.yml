@@ -3,6 +3,3 @@ spring:
     init:
       schema-locations: classpath:/schema-petroutine.sql
       data-locations: classpath:/data-petroutine.sql
-
-# instance:
-#   package: "imd.ufrn.instancepetroutine"
