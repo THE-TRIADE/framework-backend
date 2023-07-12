@@ -5,13 +5,16 @@ import org.springframework.data.annotation.Id;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import imd.ufrn.instancepetroutine.model.DependentStandard;
-// import imd.ufrn.instancefamilyroutine.model.DependentStandard;
+import imd.ufrn.instancefamilyroutine.model.DependentStandard;
+import imd.ufrn.instancepetroutine.model.DependentPet;
+import imd.ufrn.instancestudentroutine.model.DependentStudent;
 import jakarta.validation.constraints.NotNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
 @JsonSubTypes({
     @JsonSubTypes.Type(value = DependentStandard.class, name ="DependentStandard"),
+    @JsonSubTypes.Type(value = DependentPet.class, name ="DependentPet"),
+    @JsonSubTypes.Type(value = DependentStudent.class, name ="DependentStudent"),
 })
 public abstract class Dependent {
   @Id
