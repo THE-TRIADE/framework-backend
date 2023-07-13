@@ -1,5 +1,5 @@
 CREATE TABLE `user` (
-    id BIGINT NOT NULL AUTO_INCREMENT,
+    id BIGINT NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     `password` VARCHAR(256) NOT NULL,
     `name` VARCHAR(100) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE `user` (
 );
 
 CREATE TABLE `dependent` (
-    id BIGINT NOT NULL AUTO_INCREMENT,
+    id BIGINT NOT NULL,
     `name` VARCHAR(100) NOT NULL,
     race VARCHAR(30) NOT NULL,
     birthDate DATE NOT NULL,
