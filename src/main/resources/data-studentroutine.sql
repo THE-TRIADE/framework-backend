@@ -7,10 +7,10 @@ INSERT INTO `group_user_dependent` (`name`) VALUES
     ('3ª série'),
     ('1ª série A');
 
-INSERT INTO `dependent` (id, `name`, birthDate) VALUES 
-    (3, 'Enzo', '2022-07-13'),
-    (4, 'João', '2015-04-25'),
-    (5, 'Maria', '2013-04-25');
+INSERT INTO `dependent` (id, `name`, cpf, registrationNumber) VALUES 
+    (3, 'Enzo', '12345678911', '1234567891'),
+    (4, 'João', '12345678912', '1234567892'),
+    (5, 'Maria', '12345678913', '1234567893');
 
 INSERT INTO `dependent_group` (dependentId, groupId) VALUES
     (3, 3),

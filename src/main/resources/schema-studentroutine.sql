@@ -11,8 +11,8 @@ CREATE TABLE `user` (
 CREATE TABLE `dependent` (
     id BIGINT NOT NULL,
     `name` VARCHAR(100) NOT NULL,
-    -- race VARCHAR(30) NOT NULL,
-    birthDate DATE NOT NULL,
+    cpf CHAR(11) UNIQUE NOT NULL,
+    registrationNumber VARCHAR(30) UNIQUE NOT NULL,
     PRIMARY KEY(id)
 );
 

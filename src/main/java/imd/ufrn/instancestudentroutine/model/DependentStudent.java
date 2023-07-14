@@ -1,44 +1,42 @@
 package imd.ufrn.instancestudentroutine.model;
 
-import java.sql.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import imd.ufrn.framework.model.Dependent;
 import jakarta.validation.constraints.NotNull;
 
 public class DependentStudent extends Dependent{
-  // @NotNull
-  // private String raced;
-  // @JsonFormat(pattern="yyyy-MM-dd")
   @NotNull
-  private Date birthDate;
+  private String cpf;
+  @NotNull String registrationNumber;
+
 
   public DependentStudent(){}
 
-  public DependentStudent(String name, Date birthDate) {
+  public DependentStudent(String name, String cpf, String registrationNumber) {
     super(name);
-    this.birthDate = birthDate;
+    this.cpf = cpf;
+    this.registrationNumber = registrationNumber;
   }
-  public DependentStudent(Long id, String name, Date birthDate) {
+
+  public DependentStudent(Long id, String name, String cpf, String registrationNumber) {
     super(id, name);
-    this.birthDate = birthDate;
+    this.cpf = cpf;
+    this.registrationNumber = registrationNumber;
   }
 
-  // public String getRace() {
-  //   return raced;
-  // }
-
-  // public void setRace(String race) {
-  //   this.raced = race;
-  // }
-  
-  public Date getBirthDate() {
-    return birthDate;
+  public String getCpf() {
+    return cpf;
   }
 
-  public void setBirthDate(Date birthDate) {
-    this.birthDate = birthDate;
+  public void setCpf(String cpf) {
+    this.cpf = cpf;
+  }
+
+  public String getRegistrationNumber() {
+    return registrationNumber;
+  }
+
+  public void setRegistrationNumber(String registrationNumber) {
+    this.registrationNumber = registrationNumber;
   }
 
 }
