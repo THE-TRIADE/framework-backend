@@ -1,15 +1,11 @@
 package imd.ufrn.instancefamilyroutine.repository;
 
-import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import imd.ufrn.framework.repository.DependentRepository;
@@ -40,19 +36,12 @@ public class DependentRepositoryImpl implements DependentRepository<DependentSta
 
   @Override
   public DependentStandard save(DependentStandard dependent) {
-    KeyHolder keyHolder = new GeneratedKeyHolder();
-    String sql = "INSERT INTO dependent (`name`, cpf, birthDate) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO `dependent` (id, `name`, cpf, birthDate) VALUES (?,?,?,?)";
+        dependent.setId(getNextId());
+        jdbcTemplate.update(sql, dependent.getId(), dependent.getName(), dependent.getCpf(), dependent.getBirthDate());
+        return dependent;
+  } 
 
-    jdbcTemplate.update(connection -> { 
-    PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-      ps.setString(1, dependent.getName());
-      ps.setString(2, dependent.getCpf());
-      ps.setDate(3, dependent.getBirthDate());
-      return ps;
-    }, keyHolder);
-
-    return this.findById(keyHolder.getKey().longValue()).get();
-  }
 
     @Override
     public void deleteById(Long id) {
@@ -64,5 +53,29 @@ public class DependentRepositoryImpl implements DependentRepository<DependentSta
     public void deleteAll() {
         String sql = "DELETE FROM `dependent`";
         jdbcTemplate.update(sql);
+    }
+
+    private Long getNextId() {
+        Long maxUserId = jdbcTemplate
+            .query("SELECT id FROM `user`", (rs, rn) ->  rs.getBigDecimal("id").longValue())
+            .stream()
+            .reduce(Long::max)
+            .get();
+
+        Long maxDependentId = jdbcTemplate
+            .query("SELECT id FROM `dependent`", (rs, rn) ->  rs.getBigDecimal("id").longValue())
+            .stream()
+            .reduce(Long::max)
+            .get();
+
+        if (maxUserId == null && maxDependentId == null) {
+            return 1L;
+        } else if (maxUserId == null) {
+            return maxDependentId + 1;
+        } else if (maxDependentId == null) {
+            return maxUserId + 1;
+        } else {
+            return Math.max(maxUserId, maxDependentId) + 1;
+        }
     }
 }
