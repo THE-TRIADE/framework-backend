@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
 import imd.ufrn.framework.model.User;
+import imd.ufrn.framework.model.UserRole;
 
 public class UserMapper implements RowMapper<User> {
 
@@ -18,6 +19,10 @@ public class UserMapper implements RowMapper<User> {
         user.setBirthDate(resultSet.getDate("birthDate"));
         user.setEmail(resultSet.getString("email"));
         user.setPassword(resultSet.getString("password"));
+        String role = resultSet.getString("role");
+        if(role != null) {
+            user.setRole(UserRole.valueOf(role));
+        }
         return user;
     }
 }

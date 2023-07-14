@@ -2,7 +2,7 @@ spring:
   application:
     name: frameworkroutine
   profiles:
-    active: family-routine
+    active: student-routine
   jackson:
     deserialization:
       # Impede propriedades desconhecidas nas requisições HTTP

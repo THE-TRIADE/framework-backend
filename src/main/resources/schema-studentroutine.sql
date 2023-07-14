@@ -5,6 +5,7 @@ CREATE TABLE `user` (
     `name` VARCHAR(100) NOT NULL,
     cpf VARCHAR(11) NOT NULL,
     birthDate DATE NOT NULL,
+    `role` VARCHAR(20),
     PRIMARY KEY(id)
 );
 

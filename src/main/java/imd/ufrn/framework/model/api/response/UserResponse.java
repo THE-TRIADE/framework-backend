@@ -1,9 +1,7 @@
 package imd.ufrn.framework.model.api.response;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import imd.ufrn.framework.model.UserRole;
 
@@ -13,7 +11,7 @@ public class UserResponse {
     private String cpf;
     private LocalDate birthDate;
     private String email;
-    private Set<UserRole> roles = new HashSet<>();
+    private UserRole role;
     private List<GroupUserDependentResponse> groups;
     private List<RelationToUserResponse> relations;
 
@@ -76,11 +74,11 @@ public class UserResponse {
         this.relations = guards;
     }
 
-    public Set<UserRole> getRoles() {
-        return roles;
+    public UserRole getRole() {
+        return role;
     }
 
-    public void setRoles(Set<UserRole> roles) {
-        this.roles = roles;
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }

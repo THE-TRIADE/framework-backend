@@ -1,6 +1,6 @@
-INSERT INTO `user` (id, email, `password`, `name`, cpf, birthDate) VALUES 
-    (1, 'ana@email.com', '$2a$10$RleiVtfl2ikXq1RYADYTC.rsUoA6eScRlk293ygGXzDjmFWE/yBQq', 'Ana Holanda', 99999999999, '2002-07-13'),
-    (2, 'leandro@email.com', '$2a$10$/8XMU9zaTUp3Hbj9II1OxONTx7zvKaWzL7OW30JoikiDkopZqQOGu', 'Leandro Assunção', 88888888888, '2003-04-25');
+INSERT INTO `user` (id, email, `password`, `name`, cpf, birthDate, `role`) VALUES 
+    (1, 'ana@email.com', '$2a$10$RleiVtfl2ikXq1RYADYTC.rsUoA6eScRlk293ygGXzDjmFWE/yBQq', 'Ana Holanda', 99999999999, '2002-07-13', 'PRINCIPAL'),
+    (2, 'leandro@email.com', '$2a$10$/8XMU9zaTUp3Hbj9II1OxONTx7zvKaWzL7OW30JoikiDkopZqQOGu', 'Leandro Assunção', 88888888888, '2003-04-25', 'PRINCIPAL');
 
 INSERT INTO group_user_dependent (`name`) VALUES
     ('7° ano C'),

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import imd.ufrn.framework.model.User;
+import imd.ufrn.framework.model.UserRole;
 import imd.ufrn.framework.model.api.UserMapper;
 import imd.ufrn.framework.model.api.request.LoginRequest;
 import imd.ufrn.framework.model.api.request.UserRequest;
@@ -33,7 +34,7 @@ public class UserService {
 
     @Lazy
     @Autowired
-    private UserMapper UserMapper;
+    private UserMapper userMapper;
     
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -41,8 +42,13 @@ public class UserService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public List<User> findAll() {
-        return this.userRepository.findAll();
+    public List<UserResponse> findAll() {
+        return this.userRepository
+            .findAll()
+            .stream()
+            .map(User::getId)
+            .map(this::findUserByUserId)
+            .toList();
     }
 
     public User findUserById(Long userId) {
@@ -52,9 +58,7 @@ public class UserService {
     }
 
     public UserResponse findUserByUserId(Long userId) {
-        User user = this.userRepository
-                                .findById(userId)
-                                .orElseThrow(() -> new EntityNotFoundException(userId, User.class));
+        User user = this.findUserById(userId);
         List<RelationResponse> relations = this.relationService.findRelationsByUserId(userId);
         Set<GroupUserDependentResponse> groups = new HashSet<>();
         relations.stream()
@@ -63,15 +67,23 @@ public class UserService {
                 groups.add(group);
             });
         
-        return UserMapper.mapUserToUserReponse(user, relations, groups);
+        return userMapper.mapUserToUserReponse(user, relations, groups);
     }
     
     @Transactional
-    public User createUser(UserRequest newUser) {
-        User user = this.UserMapper.mapUserRequestToUser(newUser);
+    public UserResponse createUser(UserRequest newUser) {
+        User user = this.userMapper.mapUserRequestToUser(newUser);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        
-        return this.userRepository.save(user);
+        user = this.userRepository.save(user);
+
+        List<RelationResponse> relations = this.relationService.findRelationsByUserId(user.getId());
+        Set<GroupUserDependentResponse> groups = new HashSet<>();
+        relations.stream()
+            .forEach(relation -> {
+                GroupUserDependentResponse group = this.groupUserDependentService.findByDependentId(relation.getDependentId());
+                groups.add(group);
+            });
+        return userMapper.mapUserToUserReponse(user, relations, groups);
     }
 
     @Transactional
@@ -83,11 +95,38 @@ public class UserService {
         this.userRepository.deleteById(userId);
     }
 
-    public User authenticateUser(LoginRequest loginRequest) {
+    public UserResponse authenticateUser(LoginRequest loginRequest) {
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
         );
-        
-        return this.userRepository.findByEmail(loginRequest.getUsername()).get();
+        User user = this.userRepository
+            .findByEmail(loginRequest.getUsername())
+            .get();
+        List<RelationResponse> relations = this.relationService.findRelationsByUserId(user.getId());
+        Set<GroupUserDependentResponse> groups = new HashSet<>();
+        relations.stream()
+            .forEach(relation -> {
+                GroupUserDependentResponse group = this.groupUserDependentService.findByDependentId(relation.getDependentId());
+                groups.add(group);
+            });
+        return userMapper.mapUserToUserReponse(user, relations, groups);
+    }
+
+    public List<UserResponse> findAllByRole(String userRole) {
+        UserRole role = UserRole.valueOf(userRole.toUpperCase());
+        return 
+        this.userRepository.findByRole(role.toString())
+            .stream()
+            .map(user -> {
+                List<RelationResponse> relations = this.relationService.findRelationsByUserId(user.getId());
+                Set<GroupUserDependentResponse> groups = new HashSet<>();
+                relations.stream()
+                    .forEach(relation -> {
+                        GroupUserDependentResponse group = this.groupUserDependentService.findByDependentId(relation.getDependentId());
+                        groups.add(group);
+                    });
+                return userMapper.mapUserToUserReponse(user, relations, groups);
+            })
+            .toList();
     }
 }

@@ -16,13 +16,19 @@ public class UserRequest {
     @NotNull
     private LocalDate birthDate;
 
+    private String role;
+
+    public UserRequest() {
+    }
+
     public UserRequest(@NotNull String email, @NotNull String password, @NotNull String name, @NotNull String cpf,
-        LocalDate birthDate) {
+            @NotNull LocalDate birthDate, String role) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.cpf = cpf;
         this.birthDate = birthDate;
+        this.role = role;
     }
 
     public String getEmail() {
@@ -65,4 +71,11 @@ public class UserRequest {
         this.birthDate = birthDate;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }
