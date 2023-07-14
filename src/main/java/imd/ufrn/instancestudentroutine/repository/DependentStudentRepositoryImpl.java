@@ -36,9 +36,9 @@ public class DependentStudentRepositoryImpl implements DependentRepository<Depen
 
     @Override
     public DependentStudent save(DependentStudent dependent) {
-        String sql = "INSERT INTO `dependent` (id, `name`, birthDate) VALUES (?,?,?)";
+        String sql = "INSERT INTO `dependent` (id, `name`, cpf, registrationNumber) VALUES (?,?,?,?)";
         dependent.setId(getNextId());
-        jdbcTemplate.update(sql, dependent.getId(), dependent.getName(), dependent.getBirthDate()); // TODO
+        jdbcTemplate.update(sql, dependent.getId(), dependent.getName(), dependent.getCpf(), dependent.getRegistrationNumber());
         return dependent;
     } 
 
