@@ -13,6 +13,8 @@ public interface UserRepository {
 
     Optional<User> findByEmail(String email);
 
+    List<User> findByRole(String role);
+
     User save(User user);
 
     void deleteById(Long id);

@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import imd.ufrn.framework.model.User;
+import imd.ufrn.framework.model.UserRole;
 import imd.ufrn.framework.model.api.request.UserRequest;
 import imd.ufrn.framework.model.api.response.GroupUserDependentResponse;
 import imd.ufrn.framework.model.api.response.RelationResponse;
@@ -25,6 +26,9 @@ public class UserMapper {
         user.setEmail(userRequest.getEmail());
         user.setName(userRequest.getName());
         user.setPassword(userRequest.getPassword());
+        if(userRequest.getRole() != null) {
+            user.setRole(UserRole.valueOf(userRequest.getRole().toUpperCase()));
+        }
         return user;
     }
 
@@ -36,6 +40,7 @@ public class UserMapper {
         userResponse.setCpf(user.getCpf());
         userResponse.setEmail(user.getEmail());
         userResponse.setGroups(groups.stream().collect(Collectors.toList()));
+        userResponse.setRole(user.getRole());
         List<RelationToUserResponse> relationToUserResponse = new ArrayList<>();
         relations.forEach(relation -> {
             RelationToUserResponse gtgr = new RelationToUserResponse();
@@ -47,6 +52,8 @@ public class UserMapper {
             relationToUserResponse.add(gtgr);
         });
         userResponse.setRelations(relationToUserResponse);
+
+
         return userResponse;
     }
 }

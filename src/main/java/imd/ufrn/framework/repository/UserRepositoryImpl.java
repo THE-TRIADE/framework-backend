@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import imd.ufrn.framework.model.User;
+import imd.ufrn.framework.model.UserRole;
 import imd.ufrn.framework.repository.mappers.UserMapper;
 
 @Repository
@@ -35,9 +36,14 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User save(User user) {
-        String sql = "INSERT INTO `user` (id, `name`, cpf, birthDate, email, `password`) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO `user` (id, `name`, cpf, birthDate, email, `password`, `role`) VALUES (?,?,?,?,?,?, ?)";
         user.setId(getNextId());
-        jdbcTemplate.update(sql, user.getId(), user.getName(), user.getCpf(), user.getBirthDate(), user.getEmail(), user.getPassword());
+        UserRole roleEnum = user.getRole();
+        String role = null;
+        if(roleEnum != null) {
+            role = roleEnum.toString();
+        }
+        jdbcTemplate.update(sql, user.getId(), user.getName(), user.getCpf(), user.getBirthDate(), user.getEmail(), user.getPassword(), role);
         return user;
     }
 
@@ -49,6 +55,12 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         } 
+    }
+
+    @Override
+    public List<User> findByRole(String role) {
+        String sql = "SELECT * FROM `user` WHERE `role` = ?";       
+        return jdbcTemplate.query(sql, new UserMapper(), role);
     }
      
     @Override
