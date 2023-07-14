@@ -26,13 +26,13 @@ public class RecommendationServiceImpl implements RecommendationService {
     @Autowired
     private DependentServiceImpl dependentService;
 
-    @Override
     public List<String> generateRecommendation(Long dependentId) {
         List<String> recommendations = new ArrayList<>();
 
         List<ActivityWithCourseResponse> activities = activityWithCourseService.findByDependentId(dependentId);
 
         Map<Long, Map<String, List<ActivityWithCourseResponse>>> activitiesByCategoryAndState = activities.stream()
+                .filter(activity -> isValidActivityState(activity.getState().toString()))
                 .collect(Collectors.groupingBy(ActivityWithCourseResponse::getCourseId,
                         Collectors.groupingBy(this::getActivityState)));
 
@@ -46,7 +46,7 @@ public class RecommendationServiceImpl implements RecommendationService {
                 List<ActivityWithCourseResponse> stateActivities = stateEntry.getValue();
                 String dependentName = getDependentName(dependentId);
 
-                String message = "O estudante " + dependentName + " possui " + stateActivities.size() + " atividade(s) na categoria " + categoryName +
+                String message = "O estudante " + dependentName + " possui " + stateActivities.size() + " atividade(s) na disciplina " + categoryName +
                         " e no estado " + translatedState;
                 recommendations.add(message);
             }
@@ -82,6 +82,8 @@ public class RecommendationServiceImpl implements RecommendationService {
                 return "Desconhecido";
         }
     }
-
+    private boolean isValidActivityState(String state) {
+        return state.equals("LATE") || state.equals("CREATED") || state.equals("NOT_DONE");
+    }
 }
 
