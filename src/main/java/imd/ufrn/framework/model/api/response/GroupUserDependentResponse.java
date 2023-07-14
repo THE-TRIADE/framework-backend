@@ -5,9 +5,10 @@ import java.util.List;
 import imd.ufrn.framework.model.Dependent;
 
 public abstract class GroupUserDependentResponse {
-    private Long id;
-    private String name;
-    private List<? extends Dependent> dependents;
+    protected Long id;
+    protected String name;
+    protected List<? extends Dependent> dependents;
+
     public Long getId() {
         return id;
     }

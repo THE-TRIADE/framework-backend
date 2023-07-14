@@ -9,7 +9,7 @@ import imd.ufrn.framework.model.Dependent;
 public class DependentStandard extends Dependent{
 
   private String cpf;
-  @JsonFormat(pattern="yyyy-MM-dd")
+  // @JsonFormat(pattern="yyyy-MM-dd")
   private Date birthDate;
 
   public DependentStandard(){}

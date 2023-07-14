@@ -75,6 +75,13 @@ public class UserService {
     }
 
     @Transactional
+    public User createUser(User newUser) {
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        
+        return this.userRepository.save(newUser);
+    }
+
+    @Transactional
     public void deleteAllUsers() {
         this.userRepository.deleteAll();
     }

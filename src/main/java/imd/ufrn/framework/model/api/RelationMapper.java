@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import imd.ufrn.framework.model.*;
+import imd.ufrn.framework.model.Dependent;
+import imd.ufrn.framework.model.Relation;
+import imd.ufrn.framework.model.User;
 import imd.ufrn.framework.model.api.request.RelationRequest;
 import imd.ufrn.framework.model.api.response.RelationResponse;
 import imd.ufrn.framework.service.DependentService;
