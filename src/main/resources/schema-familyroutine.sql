@@ -9,7 +9,7 @@ CREATE TABLE `user` (
 );
 
 CREATE TABLE `dependent` (
-    id BIGINT NOT NULL AUTO_INCREMENT,
+    id BIGINT NOT NULL,
     `name` VARCHAR(100) NOT NULL,
     cpf CHAR(11) UNIQUE NOT NULL,
     birthDate DATE NOT NULL,
