@@ -45,8 +45,11 @@ public class UserMapper {
             gtgr.setDependentId(relation.getDependentId());
             gtgr.setDependentName(relation.getDependentName());
             relationToUserResponse.add(gtgr);
+            userResponse.getRoles().add(relation.getUserRole());
         });
         userResponse.setRelations(relationToUserResponse);
+
+
         return userResponse;
     }
 }

@@ -5,4 +5,5 @@ public enum UserRole {
   MOTHER,
   RELATIVE,
   TEMPORARY,
+  TEACHER
 }
