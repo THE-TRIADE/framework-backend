@@ -13,15 +13,15 @@ public class DependentGroupService {
     @Autowired
     private DependentGroupRepository dependentGroupRepository;
 
-    protected List<DependentGroup> findDependentGroupsByDependentId(Long dependentId) { 
+    public List<DependentGroup> findDependentGroupsByDependentId(Long dependentId) { 
         return this.dependentGroupRepository.findByDependentId(dependentId);
     }
 
-    protected List<DependentGroup> findDependentGroupsByGroupId(Long groupId) { 
+    public List<DependentGroup> findDependentGroupsByGroupId(Long groupId) { 
         return this.dependentGroupRepository.findByGroupId(groupId);
     }
 
-    protected DependentGroup createDependentGroup(DependentGroup dependentGroup) { 
+    public DependentGroup createDependentGroup(DependentGroup dependentGroup) { 
         return this.dependentGroupRepository.save(dependentGroup);
     }
 }

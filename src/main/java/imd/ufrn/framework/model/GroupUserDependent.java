@@ -1,6 +1,6 @@
 package imd.ufrn.framework.model;
 
-public class GroupUserDependent {
+public abstract class GroupUserDependent {
     private Long id;
     private String name;
 

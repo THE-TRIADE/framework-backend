@@ -9,15 +9,21 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.validation.constraints.NotNull;
+
 public class User implements UserDetails {
     
     @Id
     private Long id;
-
+    @NotNull
     private String email;
+    @NotNull
     private String password;
+    @NotNull
     private String name;
+    @NotNull
     private String cpf;
+    @NotNull
     private Date birthDate;
 
     public User() {

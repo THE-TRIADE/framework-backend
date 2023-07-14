@@ -8,13 +8,15 @@ INSERT INTO group_user_dependent (`name`) VALUES
     ('Família Boulevar');
 
 INSERT INTO `dependent` (`name`, cpf, birthDate) VALUES 
-    ('Joãozinho', 99999999999, '2012-07-13'),
-    ('Pedrinho', 88888888888, '2013-04-25'),
-    ('Josenildo', 11111111111, '2012-04-25');
+    ('Joãozinho', '99999999999', '2012-07-13'),
+    ('Pedrinho', '88888888888', '2013-04-25'),
+    ('Josenildo', '11111111111', '2012-04-25'),
+    ('Ana', '22222222222', '2011-05-15'),
+    ('Lucas', '33333333333', '2000-04-12');
 
 INSERT INTO `dependent_group` (dependentId, groupId) VALUES
     (3, 3),
-    (4, 3),
+    (1, 3),
     (5, 2);
 
 INSERT INTO `relation` (daysOfWeek, userRole, dependentId, userId) VALUES 

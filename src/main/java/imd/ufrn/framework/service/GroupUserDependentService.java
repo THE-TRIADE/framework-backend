@@ -17,19 +17,19 @@ import imd.ufrn.framework.repository.GroupUserDependentRepository;
 import imd.ufrn.framework.service.exception.EntityNotFoundException;
 
 @Service
-public class GroupUserDependentService {
+public abstract class GroupUserDependentService <T extends GroupUserDependent, GroupRequest extends GroupUserDependentRequest, GroupResponse extends GroupUserDependentResponse> {
     @Autowired
-    private GroupUserDependentRepository groupUserDependentRepository;
+    protected GroupUserDependentRepository<T> groupUserDependentRepository;
     @Autowired
-    private DependentService dependentService;
+    protected DependentService dependentService;
     @Autowired
-    private RelationService guardService;
+    protected RelationService guardService;
     @Autowired
-    private DependentGroupService dependentGroupService;
+    protected DependentGroupService dependentGroupService;
     @Autowired
-    private GroupUserDependentMapper groupUserDependentMapper;
+    protected GroupUserDependentMapper<T, GroupRequest, GroupResponse> groupUserDependentMapper;
 
-    public List<GroupUserDependentResponse> findAll() {
+    public List<GroupResponse> findAll() {
                 return this.groupUserDependentRepository
                 .findAll()
                 .stream()
@@ -37,7 +37,7 @@ public class GroupUserDependentService {
                 .toList();
     }
 
-    public GroupUserDependentResponse findGroupUserDependentById(Long groupUserDependentId) {
+    public GroupResponse findGroupUserDependentById(Long groupUserDependentId) {
         return this.groupUserDependentMapper.mapGroupUserDependentToGroupUserDependentResponse(
             this.groupUserDependentRepository.findById(groupUserDependentId).orElseThrow(
                 () -> new EntityNotFoundException(groupUserDependentId, GroupUserDependent.class)));
@@ -61,8 +61,8 @@ public class GroupUserDependentService {
     }
     
     @Transactional
-    public GroupUserDependentResponse createGroupUserDependent(GroupUserDependentRequest groupUserDependentRequest) {
-        GroupUserDependent groupUserDependent = this.groupUserDependentRepository.save(groupUserDependentMapper.mapGroupUserDependentRequestToGroupUserDependent(groupUserDependentRequest));
+    public GroupResponse createGroupUserDependent(GroupRequest groupUserDependentRequest) {
+        T groupUserDependent = this.groupUserDependentRepository.save(groupUserDependentMapper.mapGroupUserDependentRequestToGroupUserDependent(groupUserDependentRequest));
 
         List<? extends Dependent> dependents = groupUserDependentRequest
             .getDependents()
@@ -74,12 +74,14 @@ public class GroupUserDependentService {
                 return dependent;
             })
             .map(dependent -> {
-                // Creates new relation
-                RelationRequest newRelation = new RelationRequest();
-                newRelation.setDependentId(dependent.getId());
-                newRelation.setUserId(groupUserDependentRequest.getUserId());
-                newRelation.setUserRole(groupUserDependentRequest.getUserRole());
-                this.guardService.createRelation(newRelation);
+                if(groupUserDependentRequest.getUserRole() != null){
+                    // Creates new relation if wanted
+                    RelationRequest newRelation = new RelationRequest();
+                    newRelation.setDependentId(dependent.getId());
+                    newRelation.setUserId(groupUserDependentRequest.getUserId());
+                    newRelation.setUserRole(groupUserDependentRequest.getUserRole());
+                    this.guardService.createRelation(newRelation);
+                }
 
                 // Creates new DependentGroup
                 DependentGroup newDependentGroup = new DependentGroup();
@@ -102,7 +104,7 @@ public class GroupUserDependentService {
             .toList();
     }
  
-    public GroupUserDependentResponse findByDependentId(Long dependentId) {
+    public GroupResponse findByDependentId(Long dependentId) {
         return this.groupUserDependentMapper
             .mapGroupUserDependentToGroupUserDependentResponse(
                 this.groupUserDependentRepository.findByDependentId(dependentId).orElseThrow(

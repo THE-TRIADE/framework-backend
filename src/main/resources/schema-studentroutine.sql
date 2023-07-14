@@ -11,7 +11,7 @@ CREATE TABLE `user` (
 CREATE TABLE `dependent` (
     id BIGINT NOT NULL,
     `name` VARCHAR(100) NOT NULL,
-    race VARCHAR(30) NOT NULL,
+    -- race VARCHAR(30) NOT NULL,
     birthDate DATE NOT NULL,
     PRIMARY KEY(id)
 );
@@ -28,6 +28,15 @@ CREATE TABLE `dependent_group` (
     FOREIGN KEY (dependentId) REFERENCES `dependent`(id) ON DELETE CASCADE,
     FOREIGN KEY (groupId) REFERENCES `group_user_dependent`(id) ON DELETE CASCADE,
     PRIMARY KEY (groupId, dependentId)
+);
+
+CREATE TABLE `user_in_group` (
+    userId BIGINT NOT NULL,
+    groupId BIGINT NOT NULL,
+
+    FOREIGN KEY (userId) REFERENCES `user`(id) ON DELETE CASCADE,
+    FOREIGN KEY (groupId) REFERENCES `group_user_dependent`(id) ON DELETE CASCADE,
+    PRIMARY KEY (groupId, userId)
 );
 
 CREATE TABLE `recurring_activity` (

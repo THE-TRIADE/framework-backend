@@ -4,10 +4,11 @@ import java.util.List;
 
 import imd.ufrn.framework.model.Dependent;
 
-public class GroupUserDependentResponse {
-    private Long id;
-    private String name;
-    private List<? extends Dependent> dependents;
+public abstract class GroupUserDependentResponse {
+    protected Long id;
+    protected String name;
+    protected List<? extends Dependent> dependents;
+
     public Long getId() {
         return id;
     }

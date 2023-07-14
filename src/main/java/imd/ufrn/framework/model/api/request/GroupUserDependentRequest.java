@@ -8,16 +8,16 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-public class GroupUserDependentRequest {
+public abstract class GroupUserDependentRequest {
     @NotEmpty
-    private String name;
+    protected String name;
+    
+    protected UserRole userRole;
     @NotNull
-    private UserRole userRole;
-    @NotNull
-    private Long userId;
+    protected Long userId;
     @NotNull
     @Valid
-    private List<? extends Dependent> dependents;
+    protected List<? extends Dependent> dependents;
 
     public String getName() {
         return name;

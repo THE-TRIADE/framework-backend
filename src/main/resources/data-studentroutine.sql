@@ -2,27 +2,32 @@ INSERT INTO `user` (id, email, `password`, `name`, cpf, birthDate) VALUES
     (1, 'ana@email.com', '$2a$10$RleiVtfl2ikXq1RYADYTC.rsUoA6eScRlk293ygGXzDjmFWE/yBQq', 'Ana Holanda', 99999999999, '2002-07-13'),
     (2, 'leandro@email.com', '$2a$10$/8XMU9zaTUp3Hbj9II1OxONTx7zvKaWzL7OW30JoikiDkopZqQOGu', 'Leandro Assunção', 88888888888, '2003-04-25');
 
-INSERT INTO group_user_dependent (`name`) VALUES
+INSERT INTO `group_user_dependent` (`name`) VALUES
     ('7° ano C'),
     ('3ª série'),
     ('1ª série A');
 
-INSERT INTO `dependent` (id, `name`, race, birthDate) VALUES 
-    (3, 'Enzo', 'puddle', '2022-07-13'),
-    (4, 'João', 'labrador', '2015-04-25'),
-    (5, 'Maria', 'cão brabo', '2013-04-25');
+INSERT INTO `dependent` (id, `name`, birthDate) VALUES 
+    (3, 'Enzo', '2022-07-13'),
+    (4, 'João', '2015-04-25'),
+    (5, 'Maria', '2013-04-25');
 
 INSERT INTO `dependent_group` (dependentId, groupId) VALUES
     (3, 3),
     (4, 3),
     (5, 2);
 
+INSERT INTO `user_in_group` (userId, groupId) VALUES
+    (1, 3),
+    (1, 2),
+    (2, 1);
+
 INSERT INTO `relation` (daysOfWeek, userRole, dependentId, userId) VALUES 
-    ('SUNDAY,MONDAY', 'MOTHER', 4, 1),
-    ('SUNDAY,MONDAY', 'MOTHER', 3, 1),
-    ('SUNDAY,MONDAY', 'FATHER', 4, 2),
-    ('SUNDAY,MONDAY', 'FATHER', 5, 2),
-    (NULL, 'MOTHER', 5, 2);
+    (NULL, 'MOTHER', 4, 1),
+    (NULL, 'MOTHER', 3, 1),
+    (NULL, 'FATHER', 3, 2),
+    (NULL, 'FATHER', 5, 2),
+    (NULL, 'FATHER', 3, 1);
 
 INSERT INTO `course` (`name`) VALUES
     ('Português'),

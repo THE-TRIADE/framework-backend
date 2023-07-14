@@ -6,18 +6,18 @@ import java.util.Optional;
 
 import imd.ufrn.framework.model.GroupUserDependent;
 
-public interface GroupUserDependentRepository {
+public interface GroupUserDependentRepository <T extends GroupUserDependent> {
 
-  List<GroupUserDependent> findAll();
+  List<T> findAll();
 
-  Optional<GroupUserDependent> findById(Long id);
+  Optional<T> findById(Long id);
 
-  GroupUserDependent save(GroupUserDependent group);
+  T save(T group);
 
   void deleteById(Long id);
 
   void deleteAll();
 
-  Optional<GroupUserDependent> findByDependentId(Long dependentId);
+  Optional<T> findByDependentId(Long dependentId);
 
 }

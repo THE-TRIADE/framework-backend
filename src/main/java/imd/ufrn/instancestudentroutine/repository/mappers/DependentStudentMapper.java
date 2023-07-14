@@ -14,7 +14,7 @@ public class DependentStudentMapper implements RowMapper<DependentStudent> {
     DependentStudent dependentStudent = new DependentStudent();
     dependentStudent.setId(resultSet.getLong("id"));
     dependentStudent.setName(resultSet.getString("name"));
-    dependentStudent.setRace(resultSet.getString("race"));
+    // dependentStudent.setRace(resultSet.getString("race")); TODO
     dependentStudent.setBirthDate(resultSet.getDate("birthDate"));
     
     return dependentStudent;

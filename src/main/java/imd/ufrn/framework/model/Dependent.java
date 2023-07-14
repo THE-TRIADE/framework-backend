@@ -12,9 +12,9 @@ import jakarta.validation.constraints.NotNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = DependentStandard.class, name ="DependentStandard"),
-    @JsonSubTypes.Type(value = DependentPet.class, name ="DependentPet"),
-    @JsonSubTypes.Type(value = DependentStudent.class, name ="DependentStudent"),
+  @JsonSubTypes.Type(value = DependentStudent.class, name ="DependentStudent"),
+    // @JsonSubTypes.Type(value = DependentStandard.class, name ="DependentStandard"),
+    // @JsonSubTypes.Type(value = DependentPet.class, name ="DependentPet"),
 })
 public abstract class Dependent {
   @Id
@@ -23,6 +23,10 @@ public abstract class Dependent {
   private String name;
 
   public Dependent() {}
+
+  public Dependent(String name) {
+    this.name = name;
+  }
 
   public Dependent(Long id, String name) {
     this.id = id;
