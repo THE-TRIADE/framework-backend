@@ -46,7 +46,7 @@ public class RecommendationServiceImpl implements RecommendationService {
                 List<ActivityWithCourseResponse> stateActivities = stateEntry.getValue();
                 String dependentName = getDependentName(dependentId);
 
-                String message = "O pet " + dependentName + " possui " + stateActivities.size() + " atividade(s) na categoria " + categoryName +
+                String message = "O estudante " + dependentName + " possui " + stateActivities.size() + " atividade(s) na categoria " + categoryName +
                         " e no estado " + translatedState;
                 recommendations.add(message);
             }
