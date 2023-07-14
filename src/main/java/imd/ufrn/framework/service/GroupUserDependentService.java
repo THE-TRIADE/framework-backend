@@ -3,6 +3,7 @@ package imd.ufrn.framework.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,9 +18,9 @@ import imd.ufrn.framework.repository.GroupUserDependentRepository;
 import imd.ufrn.framework.service.exception.EntityNotFoundException;
 
 @Service
-public class GroupUserDependentService {
+public abstract class GroupUserDependentService <T extends GroupUserDependent, GroupRequest extends GroupUserDependentRequest, GroupResponse extends GroupUserDependentResponse> {
     @Autowired
-    private GroupUserDependentRepository groupUserDependentRepository;
+    private GroupUserDependentRepository<T> groupUserDependentRepository;
     @Autowired
     private DependentService dependentService;
     @Autowired
@@ -27,9 +28,9 @@ public class GroupUserDependentService {
     @Autowired
     private DependentGroupService dependentGroupService;
     @Autowired
-    private GroupUserDependentMapper groupUserDependentMapper;
+    private GroupUserDependentMapper<T, GroupRequest, GroupResponse> groupUserDependentMapper;
 
-    public List<GroupUserDependentResponse> findAll() {
+    public List<GroupResponse> findAll() {
                 return this.groupUserDependentRepository
                 .findAll()
                 .stream()
@@ -37,7 +38,7 @@ public class GroupUserDependentService {
                 .toList();
     }
 
-    public GroupUserDependentResponse findGroupUserDependentById(Long groupUserDependentId) {
+    public GroupResponse findGroupUserDependentById(Long groupUserDependentId) {
         return this.groupUserDependentMapper.mapGroupUserDependentToGroupUserDependentResponse(
             this.groupUserDependentRepository.findById(groupUserDependentId).orElseThrow(
                 () -> new EntityNotFoundException(groupUserDependentId, GroupUserDependent.class)));
@@ -61,8 +62,8 @@ public class GroupUserDependentService {
     }
     
     @Transactional
-    public GroupUserDependentResponse createGroupUserDependent(GroupUserDependentRequest groupUserDependentRequest) {
-        GroupUserDependent groupUserDependent = this.groupUserDependentRepository.save(groupUserDependentMapper.mapGroupUserDependentRequestToGroupUserDependent(groupUserDependentRequest));
+    public GroupResponse createGroupUserDependent(GroupRequest groupUserDependentRequest) {
+        T groupUserDependent = this.groupUserDependentRepository.save(groupUserDependentMapper.mapGroupUserDependentRequestToGroupUserDependent(groupUserDependentRequest));
 
         List<? extends Dependent> dependents = groupUserDependentRequest
             .getDependents()
@@ -102,7 +103,7 @@ public class GroupUserDependentService {
             .toList();
     }
  
-    public GroupUserDependentResponse findByDependentId(Long dependentId) {
+    public GroupResponse findByDependentId(Long dependentId) {
         return this.groupUserDependentMapper
             .mapGroupUserDependentToGroupUserDependentResponse(
                 this.groupUserDependentRepository.findByDependentId(dependentId).orElseThrow(

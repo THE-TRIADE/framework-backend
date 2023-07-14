@@ -4,7 +4,7 @@ import java.util.List;
 
 import imd.ufrn.framework.model.Dependent;
 
-public class GroupUserDependentResponse {
+public abstract class GroupUserDependentResponse {
     private Long id;
     private String name;
     private List<? extends Dependent> dependents;

@@ -1,4 +1,4 @@
-package imd.ufrn.framework.repository;
+package imd.ufrn.instancefamilyroutine.repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -12,23 +12,24 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import imd.ufrn.framework.model.GroupUserDependent;
-import imd.ufrn.framework.repository.mappers.GroupUserDependentMapper;
+import imd.ufrn.framework.repository.GroupUserDependentRepository;
+import imd.ufrn.instancefamilyroutine.model.GroupUserDependentStandard;
+import imd.ufrn.instancefamilyroutine.repository.mappers.GroupUserDependentMapper;
 
 @Repository
-public class GroupUserDependentRepositoryImpl implements GroupUserDependentRepository {
+public class GroupUserDependentRepositoryImpl implements GroupUserDependentRepository<GroupUserDependentStandard> {
 
   @Autowired
   private JdbcTemplate jdbcTemplate;
 
   @Override
-  public List<GroupUserDependent> findAll() { 
+  public List<GroupUserDependentStandard> findAll() { 
     String sql = "SELECT * FROM group_user_dependent";
     return jdbcTemplate.query(sql, new GroupUserDependentMapper());
   }
 
   @Override
-  public Optional<GroupUserDependent> findById(Long id) {
+  public Optional<GroupUserDependentStandard> findById(Long id) {
     String sql = "SELECT * FROM group_user_dependent WHERE id = ?";
     try {
         return Optional.of(jdbcTemplate.queryForObject(sql, new GroupUserDependentMapper(), id));
@@ -39,7 +40,7 @@ public class GroupUserDependentRepositoryImpl implements GroupUserDependentRepos
   }
 
   @Override
-  public Optional<GroupUserDependent> findByDependentId(Long dependentId) {
+  public Optional<GroupUserDependentStandard> findByDependentId(Long dependentId) {
     String sql = "SELECT * FROM group_user_dependent INNER JOIN dependent_group ON group_user_dependent.id = dependent_group.groupId WHERE dependent_group.dependentId = ?";
     try {
         return Optional.of(jdbcTemplate.queryForObject(sql, new GroupUserDependentMapper(), dependentId));
@@ -50,7 +51,7 @@ public class GroupUserDependentRepositoryImpl implements GroupUserDependentRepos
   }
 
   @Override
-  public GroupUserDependent save(GroupUserDependent group) {
+  public GroupUserDependentStandard save(GroupUserDependentStandard group) {
     KeyHolder keyHolder = new GeneratedKeyHolder();
     String sql = "INSERT INTO group_user_dependent (`name`) VALUES (?)";
     

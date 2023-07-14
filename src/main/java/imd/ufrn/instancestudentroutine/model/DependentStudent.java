@@ -6,8 +6,8 @@ import imd.ufrn.framework.model.Dependent;
 import jakarta.validation.constraints.NotNull;
 
 public class DependentStudent extends Dependent{
-  @NotNull
-  private String race;
+  // @NotNull
+  // private String raced;
   @NotNull
   private Date birthDate;
 
@@ -17,13 +17,13 @@ public class DependentStudent extends Dependent{
     super(id, name);
   }
 
-  public String getRace() {
-    return race;
-  }
+  // public String getRace() {
+  //   return raced;
+  // }
 
-  public void setRace(String race) {
-    this.race = race;
-  }
+  // public void setRace(String race) {
+  //   this.raced = race;
+  // }
   
   public Date getBirthDate() {
     return birthDate;
