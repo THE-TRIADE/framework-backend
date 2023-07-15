@@ -4,7 +4,7 @@ import imd.ufrn.framework.model.Dependent;
 import jakarta.validation.constraints.NotNull;
 
 public class DependentStudent extends Dependent{
-  @NotNull
+  // @NotNull
   private String cpf;
   @NotNull String registrationNumber;
 

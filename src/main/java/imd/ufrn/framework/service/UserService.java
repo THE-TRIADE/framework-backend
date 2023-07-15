@@ -2,7 +2,6 @@ package imd.ufrn.framework.service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,14 +59,9 @@ public class UserService {
     public UserResponse findUserByUserId(Long userId) {
         User user = this.findUserById(userId);
         List<RelationResponse> relations = this.relationService.findRelationsByUserId(userId);
-        Set<GroupUserDependentResponse> groups = new HashSet<>();
-        relations.stream()
-            .forEach(relation -> {
-                GroupUserDependentResponse group = this.groupUserDependentService.findByDependentId(relation.getDependentId());
-                groups.add(group);
-            });
+        List<? extends GroupUserDependentResponse> groups = this.groupUserDependentService.findGroupsByUserId(userId);
         
-        return userMapper.mapUserToUserReponse(user, relations, groups);
+        return userMapper.mapUserToUserReponse(user, relations, new HashSet<>(groups));
     }
     
     @Transactional
@@ -77,13 +71,9 @@ public class UserService {
         user = this.userRepository.save(user);
 
         List<RelationResponse> relations = this.relationService.findRelationsByUserId(user.getId());
-        Set<GroupUserDependentResponse> groups = new HashSet<>();
-        relations.stream()
-            .forEach(relation -> {
-                GroupUserDependentResponse group = this.groupUserDependentService.findByDependentId(relation.getDependentId());
-                groups.add(group);
-            });
-        return userMapper.mapUserToUserReponse(user, relations, groups);
+        List<? extends GroupUserDependentResponse> groups = this.groupUserDependentService.findGroupsByUserId(user.getId());
+
+        return userMapper.mapUserToUserReponse(user, relations, new HashSet<>(groups));
     }
 
     @Transactional
@@ -110,13 +100,9 @@ public class UserService {
             .findByEmail(loginRequest.getUsername())
             .get();
         List<RelationResponse> relations = this.relationService.findRelationsByUserId(user.getId());
-        Set<GroupUserDependentResponse> groups = new HashSet<>();
-        relations.stream()
-            .forEach(relation -> {
-                GroupUserDependentResponse group = this.groupUserDependentService.findByDependentId(relation.getDependentId());
-                groups.add(group);
-            });
-        return userMapper.mapUserToUserReponse(user, relations, groups);
+        List<? extends GroupUserDependentResponse> groups = this.groupUserDependentService.findGroupsByUserId(user.getId());
+
+        return userMapper.mapUserToUserReponse(user, relations, new HashSet<>(groups));
     }
 
     public List<UserResponse> findAllByRole(String userRole) {
@@ -126,13 +112,9 @@ public class UserService {
             .stream()
             .map(user -> {
                 List<RelationResponse> relations = this.relationService.findRelationsByUserId(user.getId());
-                Set<GroupUserDependentResponse> groups = new HashSet<>();
-                relations.stream()
-                    .forEach(relation -> {
-                        GroupUserDependentResponse group = this.groupUserDependentService.findByDependentId(relation.getDependentId());
-                        groups.add(group);
-                    });
-                return userMapper.mapUserToUserReponse(user, relations, groups);
+                List<? extends GroupUserDependentResponse> groups = this.groupUserDependentService.findGroupsByUserId(user.getId());
+
+                return userMapper.mapUserToUserReponse(user, relations, new HashSet<>(groups));
             })
             .toList();
     }

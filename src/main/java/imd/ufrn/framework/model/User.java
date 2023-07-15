@@ -18,7 +18,7 @@ public class User implements UserDetails {
     private Long id;
     @NotEmpty
     private String email;
-    @NotNull
+    // @NotNull
     private String password;
     @NotNull
     private String name;

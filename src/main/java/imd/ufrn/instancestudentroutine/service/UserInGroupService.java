@@ -13,7 +13,7 @@ public class UserInGroupService {
     @Autowired
     private UserInGroupRepository userInGroupRepository;
 
-    public List<UserInGroup> findUserInGroupsByUserInId(Long userId) { 
+    public List<UserInGroup> findUserInGroupsByUserId(Long userId) { 
         return this.userInGroupRepository.findByUserId(userId);
     }
 

@@ -1,6 +1,9 @@
 package imd.ufrn.instancestudentroutine.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -12,6 +15,8 @@ import imd.ufrn.framework.model.DependentGroup;
 import imd.ufrn.framework.model.User;
 import imd.ufrn.framework.model.api.UserMapper;
 import imd.ufrn.framework.model.api.request.RelationRequest;
+import imd.ufrn.framework.model.api.response.GroupUserDependentResponse;
+import imd.ufrn.framework.model.api.response.RelationResponse;
 import imd.ufrn.framework.service.GroupUserDependentService;
 import imd.ufrn.framework.service.UserService;
 import imd.ufrn.instancestudentroutine.model.GroupUserDependentStandard;
@@ -36,6 +41,15 @@ public class GroupUserDependentServiceImpl extends GroupUserDependentService<Gro
             .map(UserInGroup::getUserId)
             .map(this.userService::findUserById)
             .toList();
+    }
+
+    @Override
+    public List<GroupUserDependentStandardResponse> findGroupsByUserId(Long userId){
+        List<GroupUserDependentStandardResponse> groups = new ArrayList<GroupUserDependentStandardResponse>();
+        userInGroupService.findUserInGroupsByUserId(userId).forEach(userInGroup -> {
+            groups.add(this.findGroupUserDependentById(userInGroup.getGroupId()));
+        });
+        return groups;
     }
 
     @Override
@@ -92,7 +106,7 @@ public class GroupUserDependentServiceImpl extends GroupUserDependentService<Gro
                     newRelation.setDependentId(dependent.getId());
                     newRelation.setUserId(user.getId());
                     newRelation.setUserRole(groupUserDependentRequest.getUserRole());
-                    this.guardService.createRelation(newRelation);
+                    this.relationService.createRelation(newRelation);
                     });
                 });
             }

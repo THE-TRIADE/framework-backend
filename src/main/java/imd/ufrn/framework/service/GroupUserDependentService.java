@@ -1,6 +1,9 @@
 package imd.ufrn.framework.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,7 @@ import imd.ufrn.framework.model.api.GroupUserDependentMapper;
 import imd.ufrn.framework.model.api.request.GroupUserDependentRequest;
 import imd.ufrn.framework.model.api.request.RelationRequest;
 import imd.ufrn.framework.model.api.response.GroupUserDependentResponse;
+import imd.ufrn.framework.model.api.response.RelationResponse;
 import imd.ufrn.framework.repository.GroupUserDependentRepository;
 import imd.ufrn.framework.service.exception.EntityNotFoundException;
 
@@ -23,11 +27,22 @@ public abstract class GroupUserDependentService <T extends GroupUserDependent, G
     @Autowired
     protected DependentService dependentService;
     @Autowired
-    protected RelationService guardService;
+    protected RelationService relationService;
     @Autowired
     protected DependentGroupService dependentGroupService;
     @Autowired
     protected GroupUserDependentMapper<T, GroupRequest, GroupResponse> groupUserDependentMapper;
+
+    public List<GroupResponse> findGroupsByUserId(Long userId){
+        List<RelationResponse> relations = this.relationService.findRelationsByUserId(userId);
+        Set<GroupResponse> groups = new HashSet<>();
+        relations.stream()
+            .forEach(relation -> {
+                GroupResponse group = this.findByDependentId(relation.getDependentId());
+                groups.add(group);
+            });
+            return new ArrayList<GroupResponse>(groups);
+    }
 
     public List<GroupResponse> findAll() {
                 return this.groupUserDependentRepository
@@ -80,7 +95,7 @@ public abstract class GroupUserDependentService <T extends GroupUserDependent, G
                     newRelation.setDependentId(dependent.getId());
                     newRelation.setUserId(groupUserDependentRequest.getUserId());
                     newRelation.setUserRole(groupUserDependentRequest.getUserRole());
-                    this.guardService.createRelation(newRelation);
+                    this.relationService.createRelation(newRelation);
                 }
 
                 // Creates new DependentGroup
