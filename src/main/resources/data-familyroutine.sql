@@ -16,6 +16,7 @@ INSERT INTO `dependent` (id, `name`, cpf, birthDate) VALUES
 
 INSERT INTO `dependent_group` (dependentId, groupId) VALUES
     (3, 3),
+    (4, 3),
     (7, 3),
     (5, 2);
 
