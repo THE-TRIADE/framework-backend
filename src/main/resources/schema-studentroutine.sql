@@ -87,7 +87,7 @@ CREATE TABLE `activity`(
     FOREIGN KEY(createdBy) REFERENCES `user`(id),
     FOREIGN KEY(finishedBy) REFERENCES `user`(id) ON DELETE SET NULL,
     FOREIGN KEY(recurringActivityId) REFERENCES `recurring_activity`(id),
-    FOREIGN KEY(courseId) REFERENCES `course`(id) ON DELETE SET NULL,
+    FOREIGN KEY(courseId) REFERENCES `course`(id) ON DELETE CASCADE,
     PRIMARY KEY(id)
 );
 

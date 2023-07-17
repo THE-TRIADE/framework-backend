@@ -1,11 +1,16 @@
 package imd.ufrn.instancestudentroutine.repository;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
+import imd.ufrn.instancestudentroutine.model.UserInGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import imd.ufrn.instancestudentroutine.model.Course;
@@ -33,5 +38,29 @@ public class CourseRepositoryImpl implements CourseRepository {
         } 
     }
 
-    
+    @Override
+    public Course save(Course course) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        String sql = "INSERT INTO course (`name`) VALUES (?)";
+
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, course.getName());
+            return ps;
+        }, keyHolder);
+
+        return this.findById(keyHolder.getKey().longValue()).get();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        String sql = "DELETE FROM course WHERE id = ?";
+        jdbcTemplate.update(sql, new Object[] { id });
+    }
+
+    @Override
+    public void deleteAll() {
+        String sql = "DELETE FROM course";
+        jdbcTemplate.update(sql);
+    }
 }
