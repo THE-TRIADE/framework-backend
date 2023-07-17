@@ -75,8 +75,13 @@ public class ActivityWithCourseRepositoryImpl implements ActivityRepository<Acti
 
   @Override
   public ActivityWithCourse update(ActivityWithCourse activity) {
-    String sql = "UPDATE activity SET `name` = ?, `description` = ?, dateStart = ?, dateEnd = ?, hourStart = ?, hourEnd = ?, `state` = ?, commentary = ?, dependentId = ?, currentUserId = ?, actorId = ?, createdBy = ?, finishedBy = ? WHERE id = ?";
+    String sql = "UPDATE `activity` SET `name` = ?, `description` = ?, dateStart = ?, dateEnd = ?, hourStart = ?, hourEnd = ?, `state` = ?, commentary = ?, dependentId = ?, currentUserId = ?, actorId = ?, createdBy = ?, finishedBy = ?, `grade` = ? WHERE id = ?";
     
+    Double grade = null;
+    if(activity.getGrade() != null) {
+        grade = activity.getGrade();
+    }
+
     jdbcTemplate.update(sql, 
             activity.getName(),
             activity.getDescription(),
@@ -91,7 +96,9 @@ public class ActivityWithCourseRepositoryImpl implements ActivityRepository<Acti
             activity.getActor(),
             activity.getCreatedBy(),
             activity.getFinishedBy(),
-            activity.getId());
+            grade,
+            activity.getId()
+    );
     return activity;
   }
   

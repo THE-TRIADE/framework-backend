@@ -59,6 +59,10 @@ public class ActivityWithCourseMapper {
         User currentUser = this.userService.findUserById(activity.getCurrentUser());
         activityResponse.setCurrentUserEmail(currentUser.getEmail());
         activityResponse.setCurrentUserName(currentUser.getName());
+
+        if(activity.getGrade() != null) {
+            activityResponse.setGrade(activity.getGrade());
+        }
         
         activityResponse.setCourseId(activity.getCourseId());
         Course course = this.courseService.findCourseById(activity.getCourseId());

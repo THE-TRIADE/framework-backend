@@ -8,7 +8,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +39,7 @@ public abstract class ActivityService<A extends ActivityAbstract, B extends Acti
 
     protected abstract D mapToResponse(A activity);
     protected abstract A mapToEntity(B activityRequest);
+    protected abstract A mapToEntity(C finishRequest, A activity);
     protected abstract A mapToEntityDiffDates(Date startDate, Date endDate, B activityRequest);
 
     public List<D> findAll() {
@@ -76,11 +76,8 @@ public abstract class ActivityService<A extends ActivityAbstract, B extends Acti
     public D finishActivity(Long activityId, C finishActivityRequest) {
         A activity = this.getActivityById(activityId);
         this.checkActivityIsNotInStateDoneOrNotDoneOrError(activity);
-        Function<Boolean,ActivityState> defineFinishState = done -> done == true ? ActivityState.DONE : ActivityState.NOT_DONE;
-        activity.setState(defineFinishState.apply(finishActivityRequest.getDone()));
-        activity.setFinishedBy(finishActivityRequest.getUserId());
-        activity.setCommentary(finishActivityRequest.getCommentary());
-        return this.mapToResponse(this.updateActivity(activity));
+        A updatedActivity = this.mapToEntity(finishActivityRequest, activity);
+        return this.mapToResponse(this.updateActivity(updatedActivity));
     }
 
     public void deleteAllActivities() {

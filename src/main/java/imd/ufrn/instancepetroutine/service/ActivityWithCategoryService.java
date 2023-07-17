@@ -2,10 +2,12 @@ package imd.ufrn.instancepetroutine.service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import imd.ufrn.framework.model.ActivityState;
 import imd.ufrn.framework.service.ActivityService;
 import imd.ufrn.instancepetroutine.model.ActivityWithCategory;
 import imd.ufrn.instancepetroutine.model.api.ActivityWithCategoryMapper;
@@ -35,6 +37,15 @@ public class ActivityWithCategoryService extends ActivityService<ActivityWithCat
         ActivityWithCategory activity = this.activityWithCategoryMapper.mapActivityRequestToActivity(activityRequest);
         activity.setDateStart(startDate);
         activity.setDateEnd(endDate);
+        return activity;
+    }
+
+    @Override
+    protected ActivityWithCategory mapToEntity(FinishActivityWithCategoryRequest finishRequest, ActivityWithCategory activity) {
+        Function<Boolean,ActivityState> defineFinishState = done -> done == true ? ActivityState.DONE : ActivityState.NOT_DONE;
+        activity.setState(defineFinishState.apply(finishRequest.getDone()));
+        activity.setFinishedBy(finishRequest.getUserId());
+        activity.setCommentary(finishRequest.getCommentary());
         return activity;
     }
 

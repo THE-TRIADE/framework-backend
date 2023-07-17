@@ -72,6 +72,7 @@ CREATE TABLE `activity`(
     hourEnd TIME NOT NULL,
     `state` VARCHAR(50) NOT NULL,
     commentary VARCHAR(500),
+    grade DOUBLE,
     
     dependentId BIGINT NOT NULL,
     currentUserId BIGINT NOT NULL, 

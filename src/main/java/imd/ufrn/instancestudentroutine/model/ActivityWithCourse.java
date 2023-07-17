@@ -4,6 +4,7 @@ import imd.ufrn.framework.model.ActivityAbstract;
 
 public class ActivityWithCourse extends ActivityAbstract {
 
+    private Double grade;
     private Long courseId;
 
     public ActivityWithCourse() {
@@ -15,5 +16,11 @@ public class ActivityWithCourse extends ActivityAbstract {
     }
     public void setCourseId(Long courseId) {
         this.courseId = courseId;
+    }
+    public Double getGrade() {
+        return grade;
+    }
+    public void setGrade(Double grade) {
+        this.grade = grade;
     }
 }

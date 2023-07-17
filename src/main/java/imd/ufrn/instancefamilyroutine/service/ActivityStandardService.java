@@ -1,10 +1,12 @@
 package imd.ufrn.instancefamilyroutine.service;
 
 import java.sql.Date;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import imd.ufrn.framework.model.ActivityState;
 import imd.ufrn.framework.service.ActivityService;
 import imd.ufrn.instancefamilyroutine.model.ActivityStandard;
 import imd.ufrn.instancefamilyroutine.model.api.ActivityStandardMapper;
@@ -34,6 +36,15 @@ public class ActivityStandardService extends ActivityService<ActivityStandard, A
         ActivityStandard activity = this.activityStandardMapper.mapActivityRequestToActivity(activityRequest);
         activity.setDateStart(startDate);
         activity.setDateEnd(endDate);
+        return activity;
+    }
+
+    @Override
+    protected ActivityStandard mapToEntity(FinishActivityStandardRequest finishRequest, ActivityStandard activity) {
+        Function<Boolean,ActivityState> defineFinishState = done -> done == true ? ActivityState.DONE : ActivityState.NOT_DONE;
+        activity.setState(defineFinishState.apply(finishRequest.getDone()));
+        activity.setFinishedBy(finishRequest.getUserId());
+        activity.setCommentary(finishRequest.getCommentary());
         return activity;
     }
 	

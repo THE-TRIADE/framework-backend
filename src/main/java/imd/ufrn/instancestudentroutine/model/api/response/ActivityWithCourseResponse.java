@@ -6,6 +6,7 @@ public class ActivityWithCourseResponse extends ActivityResponse {
 
     private Long courseId;
     private String courseName;
+    private Double grade;
 
     public ActivityWithCourseResponse() {
         
@@ -26,4 +27,13 @@ public class ActivityWithCourseResponse extends ActivityResponse {
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
+
+    public Double getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Double grade) {
+        this.grade = grade;
+    }
+    
 }

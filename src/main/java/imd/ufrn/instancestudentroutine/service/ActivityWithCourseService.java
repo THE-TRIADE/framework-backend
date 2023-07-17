@@ -2,10 +2,12 @@ package imd.ufrn.instancestudentroutine.service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import imd.ufrn.framework.model.ActivityState;
 import imd.ufrn.framework.service.ActivityService;
 import imd.ufrn.instancestudentroutine.model.ActivityWithCourse;
 import imd.ufrn.instancestudentroutine.model.api.ActivityWithCourseMapper;
@@ -35,6 +37,19 @@ public class ActivityWithCourseService extends ActivityService<ActivityWithCours
         ActivityWithCourse activity = this.activityWithCourseMapper.mapActivityRequestToActivity(activityRequest);
         activity.setDateStart(startDate);
         activity.setDateEnd(endDate);
+        return activity;
+    }
+
+    @Override
+    protected ActivityWithCourse mapToEntity(FinishActivityWithCourseRequest finishRequest, ActivityWithCourse activity) {
+        Function<Boolean,ActivityState> defineFinishState = done -> done == true ? ActivityState.DONE : ActivityState.NOT_DONE;
+        activity.setState(defineFinishState.apply(finishRequest.getDone()));
+        activity.setFinishedBy(finishRequest.getUserId());
+        activity.setCommentary(finishRequest.getCommentary());
+        
+        if(finishRequest.getGrade() != null) {
+            activity.setGrade(finishRequest.getGrade());
+        }
         return activity;
     }
 

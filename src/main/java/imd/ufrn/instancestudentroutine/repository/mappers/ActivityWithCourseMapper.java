@@ -31,6 +31,10 @@ public class ActivityWithCourseMapper implements RowMapper<ActivityWithCourse>{
     } 
     activity.setRecurringActivityId(resultSet.getLong("recurringActivityId"));
     activity.setCourseId(resultSet.getLong("courseId"));
+    Double grade = resultSet.getDouble("grade");
+    if(grade != null) {
+        activity.setGrade(grade);
+    }
     return activity;
   }
     
