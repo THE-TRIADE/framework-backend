@@ -43,3 +43,11 @@ Extension Pack for Java, Language Support for Java(TM) by Red Hat.
 
 Clonar o projeto escolhendo a branch `develop`, rodar aplicação via VSCode clicando em "Run" no arquivo `FrameworkRoutineApplication.java` e ou apertando F5.
 
+No arquivo _application.yml_ localizado em `src/main/resources/application.yml`, alterar a propriedade `spring.profiles.active` para a instância desejada.
+Aqui estão as opções disponíveis:
+
+`family-routine`
+
+`pet-routine`
+
+`student-routine`
