@@ -2,6 +2,7 @@ package imd.ufrn.instancestudentroutine.service;
 
 import java.util.List;
 
+import imd.ufrn.instancestudentroutine.model.UserInGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,4 +26,16 @@ public class CourseService {
                 () -> new EntityNotFoundException(courseId, Course.class)
             );
     }
+    public Course createCourse(Course course) {
+        return this.courseRepository.save(course);
+    }
+
+    public void deleteAllCourses() {
+        this.courseRepository.deleteAll();
+    }
+
+    public void deleteCourseById(Long courseId) {
+        this.courseRepository.deleteById(courseId);
+    }
+
 }
