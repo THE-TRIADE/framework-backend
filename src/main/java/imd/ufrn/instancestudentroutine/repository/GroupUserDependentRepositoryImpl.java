@@ -53,12 +53,13 @@ public class GroupUserDependentRepositoryImpl implements GroupUserDependentRepos
   @Override
   public GroupUserDependentStandard save(GroupUserDependentStandard group) {
     KeyHolder keyHolder = new GeneratedKeyHolder();
-    String sql = "INSERT INTO group_user_dependent (`name`) VALUES (?)";
+    String sql = "INSERT INTO group_user_dependent (`name`, `groupType`) VALUES (?,?)";
     
     
     jdbcTemplate.update(connection -> {
       PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
       ps.setString(1, group.getName());
+      ps.setString(2, group.getGroupType());
       return ps;
     }, keyHolder);
 

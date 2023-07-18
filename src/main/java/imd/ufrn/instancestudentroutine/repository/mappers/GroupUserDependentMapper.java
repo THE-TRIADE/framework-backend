@@ -14,6 +14,7 @@ public class GroupUserDependentMapper implements RowMapper<GroupUserDependentSta
         GroupUserDependentStandard group = new GroupUserDependentStandard();
         group.setId(resultSet.getBigDecimal("id").longValue());
         group.setName(resultSet.getString("name"));
+        group.setGroupType(resultSet.getString("groupType"));
         return group;
     }
     

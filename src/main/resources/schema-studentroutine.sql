@@ -19,7 +19,8 @@ CREATE TABLE `dependent` (
 
 CREATE TABLE `group_user_dependent` (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(100) NOT NULL
+    `name` VARCHAR(100) NOT NULL,
+    `groupType` VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE `dependent_group` (

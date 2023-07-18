@@ -21,6 +21,7 @@ public class GroupUserDependentMapperImpl extends GroupUserDependentMapper<Group
     {
         GroupUserDependentStandard groupUserDependent = new GroupUserDependentStandard();
         groupUserDependent.setName(groupUserDependentRequest.getName());
+        groupUserDependent.setGroupType(groupUserDependentRequest.getGroupType());
         return groupUserDependent;
     }
 
@@ -30,6 +31,7 @@ public class GroupUserDependentMapperImpl extends GroupUserDependentMapper<Group
         GroupUserDependentStandardResponse groupUserDependentResponse = new GroupUserDependentStandardResponse();
         groupUserDependentResponse.setId(groupUserDependent.getId());
         groupUserDependentResponse.setName(groupUserDependent.getName());
+        groupUserDependentResponse.setGroupType(groupUserDependent.getGroupType());
         groupUserDependentResponse.setDependents(groupUserDependentService.getDependentsByGroupUserDependentId(groupUserDependent.getId()));
         groupUserDependentResponse.setUsers(groupUserDependentService.getUsersByGroupUserDependentId(groupUserDependent.getId()));
 

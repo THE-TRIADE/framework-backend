@@ -1,6 +1,7 @@
 package imd.ufrn.instancestudentroutine.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,13 +11,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import imd.ufrn.framework.controller.GroupUserDependentController;
-import imd.ufrn.framework.service.GroupUserDependentService;
 import imd.ufrn.instancestudentroutine.model.GroupUserDependentStandard;
 import imd.ufrn.instancestudentroutine.model.api.request.GroupUserDependentStandardRequest;
 import imd.ufrn.instancestudentroutine.model.api.response.GroupUserDependentStandardResponse;
+import imd.ufrn.instancestudentroutine.service.GroupUserDependentServiceImpl;
 import jakarta.validation.Valid;
 
 @CrossOrigin
@@ -24,12 +26,15 @@ import jakarta.validation.Valid;
 @RequestMapping("group-user-dependent")
 public class GroupUserDependentControllerImpl implements GroupUserDependentController<GroupUserDependentStandard, GroupUserDependentStandardRequest, GroupUserDependentStandardResponse> {
     @Autowired
-    private GroupUserDependentService<GroupUserDependentStandard, GroupUserDependentStandardRequest, GroupUserDependentStandardResponse> groupUserDependentService;
+    private GroupUserDependentServiceImpl groupUserDependentService;
     
-    @Override
     @GetMapping
-    public List<GroupUserDependentStandardResponse> getAllGroupUserDependents() {
-        return this.groupUserDependentService.findAll();
+    public List<GroupUserDependentStandardResponse> getAllGroupUserDependents(@RequestParam Optional<String> groupType) {
+        return
+        groupType.map(
+            type -> this.groupUserDependentService.findAllByGroupType(type)
+        )
+        .orElse(this.groupUserDependentService.findAll());
     }
 
     @Override
@@ -54,5 +59,10 @@ public class GroupUserDependentControllerImpl implements GroupUserDependentContr
     @DeleteMapping("{groupUserDependentId}")
     public void deleteGroupUserDependentById(@PathVariable Long groupUserDependentId) {
         this.groupUserDependentService.deleteGroupUserDependentById(groupUserDependentId);
+    }
+
+    @Override
+    public List<GroupUserDependentStandardResponse> getAllGroupUserDependents() {
+        return this.groupUserDependentService.findAll();
     } 
 }

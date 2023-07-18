@@ -1,9 +1,7 @@
 package imd.ufrn.instancestudentroutine.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -15,8 +13,6 @@ import imd.ufrn.framework.model.DependentGroup;
 import imd.ufrn.framework.model.User;
 import imd.ufrn.framework.model.api.UserMapper;
 import imd.ufrn.framework.model.api.request.RelationRequest;
-import imd.ufrn.framework.model.api.response.GroupUserDependentResponse;
-import imd.ufrn.framework.model.api.response.RelationResponse;
 import imd.ufrn.framework.service.GroupUserDependentService;
 import imd.ufrn.framework.service.UserService;
 import imd.ufrn.instancestudentroutine.model.GroupUserDependentStandard;
@@ -33,6 +29,14 @@ public class GroupUserDependentServiceImpl extends GroupUserDependentService<Gro
     protected UserService userService;
     @Autowired
     protected UserMapper userMapper;
+
+    public List<GroupUserDependentStandardResponse> findAllByGroupType(String type) {
+        return 
+        this.findAll()
+            .stream()
+            .filter(group -> group.getGroupType().equalsIgnoreCase(type))
+            .toList();
+    }
 
     public List<User> getUsersByGroupUserDependentId(Long groupUserDependentId){
         return userInGroupService
@@ -102,15 +106,17 @@ public class GroupUserDependentServiceImpl extends GroupUserDependentService<Gro
                 users.stream().forEach( user -> {
                     dependents.stream().forEach(dependent ->{
 
-                    RelationRequest newRelation = new RelationRequest();
-                    newRelation.setDependentId(dependent.getId());
-                    newRelation.setUserId(user.getId());
-                    newRelation.setUserRole(groupUserDependentRequest.getUserRole());
-                    this.relationService.createRelation(newRelation);
+                        RelationRequest newRelation = new RelationRequest();
+                        newRelation.setDependentId(dependent.getId());
+                        newRelation.setUserId(user.getId());
+                        newRelation.setUserRole(groupUserDependentRequest.getUserRole());
+                        this.relationService.createRelation(newRelation);
                     });
                 });
             }
             
         return this.groupUserDependentMapper.mapGroupUserDependentToGroupUserDependentResponse(groupUserDependent);
     }
+
+    
 }

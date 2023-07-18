@@ -8,7 +8,7 @@ import imd.ufrn.framework.model.api.response.GroupUserDependentResponse;
 
 public class GroupUserDependentStandardResponse extends GroupUserDependentResponse {
     protected List<User> users;
-
+    private String groupType;
 
     public GroupUserDependentStandardResponse(Long id, String name, List<? extends Dependent> dependents, List<User> users) {
         this.id = id;
@@ -27,4 +27,11 @@ public class GroupUserDependentStandardResponse extends GroupUserDependentRespon
         this.users = users;
     }
 
+    public String getGroupType() {
+        return groupType;
+    }
+
+    public void setGroupType(String groupType) {
+        this.groupType = groupType;
+    }
 }

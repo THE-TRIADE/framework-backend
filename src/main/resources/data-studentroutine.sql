@@ -2,10 +2,11 @@ INSERT INTO `user` (id, email, `password`, `name`, cpf, birthDate, `role`) VALUE
     (1, 'ana@email.com', '$2a$10$RleiVtfl2ikXq1RYADYTC.rsUoA6eScRlk293ygGXzDjmFWE/yBQq', 'Ana Holanda', 99999999999, '2002-07-13', 'PRINCIPAL'),
     (2, 'leandro@email.com', '$2a$10$/8XMU9zaTUp3Hbj9II1OxONTx7zvKaWzL7OW30JoikiDkopZqQOGu', 'Leandro Assunção', 88888888888, '2003-04-25', 'PRINCIPAL');
 
-INSERT INTO `group_user_dependent` (`name`) VALUES
-    ('7° ano C'),
-    ('3ª série'),
-    ('1ª série A');
+INSERT INTO `group_user_dependent` (`name`, groupType) VALUES
+    ('7° ano C', 'CLASS'),
+    ('3ª série', 'CLASS'),
+    ('1ª série A', 'CLASS'),
+    ('Familia recatada', 'FAMILY');
 
 INSERT INTO `dependent` (id, `name`, cpf, registrationNumber) VALUES 
     (3, 'Enzo', '12345678911', '1234567891'),
