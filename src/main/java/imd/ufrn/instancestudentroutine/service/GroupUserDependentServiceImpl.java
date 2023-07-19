@@ -2,6 +2,7 @@ package imd.ufrn.instancestudentroutine.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -50,10 +51,27 @@ public class GroupUserDependentServiceImpl extends GroupUserDependentService<Gro
     @Override
     public List<GroupUserDependentStandardResponse> findGroupsByUserId(Long userId){
         List<GroupUserDependentStandardResponse> groups = new ArrayList<GroupUserDependentStandardResponse>();
+
+        User user = this.userService.findUserById(userId);
+
         userInGroupService.findUserInGroupsByUserId(userId).forEach(userInGroup -> {
             groups.add(this.findGroupUserDependentById(userInGroup.getGroupId()));
         });
-        return groups;
+
+        Function<String, String> findGroupType = role -> role.equalsIgnoreCase("TEACHER") ? "CLASS" : "FAMILY";
+
+        List<GroupUserDependentStandardResponse> allGroups = this.findAllByGroupType(findGroupType.apply(user.getRole().toString()));
+
+        relationService.findRelationsByUserId(userId).forEach(relation -> {
+            groups.add(
+                allGroups.stream()
+                    .filter(group -> group.getDependents().stream().map(Dependent::getId).toList().contains(relation.getDependentId()))
+                    .findAny()
+                    .get()
+            );
+        });
+
+        return groups.stream().distinct().toList();
     }
 
     @Override
