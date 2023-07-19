@@ -45,12 +45,12 @@ INSERT INTO `activity` (`name`, dateStart, dateEnd, hourStart, hourEnd,`state`, 
     ('Teste', '2023-05-18', '2023-05-21', '20:00:00', '21:00:00', 'CREATED', 6, 2, 6, 2);
 
 INSERT INTO `spent` (`name`, paidOn, `value`, activityId, dependentId, userId) VALUES 
-    ('Viagem para Camurupim', '2021-04-25', 100000, NULL, 4, 2),
-    ('Odontologia', '2021-04-26', 937, NULL, 4, 1),
-    ('Disney', '2020-06-26', 13450, NULL, 4, 1),
-    ('Ovo da páscoa', '2023-04-03', 100, NULL, 4, 1),
-    ('Viagem para Camurupim', '2021-04-27', 100000, NULL, 4, 2),
-    ('Disney 2', '2020-06-26', 13450, NULL, 5, 1),
-    ('Ovo da páscoa', '2023-04-03', 100, NULL, 5, 1),
-    ('Roupa', '2023-04-03', 100, NULL, 5, 1),
-    ('Viagem para Camurupim', '2021-04-27', 100000, NULL, 5, 2);
+    ('Viagem para Camurupim', '2021-04-25', 10000000, NULL, 4, 2),
+    ('Odontologia', '2021-04-26', 93700, NULL, 4, 1),
+    ('Disney', '2020-06-26', 1345000, NULL, 4, 1),
+    ('Ovo da páscoa', '2023-04-03', 10000, NULL, 4, 1),
+    ('Viagem para Camurupim', '2021-04-27', 10000000, NULL, 4, 2),
+    ('Disney 2', '2020-06-26', 1345000, NULL, 5, 1),
+    ('Ovo da páscoa', '2023-04-03', 10000, NULL, 5, 1),
+    ('Roupa', '2023-04-03', 10000, NULL, 5, 1),
+    ('Viagem para Camurupim', '2021-04-27', 10000000, NULL, 5, 2);
